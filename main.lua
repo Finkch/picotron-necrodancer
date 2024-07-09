@@ -9,18 +9,23 @@ mount("/ram/cart/lib", "/ram/lib")
 
 include("lib/rspr.lua")
 include("lib/vec.lua")
+include("lib/queue.lua")
 
 include("graveyard.lua")
 
 function _init()
 	
-	player = load_example()
+	skeleton = load_example()
 
 	pos = Vec:new(240, 135)
 
 
 	f = 0
 	r0 = 0
+
+
+	-- debug queue, used for printing messages
+	debug = Q:new()
 end
 
 function _update()
@@ -31,9 +36,24 @@ end
 function _draw()
 	cls()
 
-	player:draw(pos)
+	debug:add(tostr(core))
 
+	skeleton:draw(pos)
+	for bone in all(skeleton.bones) do
+		debug:add(tostr(bone))
+	end
 	
 	-- draws a funny little rotating square
-	rspr(1, {x=480 - 10 * 2 ^ 0.5, y=10 * 2 ^ 0.5}, r0)	
+	rspr(1, {x=10 * 2 ^ 0.5, y=270 - 10 * 2 ^ 0.5}, r0)	
+
+
+	-- displays colours
+	for i = 0, 270 do
+		pset(479, i, i // 8)
+		if (i % 8 == 0) then
+			print(i // 8, 460, i)
+		end
+	end
+
+	debug:print(0, 0, 6)
 end
