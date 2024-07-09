@@ -21,6 +21,16 @@ function Skeleton:new(root)
     return s
 end
 
+
+-- draws the skeleton
+function Skeleton:draw(offset)
+    offset = offset or {x = 0, y = 0} -- converts model coordinates to world coordinates
+    for bone in all(self.bones) do
+        bone:draw(offset)
+    end
+end
+
+
 -- sets the list of bones, recursing down children
 function Skeleton:findbones()
     self.bones[self.root.name] = self.root
