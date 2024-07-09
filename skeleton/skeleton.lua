@@ -9,11 +9,12 @@ Skeleton = {}
 Skeleton.__index = Skeleton
 Skeleton.__type = "skeleton"
 
-function Skeleton:new(core)
+function Skeleton:new(core, debug)
+    debug = debug or false
     local s = {
         core = core,
         bones = {},
-        debug = true    -- shows skeleton as coloured lines
+        debug = debug       -- shows skeleton as coloured lines
     }
 
     -- skin map
