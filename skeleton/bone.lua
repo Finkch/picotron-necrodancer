@@ -63,5 +63,5 @@ function Bone:__tostring()
     -- shows transform
     str ..= "\n-> " .. tostr(self.transform)
 
-    return tostr
+    return str
 end
