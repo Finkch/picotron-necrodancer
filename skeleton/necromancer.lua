@@ -23,7 +23,13 @@ end
 
 -- sets new animation
 function Necromancer:set(animation)
-    self.previous = self.current
+    self.previous = self.current    -- we'll want to keep transforms of last animation, not whole animation
     self.current = animation
     self.frame = 0
+end
+
+-- updates frame count
+function Necromancer:update()
+    self.frame += 1
+    if (self.frame >= self.current.duration) self.frame = 0 -- loops
 end
