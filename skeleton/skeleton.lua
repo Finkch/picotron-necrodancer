@@ -10,9 +10,14 @@ Skeleton.__index = Skeleton
 Skeleton.__type = "skeleton"
 
 function Skeleton:new(model_data)
+    local s = {
+
+    }
 
     -- root joint
 
     -- skin map
 
+    setmetatable(s, Skeleton)
+    return s
 end
