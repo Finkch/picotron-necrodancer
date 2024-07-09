@@ -22,7 +22,7 @@ end
 
 
 -- metamethods
-function Q:__index(key) -- returns transform without overriding metamethods
+function Keyframe:__index(key) -- returns transform without overriding metamethods
     local datum = self.transforms[key]
 
     -- if we didn't find the item, it likely means it shoud look in the metatable
