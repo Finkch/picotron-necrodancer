@@ -44,3 +44,9 @@ function Necromancer:update()
     -- applies the pose
     self.skeleton:dance(pose)
 end
+
+function Necromancer:interpolate(k1, k2, progress)
+    if (self:interpolator) return self:interpolator(k1, k2, progress)
+
+    -- return linear interpolation
+end
