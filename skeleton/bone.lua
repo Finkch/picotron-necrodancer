@@ -20,8 +20,16 @@ function Bone:new(name, transform)
     return b
 end
 
+-- adds child
+function Bone:add(child)
+    add(self.children, child)
+end
 
--- metamethods
+ 
+--[[
+    metamethods
+]]
+
 function Bone:__tostring()
     local str = self.__type .. ": " .. self.name .. "\n-> children:\t"
 
