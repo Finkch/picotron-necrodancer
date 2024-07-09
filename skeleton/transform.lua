@@ -7,15 +7,18 @@ Transform = {}
 Transform.__index = Transform
 Transform.__type = Transform
 
-function Transform:new()
+function Transform:new(pos, rot)
     local t = {
-
+        pos = pos,
+        rot = rot
     }
-
-    -- position
-    
-    -- rotation
 
     setmetatable(t, Transform)
     return t
+end
+
+
+-- transforms a vector
+function Transform:__mul(vec)
+    return vec:rotate(self.rot) + self.pos
 end
