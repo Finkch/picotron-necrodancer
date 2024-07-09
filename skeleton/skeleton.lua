@@ -9,9 +9,9 @@ Skeleton = {}
 Skeleton.__index = Skeleton
 Skeleton.__type = "skeleton"
 
-function Skeleton:new(root)
+function Skeleton:new(core)
     local s = {
-        root = root,
+        core = core,
         bones = {}
     }
 
@@ -33,8 +33,8 @@ end
 
 -- sets the list of bones, recursing down children
 function Skeleton:findbones()
-    self.bones[self.root.name] = self.root
-    self:_findbones(self.root) 
+    self.bones[self.core.name] = self.core
+    self:_findbones(self.core) 
 end
 
 function Skeleton:_findbones(current_bone)
