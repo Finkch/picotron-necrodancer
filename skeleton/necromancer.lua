@@ -1,7 +1,7 @@
 --[[
     (re)animates movement between keyframes.
 
-    i really should have more serious names.
+    i really should have more serious names. maybe necrodancer?
 
 ]]
 
@@ -9,10 +9,11 @@ Necromancer = {}
 Necromancer.__index = Necromancer
 Necromancer.__type = "necromancer"
 
-function Necromancer:new(animation)
+function Necromancer:new(animation, skeleton)
     local n = {
         current = animation,    -- current animation
-        previous = nil          -- previous animation
+        previous = nil,         -- previous animation
+        skeleton = skeleton
         frame = 0               -- frame/time
     }
 
@@ -32,4 +33,10 @@ end
 function Necromancer:update()
     self.frame += 1
     if (self.frame >= self.current.duration) self.frame = 0 -- loops
+
+    -- gets frames and progress
+    local k1, k2, progress = self.current[self.frame]
+
+    local pose = self:interpolate(k1, k2, progress)
+    self.skeleton:dance(pose)
 end
