@@ -14,7 +14,8 @@ function Bone:new(name, bone, transform, z)
         bone = bone,            -- vector that represents the bone itself; length and orientation
         children = {},
         transform = transform,  -- current position, relative to model default
-        z = z                   -- depth, used to determine draw order
+        z = z,                  -- depth, used to determine draw order
+        skelton = nil           -- tracks owner
     }
 
     -- skin?
@@ -28,8 +29,10 @@ function Bone:draw(offset)
     local s, e = self:span(offset)
 
     -- for now, just draws a red line and a circle
-    line(s.x, s.y, e.x, e.y, 18)
-    circfill(s.x, s.y, 1, 2)
+    if (self.skeleton.debug) then
+        line(s.x, s.y, e.x, e.y, 18)
+        circfill(s.x, s.y, 1, 2)
+    end
 end
 
 

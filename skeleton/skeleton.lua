@@ -12,7 +12,8 @@ Skeleton.__type = "skeleton"
 function Skeleton:new(core)
     local s = {
         core = core,
-        bones = {}
+        bones = {},
+        debug = true    -- shows skeleton as coloured lines
     }
 
     -- skin map
@@ -31,18 +32,21 @@ function Skeleton:draw(offset)
     end
 
     -- draws origin
-    circfill(offset.x, offset.y, 1, 8)
+    if (self.debug) circfill(offset.x, offset.y, 1, 8)
 end
 
 
 -- sets the list of bones, recursing down children
+-- also gives the bones a reference to their owner
 function Skeleton:findbones()
     self.bones[self.core.name] = self.core
+    self.core.skeleton = self
     self:_findbones(self.core) 
 end
 
 function Skeleton:_findbones(current_bone)
     for name, bone in pairs(current_bone.children) do
         self.bones[name] = bone
+        bone.skeleton = self
     end
 end
