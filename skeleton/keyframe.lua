@@ -26,6 +26,6 @@ function Q:__index(key) -- returns transform without overriding metamethods
     local datum = self.transforms[key]
 
     -- if we didn't find the item, it likely means it shoud look in the metatable
-    if (not datum) return self[key]
+    if (not datum) return Keyframe[key]
     return datum
 end
