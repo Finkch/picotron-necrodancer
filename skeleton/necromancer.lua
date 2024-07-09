@@ -46,7 +46,7 @@ function Necromancer:update()
 end
 
 function Necromancer:interpolate(k1, k2, progress)
-    if (self:interpolator) return self:interpolator(k1, k2, progress)
+    if (self.interpolator) return self:interpolator(k1, k2, progress)
 
     -- return linear interpolation
 end
