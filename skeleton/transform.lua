@@ -23,3 +23,8 @@ end
 function Transform:__mul(vec)
     return vec:rotate(self.rot) + self.pos
 end
+
+-- metamethods
+function Transform:__tostring()
+    return tostr(self.pos) .. " @ " .. self.rot
+end
