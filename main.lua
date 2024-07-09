@@ -19,6 +19,8 @@ function _init()
 
 	pos = Vec:new(240, 135)
 
+	speed = 1
+
 
 	f = 0
 	r0 = 0
@@ -31,6 +33,11 @@ end
 function _update()
 	f += 1
 	r0 = f / 60 / 8
+
+	if (key("w")) pos.y -= speed
+	if (key("a")) pos.x -= speed
+	if (key("s")) pos.y += speed
+	if (key("d")) pos.x += speed
 end
 
 function _draw()
