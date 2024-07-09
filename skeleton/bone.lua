@@ -7,11 +7,12 @@ Bone = {}
 Bone.__index = Bone
 Bone.__type = "bone"
 
-function Bone:new(name, transform)
+function Bone:new(name, bone, transform)
     local b = {
         name = name,
+        bone = bone,            -- vector that represents the bone itself; length and orientation
         children = {},
-        transform = transform -- current position, relative to model default
+        transform = transform   -- current position, relative to model default
     }
 
     -- skin?
@@ -24,6 +25,10 @@ end
 function Bone:add(child)
     add(self.children, child)
 end
+
+-- gets the two points for the bone's span
+function Bone:span() -- not sure about the how of this one yet
+    return self.transform, self.bone * self.transform
 
  
 --[[
