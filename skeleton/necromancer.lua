@@ -13,7 +13,8 @@ function Necromancer:new(animation, skeleton)
     local n = {
         current = animation,    -- current animation
         previous = nil,         -- previous animation
-        skeleton = skeleton
+        skeleton = skeleton,    
+        interpolator = nil,     -- function used to interpolate between poses
         frame = 0               -- frame/time
     }
 
@@ -37,6 +38,9 @@ function Necromancer:update()
     -- gets frames and progress
     local k1, k2, progress = self.current[self.frame]
 
+    -- finds the pose
     local pose = self:interpolate(k1, k2, progress)
+
+    -- applies the pose
     self.skeleton:dance(pose)
 end
