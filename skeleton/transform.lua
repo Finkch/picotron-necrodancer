@@ -8,6 +8,7 @@ Transform.__index = Transform
 Transform.__type = Transform
 
 function Transform:new(pos, rot)
+    rot = rot or 0
     local t = {
         pos = pos,
         rot = rot
