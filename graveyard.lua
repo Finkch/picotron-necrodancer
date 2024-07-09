@@ -16,7 +16,7 @@ include("skeleton/transform.lua")
 
 function load_example()
 
-    core = Bone:new(
+    local core = Bone:new(
         "core",         -- aka hips
         Vec:new(0, -4), -- points from hip to skull
         Transform:new(
@@ -26,7 +26,9 @@ function load_example()
         0               -- default depth
     )
 
-    skeleton = Skeleton:new(core, true)
+
+
+    local skeleton = Skeleton:new(core, true)
 
     return skeleton
 end
