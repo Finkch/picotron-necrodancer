@@ -23,14 +23,24 @@ function Bone:new(name, bone, transform, z)
     return b
 end
 
+-- draws the bone
+function Bone:draw(offset)
+    local s, e = self:span(offset)
+
+    -- for now, just draws a red line
+    line(s.x, s.y, e.x, e.y, 8)
+end
+
+
 -- adds child
 function Bone:add(child)
     add(self.children, child)
 end
 
 -- gets the two points for the bone's span
-function Bone:span() -- not sure about the how of this one yet
-    return self.transform, self.bone * self.transform
+function Bone:span(offset) -- not sure about the how of this one yet
+    offset = offset or {x = 1, y = 1}
+    return self.transform.pos + offset, self.transform * self.bone + offset
 end
 
  
