@@ -53,6 +53,12 @@ function Bone:span(offset) -- not sure about the how of this one yet
     return self.transform.pos + offset, self:tip(offset)
 end
 
+-- applies a pose to this bone and to all of its children
+function Bone:dance(pose)
+    -- yeah this one will be tough, chief
+end
+
+
  
 --[[
     metamethods
