@@ -9,10 +9,11 @@ Keyframe = {}
 Keyframe.__index = Keyframe
 Keyframe.__type = "keyframe"
 
-function Keyframe:new(frame, transforms)
+function Keyframe:new(duration, transforms)
     local k = {
-        frame = frame,          -- time, in frames, at which to play this frame
-        transforms = transforms -- a list of transforms for all joints (from base model to reach this pose)
+        duration = duration,        -- frames for which to play this keyframe
+        transforms = transforms,    -- a list of transforms for all joints (from base model to reach this pose)
+        frame = nil                 -- timestampt at which keyframe is played (set by animation)
     }
 
     setmetatable(k, Keyframe)
