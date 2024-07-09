@@ -18,6 +18,7 @@ function Skeleton:new(core)
     -- skin map
 
     setmetatable(s, Skeleton)
+    s:findbones() -- updates bones
     return s
 end
 
@@ -25,7 +26,7 @@ end
 -- draws the skeleton
 function Skeleton:draw(offset)
     offset = offset or {x = 0, y = 0} -- converts model coordinates to world coordinates
-    for bone in all(self.bones) do
+    for _, bone in pairs(self.bones) do
         bone:draw(offset)
     end
 end
