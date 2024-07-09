@@ -46,8 +46,10 @@ function Skeleton:findbones()
 end
 
 function Skeleton:_findbones(current_bone)
-    for name, bone in pairs(current_bone.children) do
-        self.bones[name] = bone
+    for bone in all(current_bone.children) do
+        self.bones[bone.name] = bone
         bone.skeleton = self
+
+        self:_findbones(bone)
     end
 end
