@@ -9,14 +9,11 @@ Necromancer = {}
 Necromancer.__index = Necromancer
 Necromancer.__type = "necromancer"
 
-function Necromancer:new()
+function Necromancer:new(animation)
     local n = {
-
+        current = animation,    -- current animation
+        frame = 0               -- frame/time
     }
-
-    -- animation to play
-
-    -- frame
 
     setmetatable(n, Necromancer)
     return n
