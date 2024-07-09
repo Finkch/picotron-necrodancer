@@ -53,3 +53,8 @@ function Skeleton:_findbones(current_bone)
         self:_findbones(bone)
     end
 end
+
+-- applies a pose to the skeleton
+function Skeleton:dance(pose)   -- pose is a table of joint transforms
+    self.core:dance(pose)       -- applies to core; will cascade down from there
+end
