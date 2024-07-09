@@ -19,3 +19,23 @@ function Bone:new(name, transform)
     setmetatable(b, Bone)
     return b
 end
+
+
+-- metamethods
+function Bone:__tostring()
+    local str = self.__type .. ": " .. self.name .. "\n-> children:\t"
+
+    -- lists children
+    for i = 1, #self.children do
+        str ..= self.children[i].name
+        
+        if (i != #self.children) str ..= ", "
+        
+    end
+    if (#self.children == 0) str ..= "nil"
+
+    -- shows transform
+    str ..= "\n-> " .. tostr(self.transform)
+
+    return tostr
+end
