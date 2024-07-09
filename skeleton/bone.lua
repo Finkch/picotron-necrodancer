@@ -7,12 +7,14 @@ Bone = {}
 Bone.__index = Bone
 Bone.__type = "bone"
 
-function Bone:new(name, bone, transform)
+function Bone:new(name, bone, transform, z)
+    z = z or 1
     local b = {
         name = name,
         bone = bone,            -- vector that represents the bone itself; length and orientation
         children = {},
-        transform = transform   -- current position, relative to model default
+        transform = transform,  -- current position, relative to model default
+        z = z                   -- depth, used to determine draw order
     }
 
     -- skin?
@@ -29,6 +31,7 @@ end
 -- gets the two points for the bone's span
 function Bone:span() -- not sure about the how of this one yet
     return self.transform, self.bone * self.transform
+end
 
  
 --[[
