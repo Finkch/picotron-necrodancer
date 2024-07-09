@@ -10,15 +10,23 @@ Animation.__type = "animation"
 function Animation:new(keyframes)
     local a = {
         keyframes = keyframes,  -- an ordered list of all keyframes in the animation
-        
+        duration = nil   
     }
 
-    -- keyframes
-
     setmetatable(a, Animation)
+    a:findduration()            -- gets total duration of animation and sets timestamps for keyframes
     return a
 end
 
+-- finds the total duration of the animation
+function Animation:findduration()
+    local duration = 0
+    for keyframe in all(self.keyframes) do
+        duration += keyframe.duration   -- adds duration to tally
+        keyframe.frame = duration       -- sets the timestamp
+    end
+    self.duration = duration
+end
 
 
 -- metamethods
