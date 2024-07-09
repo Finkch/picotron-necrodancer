@@ -29,6 +29,9 @@ function Skeleton:draw(offset)
     for _, bone in pairs(self.bones) do
         bone:draw(offset)
     end
+
+    -- draws origin
+    circfill(offset.x, offset.y, 1, 8)
 end
 
 

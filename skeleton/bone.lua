@@ -27,8 +27,9 @@ end
 function Bone:draw(offset)
     local s, e = self:span(offset)
 
-    -- for now, just draws a red line
-    line(s.x, s.y, e.x, e.y, 8)
+    -- for now, just draws a red line and a circle
+    line(s.x, s.y, e.x, e.y, 18)
+    circfill(s.x, s.y, 1, 2)
 end
 
 
