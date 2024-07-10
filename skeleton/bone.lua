@@ -54,8 +54,18 @@ function Bone:span(offset) -- not sure about the how of this one yet
 end
 
 -- applies a pose to this bone and to all of its children
-function Bone:dance(pose)
+function Bone:dance(pose, parenttip)
     -- yeah this one will be tough, chief
+
+    local ownpose = pose[self]
+
+    if (parenttip) ownpose *= parenttip
+
+    self.transform = ownpose    -- need to first multiply current transform by ownpose?
+
+    for child in all(self.children) do
+        child:dance(pose, self:tip())
+    end
 end
 
 
