@@ -42,15 +42,14 @@ function Bone:add(child)
 end
 
 -- gets the tip of the bone
-function Bone:tip(offset)
-    offset = offset or {x = 0, y = 0}
-    return self.transform * self.bone + offset
+function Bone:tip()
+    return self.transform * self.bone
 end
 
 -- gets the two points for the bone's span
 function Bone:span(offset) -- not sure about the how of this one yet
     offset = offset or {x = 0, y = 0}
-    return self.transform.pos + offset, self:tip(offset)
+    return self.transform.pos + offset, self:tip() + offset
 end
 
 -- applies a pose to this bone and to all of its children
