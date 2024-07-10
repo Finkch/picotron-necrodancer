@@ -11,11 +11,12 @@ Skeleton = {}
 Skeleton.__index = Skeleton
 Skeleton.__type = "skeleton"
 
-function Skeleton:new(core, debug)
+function Skeleton:new(core, necromancer, debug)
     debug = debug or false
     local s = {
         core = core,
         bones = {},
+        necromancer = necromancer,
         debug = debug       -- shows skeleton as coloured lines
     }
 
@@ -36,6 +37,12 @@ function Skeleton:draw(offset)
 
     -- draws origin
     if (self.debug) circfill(offset.x, offset.y, 1, 8)
+end
+
+-- updates skeleton
+function Skeleton:update()
+    local pose = self.necromancer:update()
+    self:dance(pose)
 end
 
 
