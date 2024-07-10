@@ -35,10 +35,35 @@ function Necromancer:update()
     if (self.frame >= self.current.duration) self.frame = 0 -- loops
 
     -- gets frames and progress
-    local k1, k2, progress = self.current:get(self.frame)
+    local k1, k2 = self:findkeyframes()
+    local progress = self:progress(k1, k2)
 
     -- finds the pose
     return self:interpolate(k1, k2, progress)
+end
+
+
+-- figures out which pair of keyframes to use
+function Necromancer:findkeyframes()
+    local keyframes = self.current.keyframes
+    local k1, k2 = keyframes[1], keyframes[1]   -- need to initialise for comparisons
+
+    for i = 2, #keyframes do
+        debug:add("i: " .. i .. ", " .. self.frame .. " " .. keyframes[i].frame)
+        k2 = keyframes[i]
+
+        if (k2.frame > self.frame) return k1, k2
+        if (self.frame >= k2.frame and i == #keyframes) return k2, k1 -- allows k(-1) -> k(1)
+
+        k1 = keyframes[i]
+    end
+
+    return k1, k2
+end
+
+-- finds the progress [0, 1) between the pair of keyframes
+function Necromancer:progress(k1, k2) -- er, we don't need to pass k2
+    return (self.frame - k1.frame) / k1.duration
 end
 
 function Necromancer:interpolate(k1, k2, progress)
