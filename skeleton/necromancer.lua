@@ -52,7 +52,7 @@ function Necromancer:findkeyframes()
         k2 = keyframes[i]
 
         if (k2.frame > self.frame) return k1, k2
-        if (self.frame >= k2.frame and i == #keyframes) return k2, k1 -- allows k(-1) -> k(1)
+        if (self.frame >= k2.frame and i == #keyframes) return k2, keyframes[1] -- allows k(-1) -> k(1)
 
         k1 = keyframes[i]
     end
