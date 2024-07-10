@@ -3,19 +3,24 @@
 
 ]]
 
+include("lib/vec.lua")
+
 Bone = {}
 Bone.__index = Bone
 Bone.__type = "bone"
 
-function Bone:new(name, bone, transform, z)
+function Bone:new(name, bone, transform, joint, z)
+    joint = joint or Vec:new()
+    transform.pos += joint
     z = z or 1
     local b = {
         name = name,
         bone = bone,            -- vector that represents the bone itself; length and orientation
         children = {},
-        transform = transform,  -- current position, relative to model default
         z = z,                  -- depth, used to determine draw order
-        skelton = nil           -- tracks owner
+        skelton = nil,          -- tracks owner
+        transform = transform,
+        joint = joint           -- offset to its joint
     }
 
     -- skin?
@@ -53,23 +58,24 @@ function Bone:span(offset) -- not sure about the how of this one yet
 end
 
 -- applies a pose to this bone and to all of its children
-function Bone:dance(pose, parenttip)
+function Bone:dance(pose, parenttip, parentrot)
     -- yeah this one will be tough, chief
 
-    local ownpose = pose[self.name]
+    log("bones.txt", self.name .. ": " .. tostr(pose[self.name]) .. ", " .. tostr(parenttip) .. ", " .. tostr(parentrot), {"-a"})
+    log("bones.txt", self.name .. " start -> " .. tostr(self.transform), {"-a"})
 
-    if (parenttip) then
-        local n = ownpose * parenttip
-        ownpose = Transform:new(
-            n,
-            n:dir()
-        )
-    end
+    -- gets own rotation amount
+    local ownrot = self.transform.rot               -- default value
+    if (pose[self.name]) ownrot = pose[self.name]
+    if (parentrot) ownrot += parentrot              -- depends on parent's amount
+    self.transform.rot = ownrot
 
-    self.transform = ownpose    -- need to first multiply current transform by ownpose?
+    if (parenttip) self.transform.pos = parenttip + self.joint  -- sets joint position
+
+    log("bones.txt", self.name .. " end -> " .. tostr(self.transform), {"-a"})
 
     for child in all(self.children) do
-        child:dance(pose, self:tip())
+        child:dance(pose, self:tip(), ownrot)
     end
 end
 
