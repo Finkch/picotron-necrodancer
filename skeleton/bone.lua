@@ -56,9 +56,15 @@ end
 function Bone:dance(pose, parenttip)
     -- yeah this one will be tough, chief
 
-    local ownpose = pose[self]
+    local ownpose = pose[self.name]
 
-    if (parenttip) ownpose *= parenttip
+    if (parenttip) then
+        local n = ownpose * parenttip
+        ownpose = Transform:new(
+            n,
+            n:dir()
+        )
+    end
 
     self.transform = ownpose    -- need to first multiply current transform by ownpose?
 
