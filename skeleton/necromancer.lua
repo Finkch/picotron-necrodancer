@@ -35,7 +35,7 @@ function Necromancer:update()
     if (self.frame >= self.current.duration) self.frame = 0 -- loops
 
     -- gets frames and progress
-    local k1, k2, progress = self.current[self.frame]
+    local k1, k2, progress = self.current:get(self.frame)
 
     -- finds the pose
     return self:interpolate(k1, k2, progress)
@@ -46,12 +46,9 @@ function Necromancer:interpolate(k1, k2, progress)
 
     -- gets linear interpolation, if provided no other interpolator
     local transforms = {}
-    
+
     for bone, _ in pairs(k1.transforms) do
-        transform[bone] = Transform:new(
-            (k1.transforms[bone].pos + k2.transforms[bone].pos) / 2,
-            (k1.transforms[bone].rot + k2.transforms[bone].rot) / 2
-        )
+        transforms[bone] = (k1.transforms[bone] + k2.transforms[bone]) / 2
     end
 
     return transforms
