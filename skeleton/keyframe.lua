@@ -12,7 +12,7 @@ Keyframe.__type = "keyframe"
 function Keyframe:new(duration, transforms)
     local k = {
         duration = duration,        -- frames for which to play this keyframe
-        transforms = transforms,    -- a list of transforms for all joints (from base model to reach this pose)
+        transforms = transforms,    -- a table of transforms for all joints (from base model to reach this pose)
         frame = nil                 -- timestampt at which keyframe is played (set by animation)
     }
 
