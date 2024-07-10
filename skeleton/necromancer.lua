@@ -48,7 +48,7 @@ function Necromancer:interpolate(k1, k2, progress)
     local transforms = {}
 
     for bone, _ in pairs(k1.transforms) do
-        transforms[bone] = (k1.transforms[bone] + k2.transforms[bone]) / 2
+        transforms[bone] = (k1.transforms[bone] * (1 - progress) + k2.transforms[bone] * progress) / 2
     end
 
     return transforms
