@@ -32,9 +32,7 @@ end
 
 
 -- metamethods
-function Animation:__index(frame)   -- returns the two animations nearest to the frame
-    if (type(frame) != "number") return Animation[frame] -- doesn't override metatable
-
+function Animation:get(frame)   -- returns the two animations nearest to the frame
     for i = 1, #self.keyframes do
         if (frame >= self.keyframes[i].frame) then
             local k1 = self.keyframes[i]                            -- current key frame
