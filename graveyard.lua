@@ -16,6 +16,13 @@ include("skeleton/transform.lua")
 
 function load_example()
 
+    local skeleton = load_example_skeleton()
+
+    return skeleton
+end
+
+function load_example_skeleton(necromancer)
+
     local core = Bone:new(
         "core",             -- aka hips
         Vec:new(0, -8),     -- points from hip to skull
@@ -40,7 +47,7 @@ function load_example()
     rleg:add(rforeleg)
     core:add(rleg)
 
-    
+
     local lleg = Bone:new(
         "left leg",
         Vec:new(0, 6),
@@ -58,9 +65,9 @@ function load_example()
     lleg:add(lforeleg)
     core:add(lleg)
     
-    
+    local necromancer = load_example_necromancer()
 
-    local skeleton = Skeleton:new(core, true)
+    local skeleton = Skeleton:new(core, necromancer, true)
 
     return skeleton
 end
@@ -72,4 +79,36 @@ function load_example_pose()
     pose["right foreleg"] = 0.12
 
     return pose
+end
+
+function load_example_animation()
+
+    local keyframes = {}
+
+    local t1 = {}
+    local t2 = {}
+
+    t1["right leg"] = 0
+    t2["right leg"] = 0.125
+
+    add(keyframes, Keyframe:new(
+        60,
+        t1
+    ))
+
+    add(keyframes, Keyframe:new(
+        60,
+        t2
+    ))
+
+    return Animation:new(
+        keyframes
+    )
+end
+
+function load_example_necromancer()
+    local animation = load_example_animation()
+    local necromancer = Necromancer:new(animation)
+
+    return necromancer
 end
