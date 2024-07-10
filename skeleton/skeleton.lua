@@ -44,25 +44,23 @@ end
 function Skeleton:findbones()
     self.bones[self.core.name] = self.core
     self.core.skeleton = self
-    self:_findbones(self.core) 
+    self:_findbones(self.core)
 end
 
 function Skeleton:_findbones(current_bone)
+    local tip = current_bone:tip()
     for bone in all(current_bone.children) do
         self.bones[bone.name] = bone
         bone.skeleton = self
+        bone.transform.pos += tip   -- attatches bone
 
-        self:_findbones(bone)
+        self:_findbones(bone)       -- recurses, finding bones of current's children
     end
 end
 
 -- applies a pose to the skeleton
 function Skeleton:dance(pose)   -- pose is a table of joint transforms
     self.core:dance(    -- applies to core; will cascade down from there
-        pose,
-        Transform:new(  -- identity transform
-            Vec:new(0, 0),
-            0
-        )
+        pose
     )
 end
