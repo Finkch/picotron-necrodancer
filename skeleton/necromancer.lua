@@ -38,7 +38,7 @@ function Necromancer:update()
     local k1, k2, progress = self.current[self.frame]
 
     -- finds the pose
-    return pose = self:interpolate(k1, k2, progress)
+    return self:interpolate(k1, k2, progress)
 end
 
 function Necromancer:interpolate(k1, k2, progress)
