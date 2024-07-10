@@ -34,8 +34,7 @@ function _update()
 	f += 1
 	r0 = f / 60 / 8
 
-	-- loads new poses
-	if (f == 60) skeleton:dance(load_example_pose())
+	skeleton:update()
 
 	-- moves the skeleton around
 	if (key("w")) pos.y -= speed
@@ -48,9 +47,6 @@ function _draw()
 	cls()
 
 	skeleton:draw(pos)
-	for bone in all(skeleton.bones) do
-		debug:add(tostr(bone))
-	end
 	
 	-- draws a funny little rotating square
 	rspr(1, {x=10 * 2 ^ 0.5, y=270 - 10 * 2 ^ 0.5}, r0)	
