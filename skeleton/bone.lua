@@ -4,13 +4,15 @@
 ]]
 
 include("lib/vec.lua")
+include("skeleton/transform.lua")
 
 Bone = {}
 Bone.__index = Bone
 Bone.__type = "bone"
 
-function Bone:new(name, bone, transform, joint, z)
+function Bone:new(name, bone, z, transform, joint)
     joint = joint or Vec:new()
+    transform = transform or Transform:new()
     transform.pos += joint
     z = z or 1
     local b = {
@@ -59,10 +61,6 @@ end
 
 -- applies a pose to this bone and to all of its children
 function Bone:dance(pose, parenttip, parentrot)
-    -- yeah this one will be tough, chief
-
-    log("bones.txt", self.name .. ": " .. tostr(pose[self.name]) .. ", " .. tostr(parenttip) .. ", " .. tostr(parentrot), {"-a"})
-    log("bones.txt", self.name .. " start -> " .. tostr(self.transform), {"-a"})
 
     -- gets own rotation amount
     local ownrot = self.transform.rot               -- default value
@@ -71,8 +69,6 @@ function Bone:dance(pose, parenttip, parentrot)
     self.transform.rot = ownrot
 
     if (parenttip) self.transform.pos = parenttip + self.joint  -- sets joint position
-
-    log("bones.txt", self.name .. " end -> " .. tostr(self.transform), {"-a"})
 
     for child in all(self.children) do
         child:dance(pose, self:tip(), ownrot)
