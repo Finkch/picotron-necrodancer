@@ -1,3 +1,4 @@
+--[[pod_format="raw",created="2024-07-10 03:03:19",modified="2024-07-10 03:03:19",revision=0]]
 --[[
     describes a (re)animation for a skeleton
 
@@ -21,9 +22,10 @@ end
 -- finds the total duration of the animation
 function Animation:findduration()
     local duration = 0
+    local initial_duration = self.keyframes[1].duration
     for keyframe in all(self.keyframes) do
         duration += keyframe.duration   -- adds duration to tally
-        keyframe.frame = duration       -- sets the timestamp
+        keyframe.frame = duration - initial_duration       -- sets the timestamp
     end
     self.duration = duration
 end
@@ -32,11 +34,11 @@ end
 -- metamethods
 function Animation:__index(frame)   -- returns the two animations nearest to the frame
     if (type(frame) != "number") return Animation[frame] -- doesn't override metatable
-    
+
     for i = 1, #self.keyframes do
         if (frame >= self.keyframes[i].frame) then
             local k1 = self.keyframes[i]                            -- current key frame
-            local k2 = self.keyframes[(i + 1) % self.keyframes]     -- gets next keyframe
+            local k2 = self.keyframes[i % #self.keyframes + 1]      -- gets next keyframe
             local progress = (f - k1.frame) / (k2.frame - k1.frame) -- progress to next frame
             return k1, k2, progress                                 -- returns both frames and progress
         end
