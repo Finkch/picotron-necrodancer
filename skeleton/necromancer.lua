@@ -49,7 +49,6 @@ function Necromancer:findkeyframes()
     local k1, k2 = keyframes[1], keyframes[1]   -- need to initialise for comparisons
 
     for i = 2, #keyframes do
-        debug:add("i: " .. i .. ", " .. self.frame .. " " .. keyframes[i].frame)
         k2 = keyframes[i]
 
         if (k2.frame > self.frame) return k1, k2
