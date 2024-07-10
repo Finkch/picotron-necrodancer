@@ -8,6 +8,7 @@ Transform.__index = Transform
 Transform.__type = Transform
 
 function Transform:new(pos, rot)
+    pos = pos or {x = 0, y = 0}
     rot = rot or 0
     local t = {
         pos = pos,
@@ -23,6 +24,7 @@ end
 function Transform:__mul(vec)
     return vec:rotate(self.rot) + self.pos
 end
+
 
 -- metamethods
 function Transform:__tostring()
