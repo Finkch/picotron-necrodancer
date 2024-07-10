@@ -46,7 +46,17 @@ function Necromancer:update()
 end
 
 function Necromancer:interpolate(k1, k2, progress)
-    if (self.interpolator) return self:interpolator(k1, k2, progress)
+    if (self.interpolator) return self:interpolator(k1, k2, progress, self)
 
-    -- return linear interpolation
+    -- gets linear interpolation, if provided no other interpolator
+    local transforms = {}
+    
+    for bone, _ in pairs(k1.transforms) do
+        transform[bone] = Transform:new(
+            (k1.transforms[bone].pos + k2.transforms[bone].pos) / 2,
+            (k1.transforms[bone].rot + k2.transforms[bone].rot) / 2
+        )
+    end
+
+    return transforms
 end
