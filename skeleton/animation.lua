@@ -37,7 +37,7 @@ function Animation:get(frame)   -- returns the two animations nearest to the fra
         if (frame >= self.keyframes[i].frame) then
             local k1 = self.keyframes[i]                            -- current key frame
             local k2 = self.keyframes[i % #self.keyframes + 1]      -- gets next keyframe
-            local progress = (f - k1.frame) / (k2.frame - k1.frame) -- progress to next frame
+            local progress = (frame - k1.frame) / (k2.frame - k1.frame) -- progress to next frame
             return k1, k2, progress                                 -- returns both frames and progress
         end
     end
