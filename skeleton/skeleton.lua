@@ -5,6 +5,8 @@
 
 ]]
 
+include("skeleton/transform.lua")
+
 Skeleton = {}
 Skeleton.__index = Skeleton
 Skeleton.__type = "skeleton"
@@ -56,5 +58,11 @@ end
 
 -- applies a pose to the skeleton
 function Skeleton:dance(pose)   -- pose is a table of joint transforms
-    self.core:dance(pose)       -- applies to core; will cascade down from there
+    self.core:dance(    -- applies to core; will cascade down from there
+        pose,
+        Transform:new(  -- identity transform
+            Vec:new(0, 0),
+            0
+        )
+    )
 end
