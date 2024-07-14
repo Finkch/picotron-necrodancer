@@ -25,6 +25,7 @@ function Gui:new(name, resizable, width, height, minwidth, minheight, cls)
     return g
 end
 
+-- creates a window
 function Gui:create()
     window({
 		width = self.width,
@@ -34,6 +35,7 @@ function Gui:create()
 	})
 end
 
+-- updates dimensions
 function Gui:update()
 
     -- ensures current dimensions are not too small
@@ -47,6 +49,7 @@ function Gui:update()
 
 end
 
+-- draws
 function Gui:draw()
     cls(self.cls)
 end
