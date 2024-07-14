@@ -21,7 +21,7 @@ function Container:new(x, y, width, height, cls, contents)
 
         contents = contents,-- a draw function to call to draw its contents
 
-        allignment = "left"
+        hovering = false,   -- whether or not the mouse is over this container
     }
 
     setmetatable(c, Container)
@@ -42,6 +42,7 @@ end
 
 -- updates contents
 function Container:update(gui)
+    self.hovering = self:hover()
     if (self.contents) self.contents:update()
 end
 
