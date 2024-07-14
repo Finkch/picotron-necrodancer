@@ -37,11 +37,8 @@ end
 function Gui:update()
 
     -- ensures current dimensions are not too small
-    self.width = get_display():width()
-    self.height = get_display():height()
-
-    if (self.width < self.minwidth) self.width = self.minwidth
-    if (self.height < self.minheight) self.height = self.minheight
+    self.width = max(get_display():width(), self.minwidth)
+    self.height = max(get_display():height(), self.minheight)
 
     window({
         width = self.width,
