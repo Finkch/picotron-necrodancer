@@ -123,7 +123,7 @@ function Button:new(x, y, text, cls, contents)
     -- prints offscreen to find the pixel width
     local w = print(text, 0, -20)
 
-    local b = Container:new(x, y, w + 6, 14, cls, contents)
+    local b = Container:new(x, y, w + 4, 13, cls, contents)
     b.text = text
 
     setmetatable(b, Button)
@@ -137,7 +137,31 @@ end
 
 
 function Button:draw(gui)
+    
+    -- swaps colours to make it look asif button is rising from window
+    if (not self.clicked) then
+        pal(5, 7)
+        pal(7, 5)
+    end
+
+    -- draws regular container
     Container.draw(self)
+
+    -- two width border (other layer is from container draw)
     self:focus()
-    print(self.text, 0, 0, 1)
+    line(0, 0, 0, self.height, 5)
+    line(0, 0, self.width, 0, 5)
+
+    line(self.width, self.height, 0, self.height, 7)
+    line(self.width, self.height, self.width, 0, 7)
+
+    -- adds mid-tone grey to two corners
+    line(self.width + 1, -1, self.width, 0, 6)
+    line(-1, self.height + 1, 0, self.height, 6)
+
+    -- draws button text
+    print(self.text, 3, 3, 5)
+
+    -- reset palette
+    pal()
 end
