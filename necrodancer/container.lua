@@ -31,7 +31,7 @@ function Container:new(x, y, width, height, padding, cls, border, contents)
 end
 
 function Container:update()
-    if (self.contents) self.contents:draw()
+    if (self.contents) self.contents:update()
 end
 
 function Container:draw()
