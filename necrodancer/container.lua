@@ -8,15 +8,13 @@ Container = {}
 Container.__index = Container
 Container.__type = "container"
 
-function Container:new(x, y, width, height, padding, cls, contents)
+function Container:new(x, y, width, height, cls, contents)
     local c = {
         x = x,              -- position within gui
         y = y,
 
         width = width,      -- size of container
         height = height,
-
-        padding = padding,  -- distance to other contianers
         
         cls = cls,          -- colours to draw
         border = border,
