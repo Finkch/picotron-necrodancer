@@ -16,6 +16,8 @@ function Gui:new()
 
         widthmin = 180,    -- minimum dimensions
         heightmin = 150,
+
+        cls = 0             -- colour to clear with (aka background colour)
     }
 
     setmetatable(g, Gui)
@@ -49,5 +51,5 @@ function Gui:update()
 end
 
 function Gui:draw()
-    cls()
+    cls(self.cls)
 end
