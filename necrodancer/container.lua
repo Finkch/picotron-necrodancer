@@ -8,7 +8,7 @@ Container = {}
 Container.__index = Container
 Container.__type = "container"
 
-function Container:new(x, y, width, height, padding, cls, border, contents)
+function Container:new(x, y, width, height, padding, cls, contents)
     local c = {
         x = x,              -- position within gui
         y = y,
@@ -42,8 +42,16 @@ function Container:draw()
 
     print(minx .. ", " ..  miny, minx + 50, miny+50, 8)
 
+    -- clears the screen
     rectfill(minx, miny, maxx, maxy, self.cls)
-    rect(minx - 1, miny - 1, maxx + 1, maxy + 1, self.border)
+    
+    -- draws the border
+    line(minx - 1, miny - 1, minx - 1, maxy + 1, 5)
+    line(minx - 1, miny - 1, maxx, miny - 1, 5)
+
+    line(maxx + 1, maxy + 1, minx, maxy + 1, 7)
+    line(maxx + 1, maxy + 1, maxx + 1, miny - 1, 7)
+
 
     -- centres container contents
     camera(-(2 * self.x + self.width) / 2, -(2 * self.y + self.height) / 2)
