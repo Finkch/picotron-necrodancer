@@ -55,3 +55,21 @@ function Container:draw()
     camera(-(2 * self.x + self.width) / 2, -(2 * self.y + self.height) / 2)
     if (self.contents) self.contents:draw()
 end
+
+
+--[[
+    a button is a contentless container that can be pressed
+
+]]
+
+Button = {}
+Button.__index = Button
+Button.__type = "button"
+setmetatable(Button, Container)
+
+function Button:new(x, y, width, height, cls, contents)
+    local b = Container:new(x, y, width, height, cls, contents)
+
+    setmetatable(b, Button)
+    return b
+end
