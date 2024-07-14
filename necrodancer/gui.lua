@@ -58,6 +58,7 @@ end
 
 -- draws
 function Gui:draw()
+    camera() -- resets camera
     cls(self.cls)
     for container in all(self.containers) do
         container:draw()
