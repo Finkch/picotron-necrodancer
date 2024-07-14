@@ -52,11 +52,19 @@ function Container:hold(gui)
 end
 
 
--- updates contents
+-- updates
 function Container:update(gui)
+    self:update_status(gui)
+    self:update_contents(gui)
+end
+
+function Container:update_status(gui)   -- mouse status
     self.hovering = self:hover(gui)
     self.clicking = self:click(gui)
     self.holding = self:hold(gui)
+end
+
+function Container:update_contents(gui)          -- updates content
     if (self.contents) self.contents:update()
 end
 
@@ -102,9 +110,8 @@ function Button:new(x, y, width, height, cls, contents)
 end
 
 -- overrides Container:update()
-function Button:update(gui)
-
-    -- checks if the button has been clicked
+function Button:update_contents(gui)
+    if (self.clicking and self.contents) self.contents:update() 
 end
 
 
