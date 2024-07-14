@@ -53,6 +53,18 @@ function Container:hold(gui)
 end
 
 
+-- moves the camera to the container
+function Container:focus(style)
+    if (not style) style = "tl"
+
+    if (style == "tl") then
+        camera(-self.x, -self.y)
+    elseif (style == "c") then
+        camera(-(2 * self.x + self.width) / 2, -(2 * self.y + self.height) / 2)
+    end
+end
+
+
 -- updates
 function Container:update(gui)
     self:update_status(gui)
@@ -75,23 +87,23 @@ end
 -- draws container & contents
 function Container:draw(gui)
 
-    -- gets values for easy reference
-    local minx, miny = self.x, self.y
-    local maxx, maxy = self.x + self.width, self.y + self.height
+    -- moves camera
+    self:focus("tl")
     
     -- clears the screen
-    rectfill(minx, miny, maxx, maxy, self.cls)
-    
+    rectfill(0, 0, self.width, self.height, self.cls)
+        
     -- draws the border
-    line(minx - 1, miny - 1, minx - 1, maxy + 1, 5)
-    line(minx - 1, miny - 1, maxx, miny - 1, 5)
+    line(-1, -1, -1, self.height + 1, 5)
+    line(-1, -1, self.width, -1, 5)
 
-    line(maxx + 1, maxy + 1, minx, maxy + 1, 7)
-    line(maxx + 1, maxy + 1, maxx + 1, miny - 1, 7)
+    line(self.width + 1, self.height + 1, 0, self.height + 1, 7)
+    line(self.width + 1, self.height + 1, self.width + 1, -1, 7)
+
 
 
     -- centres container contents
-    camera(-(2 * self.x + self.width) / 2, -(2 * self.y + self.height) / 2)
+    self:focus("c")
     if (self.contents) self.contents:draw()
 end
 
@@ -106,8 +118,13 @@ Button.__index = Button
 Button.__type = "button"
 setmetatable(Button, Container)
 
-function Button:new(x, y, width, height, cls, contents)
-    local b = Container:new(x, y, width, height, cls, contents)
+function Button:new(x, y, text, cls, contents)
+
+    -- prints offscreen to find the pixel width
+    local w = print(text, 0, -20)
+
+    local b = Container:new(x, y, w + 6, 14, cls, contents)
+    b.text = text
 
     setmetatable(b, Button)
     return b
@@ -120,4 +137,7 @@ end
 
 
 function Button:draw(gui)
+    Container.draw(self)
+    self:focus()
+    print(self.text, 0, 0, 1)
 end
