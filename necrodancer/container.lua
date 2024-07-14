@@ -22,6 +22,8 @@ function Container:new(x, y, width, height, cls, contents)
         contents = contents,-- a draw function to call to draw its contents
 
         hovering = false,   -- whether or not the mouse is over this container
+        clicking = false,   -- whether or not the mouse has clicked this container
+        holding  = false    -- whether or not the mouse is being held down on this container
     }
 
     setmetatable(c, Container)
@@ -39,10 +41,22 @@ function Container:hover(gui)
     )
 end
 
+-- whether the container has been clicked (mouse down first frame)
+function Container:click(gui)
+    return self:hover(gui) and gui.kbm:pressed("lmb")
+end
+
+-- whether the container has been clicked (mouse down all frames)
+function Container:hold(gui)
+    return self:hover(gui) and gui.kbm:down("lmb") > 0
+end
+
 
 -- updates contents
 function Container:update(gui)
-    self.hovering = self:hover()
+    self.hovering = self:hover(gui)
+    self.clicking = self:click(gui)
+    self.holding = self:hold(gui)
     if (self.contents) self.contents:update()
 end
 
@@ -52,7 +66,7 @@ function Container:draw(gui)
     -- gets values for easy reference
     local minx, miny = self.x, self.y
     local maxx, maxy = self.x + self.width, self.y + self.height
-
+    
     -- clears the screen
     rectfill(minx, miny, maxx, maxy, self.cls)
     
