@@ -29,12 +29,12 @@ function Container:new(x, y, width, height, cls, contents)
 end
 
 -- updates contents
-function Container:update()
+function Container:update(gui)
     if (self.contents) self.contents:update()
 end
 
 -- draws container & contents
-function Container:draw()
+function Container:draw(gui)
 
     -- gets values for easy reference
     local minx, miny = self.x, self.y
@@ -72,4 +72,14 @@ function Button:new(x, y, width, height, cls, contents)
 
     setmetatable(b, Button)
     return b
+end
+
+-- overrides Container:update()
+function Button:update(gui)
+
+    -- checks if the button has been clicked
+end
+
+
+function Button:draw(gui)
 end
