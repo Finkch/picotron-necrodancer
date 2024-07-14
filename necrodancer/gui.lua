@@ -6,18 +6,18 @@ Gui = {}
 Gui.__index = Gui
 Gui.__type = "gui"
 
-function Gui:new()
+function Gui:new(name, resizable, width, height, minwidth, minheight, cls)
     local g = {
-        name = "necrodancer",
-        resizable = true,
+        name = name,
+        resizable = resizable,
 
-        width = 200,       -- window dimensions
-        height = 200,
+        width = width,          -- window dimensions
+        height = height,
 
-        widthmin = 180,    -- minimum dimensions
-        heightmin = 150,
+        minwidth = minwidth,    -- minimum dimensions
+        minheight = minheight,
 
-        cls = 0             -- colour to clear with (aka background colour)
+        cls = cls               -- colour to clear with (aka background colour)
     }
 
     setmetatable(g, Gui)
@@ -40,8 +40,8 @@ function Gui:update()
     self.width = get_display():width()
     self.height = get_display():height()
 
-    if (self.width < self.widthmin) self.width = self.widthmin
-    if (self.height < self.heightmin) self.height = self.heightmin
+    if (self.width < self.minwidth) self.width = self.minwidth
+    if (self.height < self.minheight) self.height = self.minheight
 
     window({
         width = self.width,
