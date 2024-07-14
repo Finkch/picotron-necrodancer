@@ -23,7 +23,8 @@ function Container:new(x, y, width, height, cls, contents)
 
         hovering = false,   -- whether or not the mouse is over this container
         clicking = false,   -- whether or not the mouse has clicked this container
-        holding  = false    -- whether or not the mouse is being held down on this container
+        holding  = false,   -- whether or not the mouse is being held down on this container
+        clicked  = false,   -- used for state (true on click until no longer holding)
     }
 
     setmetatable(c, Container)
@@ -62,6 +63,9 @@ function Container:update_status(gui)   -- mouse status
     self.hovering = self:hover(gui)
     self.clicking = self:click(gui)
     self.holding = self:hold(gui)
+
+    if (self.clicking) self.clicked = true
+    if (not self.holding) self.clicked = false
 end
 
 function Container:update_contents(gui)          -- updates content
@@ -109,7 +113,7 @@ function Button:new(x, y, width, height, cls, contents)
     return b
 end
 
--- overrides Container:update()
+-- overrides Container:update_contents()
 function Button:update_contents(gui)
     if (self.clicking and self.contents) self.contents:update() 
 end
