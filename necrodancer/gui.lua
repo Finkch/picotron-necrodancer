@@ -17,7 +17,9 @@ function Gui:new(name, resizable, width, height, minwidth, minheight, cls)
         minwidth = minwidth,    -- minimum dimensions
         minheight = minheight,
 
-        cls = cls               -- colour to clear with (aka background colour)
+        cls = cls,              -- colour to clear with (aka background colour)
+
+        containers = {}         -- array of containers attatched
     }
 
     setmetatable(g, Gui)
@@ -33,6 +35,11 @@ function Gui:create()
 		resizeable = self.resizable,
 		title = self.name
 	})
+end
+
+-- attatches a container
+function Gui:attach(container)
+    add(self.containers, container)
 end
 
 -- updates dimensions
@@ -52,4 +59,7 @@ end
 -- draws
 function Gui:draw()
     cls(self.cls)
+    for container in all(self.containers) do
+        container:draw()
+    end
 end
