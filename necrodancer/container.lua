@@ -28,6 +28,18 @@ function Container:new(x, y, width, height, cls, contents)
     return c
 end
 
+-- determines whether the mouse is above the container
+function Container:hover(gui)
+    local pos = gui.kbm.pos
+    return (
+        pos.x > self.x and
+        pos.y > self.y and
+        pos.x < self.x + self.width and
+        pos.y < self.y + self.height
+    )
+end
+
+
 -- updates contents
 function Container:update(gui)
     if (self.contents) self.contents:update()
