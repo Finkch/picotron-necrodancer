@@ -2,6 +2,8 @@
     handles the gui for the necrodancer
 ]]
 
+include("lib/kbm.lua")
+
 Gui = {}
 Gui.__index = Gui
 Gui.__type = "gui"
@@ -19,7 +21,8 @@ function Gui:new(name, resizable, width, height, minwidth, minheight, cls)
 
         cls = cls,              -- colour to clear with (aka background colour)
 
-        containers = {}         -- array of containers attatched
+        containers = {},        -- array of containers attatched
+        kbm = KBM:new({"lmb"})
     }
 
     setmetatable(g, Gui)
@@ -44,6 +47,9 @@ end
 
 -- updates dimensions
 function Gui:update()
+
+    -- updates keyboard and mouse
+    self.kbm:update()
 
     -- ensures current dimensions are not too small
     self.width = max(get_display():width(), self.minwidth)
