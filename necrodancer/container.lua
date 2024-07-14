@@ -30,17 +30,17 @@ function Container:new(x, y, width, height, padding, cls, contents)
     return c
 end
 
+-- updates contents
 function Container:update()
     if (self.contents) self.contents:update()
 end
 
+-- draws container & contents
 function Container:draw()
 
-
+    -- gets values for easy reference
     local minx, miny = self.x, self.y
     local maxx, maxy = self.x + self.width, self.y + self.height
-
-    print(minx .. ", " ..  miny, minx + 50, miny+50, 8)
 
     -- clears the screen
     rectfill(minx, miny, maxx, maxy, self.cls)
