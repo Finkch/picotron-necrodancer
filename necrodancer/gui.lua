@@ -62,7 +62,7 @@ function Gui:update()
 
     -- updates containers, for those that need it
     for container in all(self.containers) do
-        if (container.update) container:update()
+        if (container.update) container:update(self)
     end
 
 end
@@ -72,6 +72,6 @@ function Gui:draw()
     camera() -- resets camera
     cls(self.cls)
     for container in all(self.containers) do
-        container:draw()
+        container:draw(self)
     end
 end
