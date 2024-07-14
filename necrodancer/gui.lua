@@ -54,6 +54,11 @@ function Gui:update()
         height = self.height
     })
 
+    -- updates containers, for those that need it
+    for container in all(self.containers) do
+        if (container.update) container:update()
+    end
+
 end
 
 -- draws
