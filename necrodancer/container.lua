@@ -304,7 +304,7 @@ function Slider:new(x, y, length, vertical, minimum, maximum, current)
 
     local s = Container:new(x, y, w, h, 0, nil)
     s.minimum = minimum
-    s.max = maximum
+    s.maximum = maximum
     s.current = current
     s.length = length
     s.vertical = vertical
@@ -314,6 +314,14 @@ function Slider:new(x, y, length, vertical, minimum, maximum, current)
     return s
 end
 
+
+-- gets the current value out of the slider, mapped to its min and max
+function Slider:get()
+    return self.current * (self.maximum - self.minimum) + self.minimum
+end
+
+
+-- overrides container's update
 function Slider:update(gui)
     Container.update(self, gui)
 
@@ -334,7 +342,7 @@ function Slider:update_slider(gui)
         c = pos.y
 
         current = (s - c) / self.length
-        
+
     else
         s = self.x
         e = self.x + self.width
@@ -368,5 +376,5 @@ function Slider:draw(gui)
     -- draws a circle at the current position
     spr(7, x - 6, y - 6)
 
-    print(self.current, 0, 0, 8)
+    print(self.current .. ", " .. self:get(), 0, 0, 8)
 end
