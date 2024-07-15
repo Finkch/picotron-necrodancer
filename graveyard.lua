@@ -87,9 +87,14 @@ function load_example_animation()
 
     local t1 = {}
     local t2 = {}
+    local t3 = {}
 
     t1["right leg"] = 0
-    t2["right leg"] = 0.125
+    t1["right foreleg"] = 0
+    t2["right leg"] = -0.125
+    t2["right foreleg"] = 0.125
+    t3["right leg"] = 0
+    t3["right foreleg"] = 0
 
     add(keyframes, Keyframe:new(
         60,
@@ -99,6 +104,11 @@ function load_example_animation()
     add(keyframes, Keyframe:new(
         60,
         t2
+    ))
+
+    add(keyframes, Keyframe:new(
+        60,
+        t3
     ))
 
     return Animation:new(
