@@ -121,10 +121,21 @@ setmetatable(Button, Container)
 function Button:new(x, y, text, cls, contents)
 
     -- prints offscreen to find the pixel width
-    local w = print(text, 0, -20)
+    --if (type(text) == "string") local w, h = print(text, 0, -20) + 4, 13
+    local w, h, s = -1, -1, -1
+    local istext = nil
+    if (type(text) == "string") then
+        w, h = print(text, 0, -20) + 4, 13
+        istext = true
+    elseif (type(text) == "number") then
+        s = get_spr(text)
+        w, h = s:width() + 3, s:height() + 3
+        istext = false
+    end
 
-    local b = Container:new(x, y, w + 4, 13, cls, contents)
+    local b = Container:new(x, y, w, h, cls, contents)
     b.text = text
+    b.istext = istext
 
     setmetatable(b, Button)
     return b
@@ -159,8 +170,12 @@ function Button:draw(gui)
     line(self.width + 1, -1, self.width, 0, 6)
     line(-1, self.height + 1, 0, self.height, 6)
 
-    -- draws button text
-    print(self.text, 3, 3, 5)
+    -- draws button image
+    if (self.istext) then
+        print(self.text, 3, 3, 5)
+    else
+        spr(self.text, 2, 2)
+    end
 
     -- reset palette
     pal()
