@@ -132,8 +132,66 @@ function Container:draw(gui)
 
     -- centres container contents
     self:focus("c")
-    if (self.contents) self.contents:draw()
+    if (self.contents and self.contents.draw) self.contents:draw()
 end
+
+
+--[[
+    a label is a container whose contents are not updated.
+    
+
+]]
+
+Label = {}
+Label.__index = Label
+Label.__type = "label"
+setmetatable(Label, Container)
+
+function Label:new(x, y, cls, contents, colour)
+
+    -- gets the width and height
+    local w, h = -1, -1
+    local istext = nil                  -- whether contents is text or a sprite
+
+    if (type(contents) == "string") then
+        w, h = print(contents, 0, -20) + 4, 13
+        istext = true 
+
+    elseif (type(contents) == "number") then
+        contents = get_spr(contents)    -- updates contents to be the sprite
+        w, h = contents:width() + 3, contents:height() + 3
+        istext = false
+    end
+
+
+    local l = Container:new(x, y, w, h, cls, contents)
+    l.istext = istext
+    l.padding = 2
+    l.colour = colour
+
+    setmetatable(l, Label)
+    return l
+end
+
+-- overrides Container update; does not update!
+function Label:update() end
+
+function Label:draw()
+
+    Container.draw(self)
+
+    -- moves camera to topleft of container
+    self:focus()
+
+    -- draws button image
+    if (self.istext) then
+        print(self.contents, 3, 3, self.colour)
+    else
+        spr(self.contents, 2, 2)
+    end
+end
+
+
 
 
 --[[
