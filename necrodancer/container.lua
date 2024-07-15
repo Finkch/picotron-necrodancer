@@ -331,5 +331,4 @@ function Slider:draw(gui)
 
     -- draws a circle at the current position
     spr(7, x - 6, y - 6)
-
 end
