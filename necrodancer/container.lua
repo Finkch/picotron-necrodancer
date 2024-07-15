@@ -178,9 +178,9 @@ function Label:new(x, y, cls, contents, colour, width, height)
 end
 
 -- overrides Container update; does not update!
-function Label:update_contents() end
+function Label:update_contents(gui) end
 
-function Label:draw()
+function Label:draw(gui)
 
     Container.draw(self)
 
@@ -269,3 +269,4 @@ function Button:draw(gui)
     -- reset palette
     pal()
 end
+
