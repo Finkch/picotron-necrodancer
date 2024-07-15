@@ -147,7 +147,7 @@ Label.__index = Label
 Label.__type = "label"
 setmetatable(Label, Container)
 
-function Label:new(x, y, cls, contents, colour)
+function Label:new(x, y, cls, contents, colour, width, height)
 
     -- gets the width and height
     local w, h = -1, -1
@@ -162,6 +162,10 @@ function Label:new(x, y, cls, contents, colour)
         w, h = contents:width() + 3, contents:height() + 3
         istext = false
     end
+
+    -- overrides width and height
+    if (width)  w = width
+    if (height) h = height
 
 
     local l = Container:new(x, y, w, h, cls, contents)
@@ -204,9 +208,9 @@ Button.__index = Button
 Button.__type = "button"
 setmetatable(Button, Label)
 
-function Button:new(x, y, cls, contents, colour)
+function Button:new(x, y, cls, contents, colour, width, height)
 
-    local b = Label:new(x, y, cls, contents, colour)
+    local b = Label:new(x, y, cls, contents, colour, width, height)
 
     setmetatable(b, Button)
     return b
