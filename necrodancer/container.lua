@@ -270,3 +270,55 @@ function Button:draw(gui)
     pal()
 end
 
+
+
+
+--[[
+    a slider is like a button to adjust values
+
+]]
+
+Slider = {}
+Slider.__index = Slider
+Slider.__type = "slider"
+setmetatable(Slider, Container)
+
+function Slider:new(x, y, length, vertical, minimum, maximum, current, colour)
+    
+    local w, h = -1, -1
+    if (vertical) then
+        w = 3
+        h = length
+    else
+        w = length
+        h = 3
+    end
+
+    local s = Container:new(x, y, w, h, 0, nil)
+    s.minimum = minimum
+    s.max = maximum
+    s.current = current
+    s.vertical = vertical
+    s.colour = colour
+
+    setmetatable(s, Slider)
+    return s
+end
+
+function Slider:draw(gui)
+    Container.draw(self)
+
+    self:focus()
+
+    local x, y = -1, -1
+    if (self.vertical) then
+        x = 1
+        y = self:bottom() - (self.current * self.length)
+    else
+        x = self:left() + (self.current * self.length)
+        y = 1
+    end
+
+    -- draws a circle at the current position
+    circfill(x, y, 2, self.colour)
+end
