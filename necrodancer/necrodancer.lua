@@ -1,3 +1,4 @@
+--[[pod_format="raw",created="2024-07-15 19:38:57",modified="2024-07-15 19:39:08",revision=4]]
 --[[
     An editor to make and animate skeletons.
 
@@ -15,7 +16,7 @@ function init_necrodancer(skeleton)
     local gui = Gui:new("necrodancer", false, 245, 245, 180, 180, 6)
 
     -- container that holds the skeleton
-    local grave = Container:new(3, 30, 128, 128, 0, skeleton)
+    local grave = Container:new(3, padding, 128, 128, 0, skeleton)
     gui:attach(grave)
 
 
@@ -75,12 +76,25 @@ function init_necrodancer(skeleton)
 
 
 
-    local import = Button:new(offsety:right(1.5 * padding), offsety:bottom(padding * 7 - 1), 6, "Import", 5)
+    local length_readout = Label:new(length:left(), length_slider:bottom(2 * padding), 0, tostr(flr(length_slider:get())), 8, 44)
+    gui:attach(length_readout)
+
+    local rotation_readout = Label:new(rotation:left(), rotation_slider:bottom(2 * padding), 0, tostr(flr(rotation_slider:get())), 8, 44)
+    gui:attach(rotation_readout)
+
+    local offsetx_readout = Label:new(offsetx:left(), offsetx_slider:bottom(2 * padding), 0, tostr(flr(offsetx_slider:get())), 8, 44)
+    gui:attach(offsetx_readout)
+    
+    local offsety_readout = Label:new(offsety:left(), offsety_slider:bottom(2 * padding), 0, tostr(flr(offsety_slider:get())), 8, 44)
+    gui:attach(offsety_readout)
+
+
+
+    local import = Button:new(offsety_readout:right(1.5 * padding), offsety_slider:bottom(-5), 6, "Import", 5)
     gui:attach(import)
 
     local export = Button:new(import:left(), import:bottom(padding), 6, "Export", 5)
     gui:attach(export)
-
 
 
     return gui
