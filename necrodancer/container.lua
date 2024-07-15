@@ -202,27 +202,11 @@ end
 Button = {}
 Button.__index = Button
 Button.__type = "button"
-setmetatable(Button, Container)
+setmetatable(Button, Label)
 
-function Button:new(x, y, text, cls, contents)
+function Button:new(x, y, cls, contents, colour)
 
-    -- prints offscreen to find the pixel width
-    --if (type(text) == "string") local w, h = print(text, 0, -20) + 4, 13
-    local w, h, s = -1, -1, -1
-    local istext = nil
-    if (type(text) == "string") then
-        w, h = print(text, 0, -20) + 4, 13
-        istext = true
-    elseif (type(text) == "number") then
-        s = get_spr(text)
-        w, h = s:width() + 3, s:height() + 3
-        istext = false
-    end
-
-    local b = Container:new(x, y, w, h, cls, contents)
-    b.text = text
-    b.istext = istext
-    b.padding = 3
+    local b = Label:new(x, y, cls, contents, colour)
 
     setmetatable(b, Button)
     return b
@@ -243,7 +227,7 @@ function Button:draw(gui)
     end
 
     -- draws regular container
-    Container.draw(self)
+    Label.draw(self)
 
     -- two width border (other layer is from container draw)
     self:focus()
@@ -256,13 +240,7 @@ function Button:draw(gui)
     -- adds mid-tone grey to two corners
     line(self.width + 1, -1, self.width, 0, 6)
     line(-1, self.height + 1, 0, self.height, 6)
-
-    -- draws button image
-    if (self.istext) then
-        print(self.text, 3, 3, 5)
-    else
-        spr(self.text, 2, 2)
-    end
+    
 
     -- reset palette
     pal()
