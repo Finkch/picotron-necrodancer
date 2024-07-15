@@ -37,10 +37,10 @@ end
 function Container:hover(gui)
     local pos = gui.kbm.pos
     return (
-        pos.x > self.x and
-        pos.y > self.y and
-        pos.x < self.x + self.width and
-        pos.y < self.y + self.height
+        pos.x > self.x - self.padding and
+        pos.y > self.y - self.padding and
+        pos.x < self.x + self.width + self.padding and
+        pos.y < self.y + self.height + self.padding
     )
 end
 
@@ -308,10 +308,47 @@ function Slider:new(x, y, length, vertical, minimum, maximum, current)
     s.current = current
     s.length = length
     s.vertical = vertical
+    s.padding = 6
 
     setmetatable(s, Slider)
     return s
 end
+
+function Slider:update(gui)
+    Container.update(self, gui)
+
+
+    if (self.clicked) self:update_slider(gui)
+end
+
+function Slider:update_slider(gui)
+    -- transforms mouse position to 0-1 relative to slider
+    local pos = gui.kbm.pos
+
+    local s, e = -1, -1
+    local c = -1
+    local current = -1
+    if (self.vertical) then
+        s = self.y + self.length
+        e = self.y
+        c = pos.y
+
+        current = (s - c) / self.length
+        
+    else
+        s = self.x
+        e = self.x + self.width
+        c = pos.x
+
+        current = 1 - (e - c) / self.length
+    end
+
+    -- clamps the values to 0-1
+    current = mid(0, current, 1)
+
+    self.current = current
+end
+
 
 function Slider:draw(gui)
     Container.draw(self)
@@ -330,4 +367,6 @@ function Slider:draw(gui)
 
     -- draws a circle at the current position
     spr(7, x - 6, y - 6)
+
+    print(self.current, 0, 0, 8)
 end
