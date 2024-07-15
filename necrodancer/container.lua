@@ -21,6 +21,8 @@ function Container:new(x, y, width, height, cls, contents)
 
         contents = contents,-- a draw function to call to draw its contents
 
+        padding = 2,        -- size of border
+
         hovering = false,   -- whether or not the mouse is over this container
         clicking = false,   -- whether or not the mouse has clicked this container
         holding  = false,   -- whether or not the mouse is being held down on this container
@@ -56,21 +58,25 @@ end
 -- returns coordinates
 function Container:top(padding)
     padding = padding or 0
+    if (padding > 0) padding -= self.padding
     return self.y - padding
 end
 
 function Container:right(padding)
     padding = padding or 0
+    if (padding > 0) padding += self.padding
     return self.x + self.width + padding
 end
 
 function Container:bottom(padding)
     padding = padding or 0
+    if (padding > 0) padding += self.padding
     return self.y + self.height + padding
 end
 
 function Container:left(padding)
     padding = padding or 0
+    if (padding > 0) padding -= self.padding
     return self.x - padding
 end
 
@@ -158,6 +164,7 @@ function Button:new(x, y, text, cls, contents)
     local b = Container:new(x, y, w, h, cls, contents)
     b.text = text
     b.istext = istext
+    b.padding = 3
 
     setmetatable(b, Button)
     return b
