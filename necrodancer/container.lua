@@ -53,6 +53,28 @@ function Container:hold(gui)
 end
 
 
+-- returns coordinates
+function Container:top(padding)
+    padding = padding or 0
+    return self.y - padding
+end
+
+function Container:right(padding)
+    padding = padding or 0
+    return self.x + self.width + padding
+end
+
+function Container:bottom(padding)
+    padding = padding or 0
+    return self.y + self.height + padding
+end
+
+function Container:left(padding)
+    padding = padding or 0
+    return self.x - padding
+end
+
+
 -- moves the camera to the container
 function Container:focus(style)
     if (not style) style = "tl"
