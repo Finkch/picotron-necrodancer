@@ -211,19 +211,32 @@ setmetatable(Button, Label)
 function Button:new(x, y, cls, contents, colour, width, height)
 
     local b = Label:new(x, y, cls, contents, colour, width, height)
+    b.active = true
 
     setmetatable(b, Button)
     return b
 end
 
--- overrides Container:update_contents()
+-- overrides Container:update()
+function Button:update(gui)
+    if (self.active) then
+        self:update_status(gui)
+        self:update_contents(gui)
+    else
+        self.hovering = false
+        self.clicking = false
+        self.holding =  false
+        self.clicked =  false
+    end
+end
+
 function Button:update_contents(gui)
     if (self.clicking and self.contents and self.contents.update) self.contents:update() 
 end
 
 
 function Button:draw(gui)
-    
+
     -- swaps colours to make it look asif button is rising from window
     if (not self.clicked) then
         pal(5, 7)
