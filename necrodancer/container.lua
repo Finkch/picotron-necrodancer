@@ -237,8 +237,15 @@ end
 
 function Button:draw(gui)
 
+    -- greys out button when its not active
+    if (not self.active) then
+        pal(5, 0)
+        pal(6, 5)
+    end
+
+
     -- swaps colours to make it look asif button is rising from window
-    if (not self.clicked) then
+    if (not self.clicked and self.active) then
         pal(5, 7)
         pal(7, 5)
     end
