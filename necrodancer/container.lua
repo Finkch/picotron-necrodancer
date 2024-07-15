@@ -80,6 +80,14 @@ function Container:left(padding)
     return self.x - padding
 end
 
+function Container:middle_vertical()
+    return (2 * self.y + self.height) / 2
+end
+
+function Container:middle_horizontal()
+    return (2 * self.x + self.width) / 2
+end
+
 
 -- moves the camera to the container
 function Container:focus(style)
@@ -88,7 +96,7 @@ function Container:focus(style)
     if (style == "tl") then
         camera(-self.x, -self.y)
     elseif (style == "c") then
-        camera(-(2 * self.x + self.width) / 2, -(2 * self.y + self.height) / 2)
+        camera(-self:middle_horizontal(), -self:middle_vertical())
     end
 end
 
