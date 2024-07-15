@@ -295,17 +295,18 @@ function Slider:new(x, y, length, vertical, minimum, maximum, current, colour)
     
     local w, h = -1, -1
     if (vertical) then
-        w = 3
+        w = 0
         h = length
     else
         w = length
-        h = 3
+        h = 0
     end
 
     local s = Container:new(x, y, w, h, 0, nil)
     s.minimum = minimum
     s.max = maximum
     s.current = current
+    s.length = length
     s.vertical = vertical
     s.colour = colour
 
@@ -319,14 +320,16 @@ function Slider:draw(gui)
     self:focus()
 
     local x, y = -1, -1
+    local sx, sy = -1, -1
     if (self.vertical) then
-        x = 1
-        y = self:bottom() - (self.current * self.length)
+        x = 0
+        y = (1 - self.current) * self.length
     else
-        x = self:left() + (self.current * self.length)
-        y = 1
+        x = self.current * self.length
+        y = 0
     end
 
     -- draws a circle at the current position
-    circfill(x, y, 2, self.colour)
+    spr(7, x - 6, y - 6)
+
 end
