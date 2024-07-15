@@ -291,7 +291,7 @@ Slider.__index = Slider
 Slider.__type = "slider"
 setmetatable(Slider, Container)
 
-function Slider:new(x, y, length, vertical, minimum, maximum, current, colour)
+function Slider:new(x, y, length, vertical, minimum, maximum, current)
     
     local w, h = -1, -1
     if (vertical) then
@@ -308,7 +308,6 @@ function Slider:new(x, y, length, vertical, minimum, maximum, current, colour)
     s.current = current
     s.length = length
     s.vertical = vertical
-    s.colour = colour
 
     setmetatable(s, Slider)
     return s
