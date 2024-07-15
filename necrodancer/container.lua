@@ -51,7 +51,7 @@ end
 
 -- whether the container has been clicked (mouse down all frames)
 function Container:hold(gui)
-    return self:hover(gui) and gui.kbm:down("lmb") > 0
+    return gui.kbm:down("lmb") > 0
 end
 
 
