@@ -174,7 +174,7 @@ function Label:new(x, y, cls, contents, colour)
 end
 
 -- overrides Container update; does not update!
-function Label:update() end
+function Label:update_contents() end
 
 function Label:draw()
 
@@ -214,7 +214,7 @@ end
 
 -- overrides Container:update_contents()
 function Button:update_contents(gui)
-    if (self.clicking and self.contents) self.contents:update() 
+    if (self.clicking and self.contents and self.contents.update) self.contents:update() 
 end
 
 
