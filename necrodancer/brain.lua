@@ -41,9 +41,13 @@ LabelBrain.__index = LabelBrain
 LabelBrain.__type = "labelbrain"
 setmetatable(LabelBrain, Brain)
 
-function LabelBrain:new(target, source)
+function LabelBrain:new(target, source, decimals)
+    
+    decimals = decimals or 0
+    
     local lb = Brain:new(target)
     lb.source = source
+    lb.decimals = decimals
 
     setmetatable(lb, LabelBrain)
     return lb
@@ -52,7 +56,7 @@ end
 function LabelBrain:update(gui)
     local datum = self.source:get()
 
-    if (type(datum) == "number") datum = tostr(flr(datum))
+    if (type(datum) == "number") datum = string.format("%." .. self.decimals .. "f", datum)
 
     self.target.contents = datum
 end
