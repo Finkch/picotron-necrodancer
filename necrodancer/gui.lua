@@ -22,6 +22,8 @@ function Gui:new(name, resizable, width, height, minwidth, minheight, cls)
         cls = cls,              -- colour to clear with (aka background colour)
 
         containers = {},        -- array of containers attatched
+        brains = {},            -- array of controllers for the containers
+
         kbm = KBM:new({"lmb"})
     }
 
@@ -40,9 +42,16 @@ function Gui:create()
 	})
 end
 
--- attatches a container
-function Gui:attach(container)
-    add(self.containers, container)
+-- attatches a container or brain
+function Gui:attach(limb)
+
+    if (limb.__parenttype == "container") then
+        add(self.containers, limb)
+    elseif (limb.__parenttype == "brain") then
+        add(self.brains, limb)
+    else
+        error("Unrecognized parenttype for gui limb \"" .. tostr(limb.__parenttype) .. ", " .. tostr(limb.__type) .. "\"")
+    end
 end
 
 -- updates dimensions
