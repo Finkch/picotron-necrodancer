@@ -114,8 +114,10 @@ function load_example_animation()
 end
 
 function load_example_necromancer()
-    local animation = load_example_animation()
-    local necromancer = Necromancer:new(animation)
+    local animations = {}
+    animations["idle"] = load_example_animation()
+
+    local necromancer = Necromancer:new(animations)
 
     return necromancer
 end
