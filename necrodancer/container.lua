@@ -326,6 +326,11 @@ function Slider:get()
     return self.current * (self.maximum - self.minimum) + self.minimum
 end
 
+-- places a value in, mapping into its min and max
+function Slider:put(value)
+    self.current = (value - self.minimum) / (self.maximum - self.minimum)
+end
+
 
 -- overrides container's update
 function Slider:update(gui)
