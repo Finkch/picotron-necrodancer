@@ -19,8 +19,6 @@ include("necrodancer/necrodancer.lua")
 
 include("skeleton/skeleton.lua")
 
-
-
 function _init()
     
 	--skeleton = load_example()
