@@ -6,6 +6,7 @@
 
 include("necrodancer/gui.lua")
 include("necrodancer/container.lua")
+include("necrodancer/brain.lua")
 
 -- returns the window
 function init_necrodancer(skeleton)
@@ -17,6 +18,14 @@ function init_necrodancer(skeleton)
     local gui = Gui:new("necrodancer", false, 245, 245, 180, 180, 6)
 
 
+
+
+
+
+    --[[
+        creates containers
+    
+    ]]
 
     -- container that holds the skeleton
     local grave = Container:new(3, padding, 128, 128, 0, skeleton)
@@ -102,6 +111,29 @@ function init_necrodancer(skeleton)
 
     local export = Button:new(import:left(), import:bottom(padding), 6, "Export", 5)
     gui:attach(export)
+
+
+
+
+
+
+    --[[
+        creates brains
+
+    ]] 
+    
+    -- connects slider readouts to sliders
+    local length_brain = LabelBrain:new(length_readout, length_slider)
+    gui:attach(length_brain)
+    
+    local rotation_brain = LabelBrain:new(rotation_readout, rotation_slider, 2)
+    gui:attach(rotation_brain)
+
+    local offsetx_brain = LabelBrain:new(offsetx_readout, offsetx_slider, 1)
+    gui:attach(offsetx_brain)
+
+    local offsety_brain = LabelBrain:new(offsety_readout, offsety_slider, 1)
+    gui:attach(offsety_brain)
 
 
     return gui
