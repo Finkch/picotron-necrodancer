@@ -31,7 +31,7 @@ function Brain:update(gui) end
 
 
 --[[
-    labelbrains grab data from a slider (or from anything with a :get())
+    LabelBrains grab data from a slider (or really from anything)
     and push it into the label's readout
 
 ]]
@@ -54,35 +54,9 @@ function LabelBrain:new(target, source, decimals)
 end
 
 function LabelBrain:update(gui)
-    local datum = self.source:get()
+    local datum = self.source:get(gui)
 
     if (type(datum) == "number") datum = string.format("%." .. self.decimals .. "f", datum)
 
     self.target.image = datum
-end
-
-
-
-
---[[
-    handles interacting with the skeleton
-
-]]
-
-BoneBrain = {}
-BoneBrain.__index = BoneBrain
-BoneBrain.__type = "bonebrain"
-setmetatable(BoneBrain, Brain)
-
-function BoneBrain:new(skeleton)
-    local bb = Brain:new(skeleton)
-    bb.current = skeleton.core
-
-    setmetatable(bb, BoneBrain)
-    return bb
-end
-
--- returns the current bone
-function BoneBrain:get()
-    return self.current.name
 end
