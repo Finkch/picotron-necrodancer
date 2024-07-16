@@ -8,7 +8,10 @@ include("necrodancer/gui.lua")
 include("necrodancer/container.lua")
 include("necrodancer/brain.lua")
 
+include("lib/vec.lua")
+
 include("skeleton/bone.lua")
+include("skeleton/transform.lua")
 
 
 -- returns the window
@@ -89,10 +92,10 @@ function init_necrodancer(skeleton)
     local rotation_slider = Slider:new(rotation:middle_horizontal(), length_slider:top(), 49, true, 0, 1, 0)
     gui:attach(rotation_slider)
 
-    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, 0, 25, 0)
+    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, -15, 15, 0)
     gui:attach(offsetx_slider)
 
-    local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, 0, 25, 0)
+    local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -15, 15, 0)
     gui:attach(offsety_slider)
 
 
@@ -144,6 +147,49 @@ function init_necrodancer(skeleton)
 
 
 
+    -- connects bone to sliders
+    length_slider.when_clicked = function(self, gui)
+        gui.data.current.bone = gui.data.current.bone:normal() * self:get()
+    end
+
+    length_slider.when_not_clicked = function(self, gui)
+        self:put(gui.data.current.bone:mag())
+    end
+
+
+    rotation_slider.when_clicked = function(self, gui)
+        gui.data.current.bone = gui.data.current.bone:rotate(gui.data.current.bone:dir() - self:get())
+    end
+
+    rotation_slider.when_not_clicked = function(self, gui)
+        self:put(gui.data.current.bone:dir())
+    end
+
+
+    offsetx_slider.when_clicked = function(self, gui)
+        local v = self:get()
+        if (abs(v) < 1) v = 0
+        gui.data.current.joint = Vec:new(v, gui.data.current.joint.y)
+    end
+
+    offsetx_slider.when_not_clicked = function(self, gui)
+        self:put(gui.data.current.joint.x)
+    end
+
+
+    offsety_slider.when_clicked = function(self, gui)
+        local v = self:get()
+        if (abs(v) < 1) v = 0
+        gui.data.current.joint = Vec:new(gui.data.current.joint.x, v)
+    end
+
+    offsety_slider.when_not_clicked = function(self, gui)
+        self:put(gui.data.current.joint.y)
+    end
+
+
+
+
 
     -- current bone readout
     local bone_readout = Brain:new(curread)
@@ -151,6 +197,8 @@ function init_necrodancer(skeleton)
         self.target.image = gui.data.current.name
     end
     gui:attach(bone_readout)
+
+    
 
 
 
@@ -173,25 +221,11 @@ function init_necrodancer(skeleton)
     end
     addbone.contents = addbone_brain
 
-    --[[
-    -- attaches brain to the addbone button
-    local addbone_brain = Brain:new(skeleton)
-    addbone_brain.update = function(gui)     
-            local bone = Bone:new(
-            tostr(count),
-            self.current.name,
-            self.current.bone,
-            self.current.joint,
-            self.current.transform
-        )
+    
 
-        self.current:add(bone)
-        self.current = bone
-    end
+    -- connects sliders to current bone
 
 
-    addbone.contents = addbone_brain
-    ]]
 
 
     return gui
