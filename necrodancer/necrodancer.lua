@@ -8,6 +8,9 @@ include("necrodancer/gui.lua")
 include("necrodancer/container.lua")
 include("necrodancer/brain.lua")
 
+include("skeleton/bone.lua")
+
+
 -- returns the window
 function init_necrodancer(skeleton)
 
@@ -18,6 +21,10 @@ function init_necrodancer(skeleton)
     local gui = Gui:new("necrodancer", false, 245, 245, 180, 180, 6)
 
 
+    -- adds some data to the gui
+    gui.data["skeleton"] = skeleton
+    gui.data["current"] = skeleton.core
+    gui.data["count"] = 1
 
 
 
@@ -134,6 +141,57 @@ function init_necrodancer(skeleton)
 
     local offsety_brain = LabelBrain:new(offsety_readout, offsety_slider, 1)
     gui:attach(offsety_brain)
+
+
+
+
+    -- current bone readout
+    local bone_readout = Brain:new(curread)
+    bone_readout.update = function(self, gui)
+        self.target.image = gui.data.current.name
+    end
+    gui:attach(bone_readout)
+
+
+
+    -- adding bones
+    local addbone_brain = Brain:new(skeleton)
+    addbone_brain.update = function(self, gui)
+        local current = skeleton.bones[gui.data.current.name]
+
+        local bone = Bone:new(
+            tostr(gui.data.count),
+            current.bone:copy(),
+            current.z,
+            nil,
+            current.transform:copy()
+        )
+
+        gui.data.skeleton:add(bone, current)
+        gui.data.current = bone
+        gui.data.count += 1
+    end
+    addbone.contents = addbone_brain
+
+    --[[
+    -- attaches brain to the addbone button
+    local addbone_brain = Brain:new(skeleton)
+    addbone_brain.update = function(gui)     
+            local bone = Bone:new(
+            tostr(count),
+            self.current.name,
+            self.current.bone,
+            self.current.joint,
+            self.current.transform
+        )
+
+        self.current:add(bone)
+        self.current = bone
+    end
+
+
+    addbone.contents = addbone_brain
+    ]]
 
 
     return gui
