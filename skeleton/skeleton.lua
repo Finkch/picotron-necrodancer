@@ -80,6 +80,14 @@ function Skeleton:_findbones(current_bone)
     end
 end
 
+
+-- adds and removes bones, allowing for live modifications
+function Skeleton:add(bone, parent)
+    self.bones[parent.name]:add(bone)
+    self.bones = {}
+    self:findbones()
+end
+
 -- applies a pose to the skeleton
 function Skeleton:dance(pose)   -- pose is a table of joint transforms
     self.core:dance(    -- applies to core; will cascade down from there
