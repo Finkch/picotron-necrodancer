@@ -118,7 +118,7 @@ function Container:update_status(gui)   -- mouse status
 end
 
 function Container:update_contents(gui)          -- updates content
-    if (self.contents) self.contents:update()
+    if (self.contents) self.contents:update(gui)
 end
 
 -- draws container & contents
@@ -243,7 +243,7 @@ function Button:update(gui)
 end
 
 function Button:update_contents(gui)
-    if (self.clicking and self.contents and self.contents.update) self.contents:update() 
+    if (self.clicking and self.contents and self.contents.update) self.contents:update(gui) 
 end
 
 
