@@ -74,6 +74,11 @@ function Gui:update()
         if (container.update) container:update(self)
     end
 
+    -- updates brains
+    for brain in all(self.brains) do
+        brain:update(self)
+    end
+
 end
 
 -- draws
