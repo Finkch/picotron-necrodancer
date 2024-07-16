@@ -60,3 +60,29 @@ function LabelBrain:update(gui)
 
     self.target.image = datum
 end
+
+
+
+
+--[[
+    handles interacting with the skeleton
+
+]]
+
+BoneBrain = {}
+BoneBrain.__index = BoneBrain
+BoneBrain.__type = "bonebrain"
+setmetatable(BoneBrain, Brain)
+
+function BoneBrain:new(skeleton)
+    local bb = Brain:new(skeleton)
+    bb.current = skeleton.core
+
+    setmetatable(bb, BoneBrain)
+    return bb
+end
+
+-- returns the current bone
+function BoneBrain:get()
+    return self.current.name
+end
