@@ -12,8 +12,11 @@ function init_necrodancer(skeleton)
 
     local padding = 4
 
+
     -- application window to make a skeleton
     local gui = Gui:new("necrodancer", false, 245, 245, 180, 180, 6)
+
+
 
     -- container that holds the skeleton
     local grave = Container:new(3, padding, 128, 128, 0, skeleton)
@@ -21,7 +24,7 @@ function init_necrodancer(skeleton)
 
 
 
-
+    -- add and remove bones, plus label that says "current bone"
     local rmbone = Button:new(grave:right(padding), grave:top(), 6, 4)
     gui:attach(rmbone)
     rmbone.active = false
@@ -34,7 +37,7 @@ function init_necrodancer(skeleton)
 
 
     
-
+    -- next and previous, plus label that says the $current_bone
     local prev = Button:new(rmbone:left(), rmbone:bottom(padding), 6, 6)
     gui:attach(prev)
     prev.active = false
@@ -48,6 +51,7 @@ function init_necrodancer(skeleton)
 
 
 
+    -- labels for the sliders
     local length = Label:new(grave:left(), grave:bottom(padding), 0, " Length ", 7)
     gui:attach(length)
 
@@ -62,6 +66,7 @@ function init_necrodancer(skeleton)
 
 
 
+    --  sliders for the bones
     local length_slider = Slider:new(length:middle_horizontal(), length:bottom(2 * padding), 49, true, 1, 25, 0.33)
     gui:attach(length_slider)
 
@@ -76,6 +81,7 @@ function init_necrodancer(skeleton)
 
 
 
+    -- readouts for the sliders
     local length_readout = Label:new(length:left(), length_slider:bottom(2 * padding), 0, tostr(flr(length_slider:get())), 8, 44)
     gui:attach(length_readout)
 
@@ -90,6 +96,7 @@ function init_necrodancer(skeleton)
 
 
 
+    -- import/export buttons
     local import = Button:new(offsety_readout:right(1.5 * padding), offsety_slider:bottom(-5), 6, "Import", 5)
     gui:attach(import)
 
