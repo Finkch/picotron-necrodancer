@@ -15,9 +15,9 @@ Brain.__index = Brain
 Brain.__type = "brain"
 Brain.__parenttype = "brain"
 
-function Brain:new(source)
+function Brain:new(target)
     local b = {
-        source = source
+        target = target
     }
 
     setmetatable(b, Brain)
@@ -41,9 +41,9 @@ LabelBrain.__index = LabelBrain
 LabelBrain.__type = "labelbrain"
 setmetatable(LabelBrain, Brain)
 
-function LabelBrain:new(source, target)
-    local lb = Brain:new(source)
-    lb.target = target
+function LabelBrain:new(target, source)
+    local lb = Brain:new(target)
+    lb.source = source
 
     setmetatable(lb, LabelBrain)
     return lb
@@ -52,7 +52,7 @@ end
 function LabelBrain:update(gui)
     local datum = self.source:get()
 
-    if (type(datum) == "number") datum = tostr(flr(rnd(datum)))
+    if (type(datum) == "number") datum = tostr(flr(datum))
 
-    self.target.content = datum
+    self.target.contents = datum
 end
