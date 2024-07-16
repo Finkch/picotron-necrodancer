@@ -313,6 +313,8 @@ function Slider:new(x, y, length, vertical, minimum, maximum, current)
     s.length = length
     s.vertical = vertical
     s.padding = 6
+    s.when_clicked = nil        -- methods that can be set
+    s.when_not_clicked = nil
 
     setmetatable(s, Slider)
     return s
@@ -330,7 +332,13 @@ function Slider:update(gui)
     Container.update(self, gui)
 
 
-    if (self.clicked) self:update_slider(gui)
+    if (self.clicked) then
+        self:update_slider(gui)
+
+        if (self.when_clicked) self:when_clicked(gui)
+    else
+        if (self.when_not_clicked) self:when_not_clicked(gui)
+    end
 end
 
 function Slider:update_slider(gui)
