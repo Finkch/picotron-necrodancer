@@ -10,7 +10,7 @@ Bone = {}
 Bone.__index = Bone
 Bone.__type = "bone"
 
-function Bone:new(name, bone, z, transform, joint)
+function Bone:new(name, bone, z, joint, transform)
     joint = joint or Vec:new()
     transform = transform or Transform:new()
     transform.pos += joint

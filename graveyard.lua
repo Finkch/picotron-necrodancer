@@ -27,7 +27,6 @@ function load_example_skeleton(necromancer)
         "core",             -- aka hips
         Vec:new(0, -8),     -- points from hip to skull
         0,                  -- default depth
-        Transform:new(),
         Vec:new(0, -12)     -- 12 units off the ground
     )
 
@@ -35,7 +34,6 @@ function load_example_skeleton(necromancer)
         "right leg",
         Vec:new(0, 6),
         1,
-        Transform:new(),
         Vec:new(-4, 9)
     )
 
@@ -52,7 +50,6 @@ function load_example_skeleton(necromancer)
         "left leg",
         Vec:new(0, 6),
         1,
-        Transform:new(),
         Vec:new(4, 9)
     )
 
