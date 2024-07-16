@@ -140,8 +140,10 @@ function Container:draw(gui)
 
 
     -- centres container contents
-    self:focus("c")
-    if (self.contents and self.contents.draw) self.contents:draw()
+    if (self.contents and self.contents.draw) then
+        self:focus("c")
+        self.contents:draw()
+    end
 end
 
 
