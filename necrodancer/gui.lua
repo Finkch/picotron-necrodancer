@@ -24,7 +24,9 @@ function Gui:new(name, resizable, width, height, minwidth, minheight, cls)
         containers = {},        -- array of containers attatched
         brains = {},            -- array of controllers for the containers
 
-        kbm = KBM:new({"lmb"})
+        kbm = KBM:new({"lmb"}),
+
+        data = {}               -- contains shared information
     }
 
     setmetatable(g, Gui)
