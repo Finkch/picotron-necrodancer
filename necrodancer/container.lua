@@ -7,6 +7,7 @@
 Container = {}
 Container.__index = Container
 Container.__type = "container"
+Container.__parenttype = "container"
 
 function Container:new(x, y, width, height, cls, contents)
     local c = {
