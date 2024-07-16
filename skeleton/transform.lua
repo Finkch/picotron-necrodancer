@@ -20,6 +20,14 @@ function Transform:new(pos, rot)
 end
 
 
+function Transform:copy()
+    return Transform:new(
+        self.pos:copy(),
+        self.rot
+    )
+end
+
+
 -- transforms a vector
 function Transform:__mul(vec)
     return vec:rotate(self.rot) + self.pos

@@ -76,6 +76,19 @@ function Bone:dance(pose, parenttip, parentrot)
 end
 
 
+-- copies a bone
+function Bone:copy(name)
+    name = name or self.name
+    return Bone:new(
+        name,
+        self.bone:copy(),
+        self.z,
+        self.joint:copy(),
+        Transform:new()
+    )
+end
+
+
  
 --[[
     metamethods
