@@ -5,16 +5,25 @@
 
 ]]
 
+include("skeleton/animation.lua")
+
 Necromancer = {}
 Necromancer.__index = Necromancer
 Necromancer.__type = "necromancer"
 
-function Necromancer:new(animation)
+function Necromancer:new(animations)
+
+    if (not animations) then
+        animations = {}
+        animations["idle"] = Animation:new()
+    end
+
     local n = {
-        current = animation,    -- current animation
-        previous = nil,         -- previous animation
-        interpolator = nil,     -- function used to interpolate between poses
-        frame = 0               -- frame/time
+        animations = animations,
+        current = animations["idle"],   -- current animation
+        previous = nil,                 -- previous animation
+        interpolator = nil,             -- function used to interpolate between poses
+        frame = 0                       -- frame/time
     }
 
     setmetatable(n, Necromancer)

@@ -5,22 +5,29 @@
 
 ]]
 
-include("skeleton/transform.lua")
 include("skeleton/bone.lua")
+include("skeleton/necromancer.lua")
+include("skeleton/transform.lua")
 
 Skeleton = {}
 Skeleton.__index = Skeleton
 Skeleton.__type = "skeleton"
 
 function Skeleton:new(core, necromancer, debug)
-    if (not core) core = Bone:new(
-        "core",
-        Vec:new(0, -4),     -- points from hips to skull
-        0,                  -- default depth
-        Vec:new(0, -8)      -- starts off the ground
-    )
+    
+    if (not core) then
+        core = Bone:new(
+            "core",
+            Vec:new(0, -4),     -- points from hips to skull
+            0,                  -- default depth
+            Vec:new(0, -8)      -- starts off the ground
+        )
+    end
+
+    if (not necromancer) necromancer = Necromancer:new()
 
     debug = debug or false
+
     local s = {
         core = core,
         bones = {},

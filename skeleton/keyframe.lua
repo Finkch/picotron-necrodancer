@@ -10,6 +10,10 @@ Keyframe.__index = Keyframe
 Keyframe.__type = "keyframe"
 
 function Keyframe:new(duration, transforms)
+
+    if (not duration) duration = 30
+    if (not transforms) transforms = {}
+
     local k = {
         duration = duration,        -- frames for which to play this keyframe
         transforms = transforms,    -- a table of transforms for all joints (from base model to reach this pose)

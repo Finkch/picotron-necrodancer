@@ -4,11 +4,16 @@
 
 ]]
 
+include("skeleton/keyframe.lua")
+
 Animation = {}
 Animation.__index = Animation
 Animation.__type = "animation"
 
 function Animation:new(keyframes)
+
+    if (not keyframes) keyframes = {Keyframe:new()}
+
     local a = {
         keyframes = keyframes,  -- an ordered list of all keyframes in the animation
         duration = nil   
