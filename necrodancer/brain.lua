@@ -24,7 +24,7 @@ function Brain:new(target)
     return b
 end
 
--- empty update functions. Must be overridden.
+-- empty update functions. Must be overridden or given a new update function
 function Brain:update(gui) end
 
 
@@ -58,5 +58,5 @@ function LabelBrain:update(gui)
 
     if (type(datum) == "number") datum = string.format("%." .. self.decimals .. "f", datum)
 
-    self.target.contents = datum
+    self.target.image = datum
 end

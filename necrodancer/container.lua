@@ -179,10 +179,11 @@ function Label:new(x, y, cls, contents, colour, width, height)
     if (height) h = height
 
 
-    local l = Container:new(x, y, w, h, cls, contents)
+    local l = Container:new(x, y, w, h, cls, nil)
     l.istext = istext
     l.padding = 2
     l.colour = colour
+    l.image = contents
 
     setmetatable(l, Label)
     return l
@@ -200,9 +201,9 @@ function Label:draw(gui)
 
     -- draws button image
     if (self.istext) then
-        print(self.contents, 3, 3, self.colour)
+        print(self.image, 3, 3, self.colour)
     else
-        spr(self.contents, 2, 2)
+        spr(self.image, 2, 2)
     end
 end
 
