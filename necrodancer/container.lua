@@ -234,6 +234,7 @@ function Button:update(gui)
     if (self.active) then
         self:update_status(gui)
         self:update_contents(gui)
+        self:update_active(gui)
     else
         self.hovering = false
         self.clicking = false
@@ -245,6 +246,9 @@ end
 function Button:update_contents(gui)
     if (self.clicking and self.contents and self.contents.update) self.contents:update(gui) 
 end
+
+-- must be ovveridden
+function Button:update_active(gui) end
 
 
 function Button:draw(gui)
