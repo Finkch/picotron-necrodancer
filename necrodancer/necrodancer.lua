@@ -47,9 +47,9 @@ function init_necrodancer(skeleton)
     -- animation data
     local animation = Animation:new()
     gui.data["animation"] = animation
-    gui.data["currentkf"] = nil
+    gui.data["currentkf"] = animation.keyframes[1]
     gui.data["countkf"] = 1
-    gui.data["ikf"] = 0
+    gui.data["ikf"] = 1
 
 
 
@@ -141,9 +141,6 @@ function init_necrodancer(skeleton)
     duration.mode = "animation"
     gui:attach(duration)
 
-    duration.update_active = function(self, gui)
-        self.active = gui.data.ikf != 0
-    end
 
 
 
@@ -167,10 +164,6 @@ function init_necrodancer(skeleton)
     duration_slider.mode = "animation"
     gui:attach(duration_slider)
 
-    duration_slider.update_active = function(self, gui)
-        self.active = gui.data.ikf != 0
-    end
-
 
 
 
@@ -193,10 +186,6 @@ function init_necrodancer(skeleton)
     local duration_readout = Label:new(offsety_readout:right(padding), offsety_readout:top(), 0, tostr(flr(duration_slider:get())), 8, duration:right() - duration:left())
     duration_readout.mode = "animation"
     gui:attach(duration_readout)
-
-    duration_readout.update_active = function(self, gui)
-        self.active = gui.data.ikf != 0
-    end
 
 
 
@@ -432,34 +421,32 @@ function init_necrodancer(skeleton)
     -- next/prev keyframe
     local prevkf_brain = Brain:new(nil)
     prevkf_brain.update = function(self, gui)
-        gui.data.ikf = (gui.data.ikf - 1) % (gui.data.countkf + 1)
-
-        if (gui.data.ikf == 0) then
-            gui.data.currentkf = nil
-        else
-            gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
-        end
+        gui.data.ikf = (gui.data.ikf - 2) % gui.data.countkf + 1
+        gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
     end
     prevkf.contents = prevkf_brain
+
+    prevkf.update_active = function(self, gui)
+        self.active = gui.data.countkf > 1
+    end
 
 
     local nextkf_brain = Brain:new(nil)
     nextkf_brain.update = function(self, gui)
-        gui.data.ikf = (gui.data.ikf + 1) % (gui.data.countkf + 1)
-
-        if (gui.data.ikf == 0) then
-            gui.data.currentkf = nil
-        else
-            gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
-        end
+        gui.data.ikf = gui.data.ikf % gui.data.countkf + 1
+        gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
     end
     nextkf.contents = nextkf_brain
+
+    nextkf.update_active = function(self, gui)
+        self.active = gui.data.countkf > 1
+    end
 
 
     
     -- button activation logic
     rmkf.update_active = function(self, gui)
-        self.active = gui.data.ikf != 0 and gui.data.countkf > 1
+        self.active = gui.data.countkf > 1
     end
 
 
@@ -467,11 +454,7 @@ function init_necrodancer(skeleton)
     -- current kf readout
     local kf_readout = Brain:new(curreadkf)
     kf_readout.update = function(self, gui)
-        if (gui.data.ikf == 0) then
-            self.target.image = "n/a"
-        else
-            self.target.image = gui.data.ikf
-        end
+        self.target.image = gui.data.ikf
     end
     gui:attach(kf_readout)
 
