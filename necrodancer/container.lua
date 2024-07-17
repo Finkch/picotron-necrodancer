@@ -106,6 +106,7 @@ end
 -- updates
 function Container:update(gui)
     self:update_active(gui)
+    self:_update_active(gui)
     self:update_status(gui)
     self:update_contents(gui)
     self:update_extra(gui)
@@ -135,6 +136,12 @@ end
 
 -- must be ovveridden
 function Container:update_active(gui) end
+
+-- deactivates if gui is in wrong mode
+function Container:_update_active(gui)
+    if (self.mode and gui.data.mode) self.active = gui.data.mode == self.mode 
+end
+
 
 -- can be overridden to give more control
 function Container:update_extra(gui) end
