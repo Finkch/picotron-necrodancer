@@ -429,6 +429,7 @@ function Slider:draw(gui)
         y = 0
     end
 
+    -- swaps palette to show slider is deactivated
     if (not self.active) then
         pal(5, 0)
         pal(6, 5)
@@ -436,6 +437,4 @@ function Slider:draw(gui)
 
     -- draws a circle at the current position
     spr(7, x - 6, y - 6)
-
-    pal()
 end
