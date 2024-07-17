@@ -121,15 +121,15 @@ function init_necrodancer(skeleton)
 
 
 
-    -- labels for the sliders
-    local length = Label:new(grave:left(), grave:bottom(padding + 1), 0, " Length ", 7)
+    -- labels for the sliders 
+    local rotation = Label:new(grave:left(), grave:bottom(padding + 1), 0, "Rotation", 7)
+    gui:attach(rotation)
+    
+    local length = Label:new(rotation:right(padding), rotation:top(), 0, " Length ", 7)
     length.mode = "skeleton"
     gui:attach(length)
 
-    local rotation = Label:new(length:right(padding), length:top(), 0, "Rotation", 7)
-    gui:attach(rotation)
-
-    local offsetx = Label:new(rotation:right(padding), rotation:top(), 0, "Offset x", 7)
+    local offsetx = Label:new(length:right(padding), length:top(), 0, "Offset x", 7)
     offsetx.mode = "skeleton"
     gui:attach(offsetx)
 
@@ -148,15 +148,14 @@ function init_necrodancer(skeleton)
 
 
     --  sliders for the bones
-    local length_slider = Slider:new(length:middle_horizontal(), length:bottom(2 * padding), 49, true, 1, 25, 1)
+    local rotation_slider = Slider:new(rotation:middle_horizontal(), rotation:bottom(2 * padding), 49, true, 0, 1.019, 0.02)
+    gui:attach(rotation_slider)
+
+    local length_slider = Slider:new(length:middle_horizontal(), rotation_slider:top(), 49, true, 1, 25, 1)
     length_slider.mode = "skeleton"
     gui:attach(length_slider)
 
-    local rotation_slider = Slider:new(rotation:middle_horizontal(), length_slider:top(), 49, true, 0, 1.019, 0.02)
-    rotation_slider.mode = "skeleton"
-    gui:attach(rotation_slider)
-
-    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, -25, 25, 1)
+    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), length_slider:top(), 49, true, -25, 25, 1)
     offsetx_slider.mode = "skeleton"
     gui:attach(offsetx_slider)
 
@@ -176,22 +175,22 @@ function init_necrodancer(skeleton)
 
 
     -- readouts for the sliders
-    local length_readout = Label:new(length:left(), length_slider:bottom(2 * padding), 0, tostr(flr(length_slider:get())), 8, 44)
+    local rotation_readout = Label:new(rotation:left(), rotation_slider:bottom(2 * padding), 0, tostr(flr(rotation_slider:get())), 8, rotation:right() - rotation:left())
+    gui:attach(rotation_readout)
+
+    local length_readout = Label:new(rotation_readout:right(padding), rotation_readout:top(), 0, tostr(flr(length_slider:get())), 8, length:right() - length:left())
     length_readout.mode = "skeleton"
     gui:attach(length_readout)
 
-    local rotation_readout = Label:new(rotation:left(), rotation_slider:bottom(2 * padding), 0, tostr(flr(rotation_slider:get())), 8, 44)
-    gui:attach(rotation_readout)
-
-    local offsetx_readout = Label:new(offsetx:left(), offsetx_slider:bottom(2 * padding), 0, tostr(flr(offsetx_slider:get())), 8, 44)
+    local offsetx_readout = Label:new(length_readout:right(padding), length_readout:top(), 0, tostr(flr(offsetx_slider:get())), 8, offsetx:right() - offsetx:left())
     offsetx_readout.mode = "skeleton"
     gui:attach(offsetx_readout)
     
-    local offsety_readout = Label:new(offsety:left(), offsety_slider:bottom(2 * padding), 0, tostr(flr(offsety_slider:get())), 8, 44)
+    local offsety_readout = Label:new(offsetx_readout:right(padding), offsetx_readout:top(), 0, tostr(flr(offsety_slider:get())), 8, offsety:right() - offsety:left())
     offsety_readout.mode = "skeleton"
     gui:attach(offsety_readout)
 
-    local duration_readout = Label:new(duration:left(), duration_slider:bottom(2 * padding), 0, tostr(flr(duration_slider:get())), 8, 44)
+    local duration_readout = Label:new(offsety_readout:right(padding), offsety_readout:top(), 0, tostr(flr(duration_slider:get())), 8, duration:right() - duration:left())
     duration_readout.mode = "animation"
     gui:attach(duration_readout)
 
