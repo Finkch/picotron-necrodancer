@@ -14,6 +14,7 @@ include("skeleton/skeleton.lua")
 include("skeleton/bone.lua")
 include("skeleton/transform.lua")
 include("skeleton/animation.lua")
+include("skeleton/keyframe.lua")
 
 include("finkchlib/log.lua")
 
@@ -24,7 +25,7 @@ function init_necrodancer(skeleton)
 
 
     -- application window to make a skeleton
-    local gui = Gui:new("necrodancer", false, 245, 245, 180, 180, 6)
+    local gui = Gui:new("necrodancer", false, 251, 245, 180, 180, 6)
 
 
     --[[ 
@@ -57,13 +58,13 @@ function init_necrodancer(skeleton)
     ]]
 
     -- container that holds the skeleton
-    local grave = Container:new(3, padding, 128, 128, 0, skeleton)
+    local grave = Container:new(padding, padding, 128, 128, 0, skeleton)
     gui:attach(grave)
 
 
 
     -- add and remove bones, plus label that says "current bone"
-    local rmbone = Button:new(grave:right(padding), grave:top(), 6, 4)
+    local rmbone = Button:new(grave:right(padding + 3), grave:top(), 6, 4)
     gui:attach(rmbone)
 
     local curbone = Label:new(rmbone:right(padding), rmbone:top(), 0, "Current Bone", 7)
@@ -87,7 +88,7 @@ function init_necrodancer(skeleton)
 
 
     -- labels for the sliders
-    local length = Label:new(grave:left(), grave:bottom(padding), 0, " Length ", 7)
+    local length = Label:new(grave:left(), grave:bottom(padding + 1), 0, " Length ", 7)
     gui:attach(length)
 
     local rotation = Label:new(length:right(padding), length:top(), 0, "Rotation", 7)
@@ -98,6 +99,9 @@ function init_necrodancer(skeleton)
 
     local offsety = Label:new(offsetx:right(padding), offsetx:top(), 0, "Offset y", 7)
     gui:attach(offsety)
+
+    local duration = Label:new(offsety:right(padding), offsety:top(), 0, "Duration", 7)
+    gui:attach(duration)
 
 
 
@@ -116,6 +120,7 @@ function init_necrodancer(skeleton)
 
 
 
+
     -- readouts for the sliders
     local length_readout = Label:new(length:left(), length_slider:bottom(2 * padding), 0, tostr(flr(length_slider:get())), 8, 44)
     gui:attach(length_readout)
@@ -128,16 +133,6 @@ function init_necrodancer(skeleton)
     
     local offsety_readout = Label:new(offsety:left(), offsety_slider:bottom(2 * padding), 0, tostr(flr(offsety_slider:get())), 8, 44)
     gui:attach(offsety_readout)
-
-
-
-    -- import/export buttons
-    local import = Button:new(offsety_readout:right(1.5 * padding), offsety_slider:bottom(-5), 6, "Import", 5)
-    gui:attach(import)
-
-    local export = Button:new(import:left(), import:bottom(padding), 6, "Export", 5)
-    gui:attach(export)
-
 
 
 
@@ -386,7 +381,6 @@ function init_necrodancer(skeleton)
     -- current kf readout
     local kf_readout = Brain:new(curreadkf)
     kf_readout.update = function(self, gui)
-        debug:add(gui.data.ikf)
         if (gui.data.ikf == 0) then
             self.target.image = "n/a"
         else
@@ -394,6 +388,44 @@ function init_necrodancer(skeleton)
         end
     end
     gui:attach(kf_readout)
+
+
+    
+
+    -- add/remove kf
+    local rmkf_brain = Brain:new(nil)
+    rmkf_brain.update = function(self, gui)
+        del(gui.animation.keyframes, gui.currentkf)
+        gui.data.countkf -= 1
+        gui.data.ikf = gui.data.ikf % gui.data.countkf + 1
+        gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
+    end
+    rmkf.contents = rmkf_brain
+
+    local addkf_brain = Brain:new(nil)
+    addkf_brain.update = function(self, gui)
+        local kf = Keyframe:new()
+
+        gui.data.ikf += 1
+        add(gui.data.animation.keyframes, kf, gui.data.ikf)
+        gui.data.countkf += 1
+        gui.data.currentkf = kf
+    end
+    addkf.contents = addkf_brain
+
+
+
+
+
+    --[[
+        import/export buttons
+
+    ]]
+    local import = Button:new(prevkf:left(), prevkf:bottom(2 * padding), 6, "Import", 5)
+    gui:attach(import)
+
+    local export = Button:new(import:left(), import:bottom(padding), 6, "Export", 5)
+    gui:attach(export)
 
 
 
