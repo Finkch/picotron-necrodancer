@@ -13,6 +13,7 @@ mount("/ram/cart/lib", "/ram/lib")
 
 
 include("lib/queue.lua")
+include("lib/logger.lua")
 
 include("necrodancer/necrodancer.lua")
 
@@ -20,6 +21,9 @@ function _init()
 
     -- debug queue, used for printing messages
 	debug = Q:new()
+
+    -- logger to log when printing isn't enough
+    logger = Logger:new("appdata/logs", "log.txt")
 
     gui = init_necrodancer()
 end
