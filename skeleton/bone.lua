@@ -81,7 +81,8 @@ function Bone:dance(pose, parenttip, parentrot)
     if (parentrot and parentrot > 0) ownrot = parentrot         -- depends on parent's amount
     self.transform.rot = ownrot
 
-    if (parenttip) self.transform.pos = parenttip + self.joint  -- sets joint position
+    self.transform.pos = self.joint
+    if (parenttip) self.transform.pos += parenttip               -- sets joint position
 
     for child in all(self.children) do
         child:dance(pose, self:tip(), ownrot)
