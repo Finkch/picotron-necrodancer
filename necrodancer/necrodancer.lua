@@ -118,6 +118,9 @@ function init_necrodancer(skeleton)
     local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -25, 25, 1)
     gui:attach(offsety_slider)
 
+    local duration_slider = Slider:new(duration:middle_horizontal(), offsety_slider:top(), 49, true, 2, 120, 2)
+    gui:attach(duration_slider)
+
 
 
 
@@ -133,6 +136,9 @@ function init_necrodancer(skeleton)
     
     local offsety_readout = Label:new(offsety:left(), offsety_slider:bottom(2 * padding), 0, tostr(flr(offsety_slider:get())), 8, 44)
     gui:attach(offsety_readout)
+
+    local duration_readout = Label:new(duration:left(), duration_slider:bottom(2 * padding), 0, tostr(flr(duration_slider:get())), 8, 44)
+    gui:attach(duration_readout)
 
 
 
@@ -155,6 +161,9 @@ function init_necrodancer(skeleton)
 
     local offsety_brain = LabelBrain:new(offsety_readout, offsety_slider)
     gui:attach(offsety_brain)
+
+    local duration_brain = LabelBrain:new(duration_readout, duration_slider)
+    gui:attach(duration_brain)
 
 
 
