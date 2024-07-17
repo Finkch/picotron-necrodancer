@@ -429,7 +429,7 @@ function init_necrodancer(skeleton)
     -- add/remove kf
     local rmkf_brain = Brain:new(nil)
     rmkf_brain.update = function(self, gui)
-        del(gui.animation.keyframes, gui.currentkf)
+        del(gui.data.animation.keyframes, gui.data.currentkf)
         gui.data.countkf -= 1
         gui.data.ikf = gui.data.ikf % gui.data.countkf + 1
         gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
