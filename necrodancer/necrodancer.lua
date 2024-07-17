@@ -92,7 +92,7 @@ function init_necrodancer(skeleton)
     local length_slider = Slider:new(length:middle_horizontal(), length:bottom(2 * padding), 49, true, 1, 25, 0.33)
     gui:attach(length_slider)
 
-    local rotation_slider = Slider:new(rotation:middle_horizontal(), length_slider:top(), 49, true, 0, 1, 0)
+    local rotation_slider = Slider:new(rotation:middle_horizontal(), length_slider:top(), 49, true, 0, 1.0001, 0)
     gui:attach(rotation_slider)
 
     local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, -25, 25, 0)
@@ -165,7 +165,8 @@ function init_necrodancer(skeleton)
     end
 
     rotation_slider.when_not_clicked = function(self, gui)
-        self:put(gui.data.current.bone:dir())
+        -- add arbitrarily small amount to fix rounding error
+        self:put(gui.data.current.bone:dir() + 0.0001)
     end
 
 
