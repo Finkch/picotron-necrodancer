@@ -10,6 +10,7 @@ include("necrodancer/brain.lua")
 
 include("lib/vec.lua")
 
+include("skeleton/skeleton.lua")
 include("skeleton/bone.lua")
 include("skeleton/transform.lua")
 include("skeleton/animation.lua")
@@ -32,6 +33,7 @@ function init_necrodancer(skeleton)
     ]]
 
     -- skeleton data
+    local skeleton = Skeleton:new(nil, nil, true)
     gui.data["skeleton"] = skeleton
     gui.data["current"] = skeleton.core
     gui.data["max"] = 1

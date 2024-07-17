@@ -12,23 +12,16 @@ rm("/ram/cart/lib") -- makes sure at most one copy is present
 mount("/ram/cart/lib", "/ram/lib")
 
 
-
 include("lib/queue.lua")
 
 include("necrodancer/necrodancer.lua")
 
-include("skeleton/skeleton.lua")
-
 function _init()
-    
-	--skeleton = load_example()
-    skeleton = Skeleton:new(nil, nil, true)
 
-    gui = init_necrodancer(skeleton)
-
-
-	-- debug queue, used for printing messages
+    -- debug queue, used for printing messages
 	debug = Q:new()
+
+    gui = init_necrodancer()
 end
 
 function _update()
