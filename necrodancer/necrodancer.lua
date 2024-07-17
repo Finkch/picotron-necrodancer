@@ -97,12 +97,14 @@ function init_necrodancer(skeleton)
 
     -- add and remove bones, plus label that says "current bone"
     local rmbone = Button:new(skeleton_mode:left(), skeleton_mode:bottom(2 * padding), 6, 4)
+    rmbone.mode = "skeleton"
     gui:attach(rmbone)
 
     local curbone = Label:new(rmbone:right(padding), rmbone:top(), 0, "Current Bone", 7)
     gui:attach(curbone)
 
     local addbone = Button:new(curbone:right(padding), curbone:top(), 6, 3)
+    addbone.mode = "skeleton"
     gui:attach(addbone)
 
 
@@ -121,18 +123,22 @@ function init_necrodancer(skeleton)
 
     -- labels for the sliders
     local length = Label:new(grave:left(), grave:bottom(padding + 1), 0, " Length ", 7)
+    length.mode = "skeleton"
     gui:attach(length)
 
     local rotation = Label:new(length:right(padding), length:top(), 0, "Rotation", 7)
     gui:attach(rotation)
 
     local offsetx = Label:new(rotation:right(padding), rotation:top(), 0, "Offset x", 7)
+    offsetx.mode = "skeleton"
     gui:attach(offsetx)
 
     local offsety = Label:new(offsetx:right(padding), offsetx:top(), 0, "Offset y", 7)
+    offsety.mode = "skeleton"
     gui:attach(offsety)
 
     local duration = Label:new(offsety:right(padding), offsety:top(), 0, "Duration", 7)
+    duration.mode = "animation"
     gui:attach(duration)
 
     duration.update_active = function(self, gui)
@@ -143,18 +149,23 @@ function init_necrodancer(skeleton)
 
     --  sliders for the bones
     local length_slider = Slider:new(length:middle_horizontal(), length:bottom(2 * padding), 49, true, 1, 25, 1)
+    length_slider.mode = "skeleton"
     gui:attach(length_slider)
 
     local rotation_slider = Slider:new(rotation:middle_horizontal(), length_slider:top(), 49, true, 0, 1.019, 0.02)
+    rotation_slider.mode = "skeleton"
     gui:attach(rotation_slider)
 
     local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, -25, 25, 1)
+    offsetx_slider.mode = "skeleton"
     gui:attach(offsetx_slider)
 
     local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -25, 25, 1)
+    offsety_slider.mode = "skeleton"
     gui:attach(offsety_slider)
 
     local duration_slider = Slider:new(duration:middle_horizontal(), offsety_slider:top(), 49, true, 2, 120, 2)
+    duration_slider.mode = "animation"
     gui:attach(duration_slider)
 
     duration_slider.update_active = function(self, gui)
@@ -166,18 +177,22 @@ function init_necrodancer(skeleton)
 
     -- readouts for the sliders
     local length_readout = Label:new(length:left(), length_slider:bottom(2 * padding), 0, tostr(flr(length_slider:get())), 8, 44)
+    length_readout.mode = "skeleton"
     gui:attach(length_readout)
 
     local rotation_readout = Label:new(rotation:left(), rotation_slider:bottom(2 * padding), 0, tostr(flr(rotation_slider:get())), 8, 44)
     gui:attach(rotation_readout)
 
     local offsetx_readout = Label:new(offsetx:left(), offsetx_slider:bottom(2 * padding), 0, tostr(flr(offsetx_slider:get())), 8, 44)
+    offsetx_readout.mode = "skeleton"
     gui:attach(offsetx_readout)
     
     local offsety_readout = Label:new(offsety:left(), offsety_slider:bottom(2 * padding), 0, tostr(flr(offsety_slider:get())), 8, 44)
+    offsety_readout.mode = "skeleton"
     gui:attach(offsety_readout)
 
     local duration_readout = Label:new(duration:left(), duration_slider:bottom(2 * padding), 0, tostr(flr(duration_slider:get())), 8, 44)
+    duration_readout.mode = "animation"
     gui:attach(duration_readout)
 
     duration_readout.update_active = function(self, gui)
@@ -388,24 +403,30 @@ function init_necrodancer(skeleton)
 
     -- add and remove keyframe
     local rmkf = Button:new(prev:left(), prev:bottom(2 * padding), 6, 4)
+    rmkf.mode = "animation"
     gui:attach(rmkf)
 
     local curkf = Label:new(rmkf:right(padding), rmkf:top(), 0, " Key Frame", 7, curbone:right() - curbone:left())
+    curkf.mode = "animation"
     gui:attach(curkf)
 
     local addkf = Button:new(curkf:right(padding), curkf:top(), 6, 3)
+    addkf.mode = "animation"
     gui:attach(addkf)
 
 
     
     -- next and previous, plus label that says the $current_bone
     local prevkf = Button:new(rmkf:left(), rmkf:bottom(padding), 6, 6)
+    prevkf.mode = "animation"
     gui:attach(prevkf)
 
     local curreadkf = Label:new(prevkf:right(padding), prevkf:top(), 0, "n/a", 8, curkf:right() - curkf:left())
+    curreadkf.mode = "animation"
     gui:attach(curreadkf)
 
     local nextkf = Button:new(curreadkf:right(padding), curreadkf:top(), 6, 5)
+    nextkf.mode = "animation"
     gui:attach(nextkf)
 
 
