@@ -106,6 +106,7 @@ end
 function Container:update(gui)
     self:update_status(gui)
     self:update_contents(gui)
+    self:update_extra(gui)
 end
 
 function Container:update_status(gui)   -- mouse status
@@ -120,6 +121,9 @@ end
 function Container:update_contents(gui)          -- updates content
     if (self.contents) self.contents:update(gui)
 end
+
+-- can be overridden to give more control
+function Container:update_extra(gui) end
 
 -- draws container & contents
 function Container:draw(gui)
@@ -144,7 +148,12 @@ function Container:draw(gui)
         self:focus("c")
         self.contents:draw()
     end
+
+    self:draw_extra(gui)
 end
+
+-- can be overridden to give more control
+function Container:draw_extra(gui) end
 
 
 --[[
