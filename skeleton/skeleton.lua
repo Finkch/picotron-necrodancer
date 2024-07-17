@@ -18,9 +18,9 @@ function Skeleton:new(core, necromancer, debug)
     if (not core) then
         core = Bone:new(
             "core",
-            Vec:new(0, -4),     -- points from hips to skull
+            Vec:new(0, -6),     -- points from hips to skull
             0,                  -- default depth
-            Vec:new(0, -8)      -- starts off the ground
+            Vec:new(0, -12)      -- starts off the ground
         )
     end
 
