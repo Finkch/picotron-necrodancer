@@ -135,11 +135,11 @@ function Container:update_contents(gui)          -- updates content
 end
 
 -- must be ovveridden
-function Container:update_active(gui) end
+function Container:update_active(gui) self.active = true end
 
 -- deactivates if gui is in wrong mode
 function Container:_update_active(gui)
-    if (self.mode and gui.data.mode) self.active = gui.data.mode == self.mode 
+    if (self.mode and gui.data.mode) self.active = self.active and gui.data.mode == self.mode
 end
 
 
