@@ -142,12 +142,8 @@ function Container:update_extra(gui) end
 -- draws container & contents
 function Container:draw(gui)
 
-    -- greys out when its not active
+    -- resets palette
     pal()
-    if (not self.active) then
-        pal(5, 0)
-        pal(6, 5)
-    end
 
     -- moves camera
     self:focus("tl")
@@ -433,6 +429,13 @@ function Slider:draw(gui)
         y = 0
     end
 
+    if (not self.active) then
+        pal(5, 0)
+        pal(6, 5)
+    end
+
     -- draws a circle at the current position
     spr(7, x - 6, y - 6)
+
+    pal()
 end
