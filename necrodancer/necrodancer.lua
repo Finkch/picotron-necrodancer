@@ -33,6 +33,8 @@ function init_necrodancer(skeleton)
 
     ]]
 
+    gui.data["mode"] = "skeleton"
+
     -- skeleton data
     local skeleton = Skeleton:new(nil, nil, true)
     gui.data["skeleton"] = skeleton
@@ -63,8 +65,38 @@ function init_necrodancer(skeleton)
 
 
 
+    -- mode toggle
+    local skeleton_mode = Button:new(grave:right(padding + 3), grave:top(), 6, "Skeleton", 5)
+    gui:attach(skeleton_mode)
+    skeleton_mode.active = false
+
+    local animation_mode = Button:new(skeleton_mode:right(2 * padding + 1), skeleton_mode:top(), 6, "Animation", 5)
+    gui:attach(animation_mode)
+
+    -- mode buttons need a reference to one another
+    skeleton_mode.other = animation_mode
+    animation_mode.other = skeleton_mode
+
+    skeleton_mode.update_active = function(self, gui)
+        if (self.clicked) then
+            self.active = false
+            self.other.active = true
+            gui.data.mode = "skeleton"
+        end
+    end
+
+    animation_mode.update_active = function(self, gui)
+        if (self.clicked) then
+            self.active = false
+            self.other.active = true
+            gui.data.mode = "animation"
+        end
+    end
+
+
+
     -- add and remove bones, plus label that says "current bone"
-    local rmbone = Button:new(grave:right(padding + 3), grave:top(), 6, 4)
+    local rmbone = Button:new(skeleton_mode:left(), skeleton_mode:bottom(2 * padding), 6, 4)
     gui:attach(rmbone)
 
     local curbone = Label:new(rmbone:right(padding), rmbone:top(), 0, "Current Bone", 7)
@@ -448,8 +480,6 @@ function init_necrodancer(skeleton)
     addkf.contents = addkf_brain
 
 
-
-
     --[[
         import/export buttons
 
@@ -457,7 +487,7 @@ function init_necrodancer(skeleton)
     local import = Button:new(prevkf:left(), prevkf:bottom(2 * padding), 6, "Import", 5)
     gui:attach(import)
 
-    local export = Button:new(import:left(), import:bottom(padding), 6, "Export", 5)
+    local export = Button:new(import:right(padding), import:top(), 6, "Export", 5)
     gui:attach(export)
 
 
