@@ -49,7 +49,6 @@ function init_necrodancer(skeleton)
     -- add and remove bones, plus label that says "current bone"
     local rmbone = Button:new(grave:right(padding), grave:top(), 6, 4)
     gui:attach(rmbone)
-    rmbone.active = false
 
     local curbone = Label:new(rmbone:right(padding), rmbone:top(), 0, "Current Bone", 7)
     gui:attach(curbone)
@@ -62,14 +61,12 @@ function init_necrodancer(skeleton)
     -- next and previous, plus label that says the $current_bone
     local prev = Button:new(rmbone:left(), rmbone:bottom(padding), 6, 6)
     gui:attach(prev)
-    prev.active = false
 
     local curread = Label:new(prev:right(padding), prev:top(), 0, "0", 8, curbone:right() - curbone:left())
     gui:attach(curread)
 
     local next = Button:new(curread:right(padding), curread:top(), 6, 5)
     gui:attach(next)
-    next.active = false
 
 
 
