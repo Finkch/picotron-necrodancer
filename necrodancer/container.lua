@@ -231,10 +231,10 @@ end
 
 -- overrides Container:update()
 function Button:update(gui)
+    self:update_active(gui)
     if (self.active) then
         self:update_status(gui)
         self:update_contents(gui)
-        self:update_active(gui)
     else
         self.hovering = false
         self.clicking = false
