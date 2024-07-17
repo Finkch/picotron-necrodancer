@@ -59,6 +59,19 @@ function Bone:span(offset) -- not sure about the how of this one yet
     return self.transform.pos + offset, self:tip() + offset
 end
 
+-- rotates the bone and all of its children.
+-- should NOT be used to dance; only used to build.
+-- dancing uses transforms to rotate, bone rotation,
+-- is used for default, unrotated position.
+function Bone:rotate(rot)
+    self.bone = self.bone:rotate(rot)
+    for child in all(self.children) do
+        child:rotate(rot)
+    end
+    return self
+end
+
+
 -- applies a pose to this bone and to all of its children
 function Bone:dance(pose, parenttip, parentrot)
 
