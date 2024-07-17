@@ -28,6 +28,7 @@ function init_necrodancer(skeleton)
     -- adds some data to the gui
     gui.data["skeleton"] = skeleton
     gui.data["current"] = skeleton.core
+    gui.data["max"] = 1
     gui.data["count"] = 1
     gui.data["i"] = 0
 
@@ -253,7 +254,7 @@ function init_necrodancer(skeleton)
         local current = gui.data.current
 
         local bone = Bone:new(
-            tostr(gui.data.count),
+            tostr(gui.data.max),
             current.bone:copy(),
             current.z,
             nil,
@@ -263,6 +264,7 @@ function init_necrodancer(skeleton)
         gui.data.skeleton:add(bone, current)
         gui.data.current = bone
         gui.data.count += 1
+        gui.data.max += 1
     end
     addbone.contents = addbone_brain
 
@@ -276,13 +278,16 @@ function init_necrodancer(skeleton)
         gui.data.current = gui.data.skeleton.core
         gui.data.i = 0
 
-        -- finds the largest name (in terms of its number)
-        -- to use as the count
-        gui.data.count = 1
+        -- finds max and count
+        gui.data.count = 0
+        gui.data.max = 1
         for _, bone in pairs(gui.data.skeleton.bones) do
-            -- plus one in the max to set it to the next bone.
+
+            gui.data.count += 1
+
+            -- plus 1 in the max to set it to the next bone.
             -- we need to convert it from string to number anyways.
-            if (bone.name != "core") gui.data.count = max(bone.name + 1, gui.data.count)
+            if (bone.name != "core") gui.data.max = max(bone.name + 1, gui.data.max)
         end
     end
     rmbone.contents = rmbone_brain
