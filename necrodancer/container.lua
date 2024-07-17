@@ -24,6 +24,7 @@ function Container:new(x, y, width, height, cls, contents)
 
         padding = 2,        -- size of border
 
+        active   = true,    -- whether or not the content is interactable
         hovering = false,   -- whether or not the mouse is over this container
         clicking = false,   -- whether or not the mouse has clicked this container
         holding  = false,   -- whether or not the mouse is being held down on this container
@@ -104,23 +105,36 @@ end
 
 -- updates
 function Container:update(gui)
+    self:update_active(gui)
     self:update_status(gui)
     self:update_contents(gui)
     self:update_extra(gui)
 end
 
 function Container:update_status(gui)   -- mouse status
-    self.hovering = self:hover(gui)
-    self.clicking = self:click(gui)
-    self.holding = self:hold(gui)
 
-    if (self.clicking) self.clicked = true
-    if (not self.holding) self.clicked = false
+    if (not self.active) then
+        self.hovering = false
+        self.clicking = false
+        self.holding =  false
+        self.clicked =  false
+
+    else
+        self.hovering = self:hover(gui)
+        self.clicking = self:click(gui)
+        self.holding = self:hold(gui)
+
+        if (self.clicking) self.clicked = true
+        if (not self.holding) self.clicked = false
+    end
 end
 
 function Container:update_contents(gui)          -- updates content
     if (self.contents) self.contents:update(gui)
 end
+
+-- must be ovveridden
+function Container:update_active(gui) end
 
 -- can be overridden to give more control
 function Container:update_extra(gui) end
@@ -232,32 +246,15 @@ setmetatable(Button, Label)
 function Button:new(x, y, cls, contents, colour, width, height)
 
     local b = Label:new(x, y, cls, contents, colour, width, height)
-    b.active = true
 
     setmetatable(b, Button)
     return b
 end
 
--- overrides Container:update()
-function Button:update(gui)
-    self:update_active(gui)
-    if (self.active) then
-        self:update_status(gui)
-        self:update_contents(gui)
-    else
-        self.hovering = false
-        self.clicking = false
-        self.holding =  false
-        self.clicked =  false
-    end
-end
 
 function Button:update_contents(gui)
     if (self.clicking and self.contents and self.contents.update) self.contents:update(gui) 
 end
-
--- must be ovveridden
-function Button:update_active(gui) end
 
 
 function Button:draw(gui)
