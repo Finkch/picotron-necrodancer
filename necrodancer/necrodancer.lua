@@ -267,6 +267,31 @@ function init_necrodancer(skeleton)
     addbone.contents = addbone_brain
 
 
+    -- removing bones
+    local rmbone_brain = Brain:new(skeleton)
+    rmbone_brain.update = function(self, gui)
+        local current = gui.data.current
+
+        gui.data.skeleton:remove(current)
+        gui.data.current = gui.data.skeleton.core
+        gui.data.i = 0
+
+        -- finds the largest name (in terms of its number)
+        -- to use as the count
+        gui.data.count = 1
+        for _, bone in pairs(gui.data.skeleton.bones) do
+            -- plus one in the max to set it to the next bone.
+            -- we need to convert it from string to number anyways.
+            if (bone.name != "core") gui.data.count = max(bone.name + 1, gui.data.count)
+        end
+    end
+    rmbone.contents = rmbone_brain
+
+    rmbone.update_active = function(self, gui)
+        self.active = gui.data.current.name != "core"
+    end
+
+
 
     return gui
 end
