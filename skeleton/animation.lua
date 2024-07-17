@@ -11,9 +11,6 @@ Animation.__index = Animation
 Animation.__type = "animation"
 
 function Animation:new(keyframes)
-
-    if (not keyframes) keyframes = {Keyframe:new()}
-
     local a = {
         keyframes = keyframes,  -- an ordered list of all keyframes in the animation
         duration = nil   
@@ -26,6 +23,11 @@ end
 
 -- finds the total duration of the animation
 function Animation:findduration()
+    if (not self.keyframes) then
+        self.duration = 0
+        return
+    end
+
     local duration = 0
     local initial_duration = self.keyframes[1].duration
     for keyframe in all(self.keyframes) do
