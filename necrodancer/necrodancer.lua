@@ -103,6 +103,10 @@ function init_necrodancer(skeleton)
     local duration = Label:new(offsety:right(padding), offsety:top(), 0, "Duration", 7)
     gui:attach(duration)
 
+    duration.update_active = function(self, gui)
+        self.active = gui.data.ikf != 0
+    end
+
 
 
     --  sliders for the bones
@@ -120,6 +124,10 @@ function init_necrodancer(skeleton)
 
     local duration_slider = Slider:new(duration:middle_horizontal(), offsety_slider:top(), 49, true, 2, 120, 2)
     gui:attach(duration_slider)
+
+    duration_slider.update_active = function(self, gui)
+        self.active = gui.data.ikf != 0
+    end
 
 
 
@@ -139,6 +147,10 @@ function init_necrodancer(skeleton)
 
     local duration_readout = Label:new(duration:left(), duration_slider:bottom(2 * padding), 0, tostr(flr(duration_slider:get())), 8, 44)
     gui:attach(duration_readout)
+
+    duration_readout.update_active = function(self, gui)
+        self.active = gui.data.ikf != 0
+    end
 
 
 
@@ -205,8 +217,8 @@ function init_necrodancer(skeleton)
     end
 
 
-    --[[
     duration_slider.when_clicked = function(self, gui)
+        gui.data.currentkf.duration = self:get()
     end
 
     duration_slider.when_not_clicked = function(self, gui)
@@ -216,7 +228,6 @@ function init_necrodancer(skeleton)
             self:put(gui.data.currentkf.duration)
         end
     end
-    ]]
 
 
 
