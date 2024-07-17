@@ -142,6 +142,13 @@ function Container:update_extra(gui) end
 -- draws container & contents
 function Container:draw(gui)
 
+    -- greys out when its not active
+    pal()
+    if (not self.active) then
+        pal(5, 0)
+        pal(6, 5)
+    end
+
     -- moves camera
     self:focus("tl")
     
@@ -222,6 +229,9 @@ function Label:draw(gui)
     -- moves camera to topleft of container
     self:focus()
 
+    -- swaps active colour for dark grey when not active
+    if (not self.active) pal(self.colour, 5)
+
     -- draws button image
     if (self.istext) then
         print(self.image, 3, 3, self.colour)
@@ -257,14 +267,14 @@ function Button:update_contents(gui)
 end
 
 
+-- completely overrides lower draws due to palette swapping issues
 function Button:draw(gui)
 
-    -- greys out button when its not active
+    pal()
     if (not self.active) then
         pal(5, 0)
         pal(6, 5)
     end
-
 
     -- swaps colours to make it look asif button is rising from window
     if (not self.clicked and self.active) then
@@ -272,8 +282,27 @@ function Button:draw(gui)
         pal(7, 5)
     end
 
-    -- draws regular container
-    Label.draw(self)
+
+    -- moves camera
+    self:focus("tl")
+
+    -- clears the screen
+    rectfill(0, 0, self.width, self.height, self.cls)
+        
+    -- draws the border
+    line(-1, -1, -1, self.height + 1, 5)
+    line(-1, -1, self.width, -1, 5)
+
+    line(self.width + 1, self.height + 1, 0, self.height + 1, 7)
+    line(self.width + 1, self.height + 1, self.width + 1, -1, 7)
+
+    -- draws button image
+    if (self.istext) then
+        print(self.image, 3, 3, self.colour)
+    else
+        spr(self.image, 2, 2)
+    end
+
 
     -- two width border (other layer is from container draw)
     self:focus()
@@ -286,10 +315,6 @@ function Button:draw(gui)
     -- adds mid-tone grey to two corners
     line(self.width + 1, -1, self.width, 0, 6)
     line(-1, self.height + 1, 0, self.height, 6)
-    
-
-    -- reset palette
-    pal()
 end
 
 
