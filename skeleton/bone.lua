@@ -61,7 +61,7 @@ end
 
 -- rotates the bone and all of its children.
 -- should NOT be used to dance; only used to build.
--- dancing uses transforms to rotate, bone rotation,
+-- dancing uses transforms to rotate, bone rotation
 -- is used for default, unrotated position.
 function Bone:rotate(rot)
     self.bone = self.bone:rotate(rot)
