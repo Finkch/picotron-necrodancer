@@ -161,7 +161,7 @@ function init_necrodancer(skeleton)
 
 
     rotation_slider.when_clicked = function(self, gui)
-        gui.data.current.bone = gui.data.current.bone:rotate(gui.data.current.bone:dir() - self:get())
+        gui.data.current:rotate(gui.data.current.bone:dir() - self:get())
     end
 
     rotation_slider.when_not_clicked = function(self, gui)
