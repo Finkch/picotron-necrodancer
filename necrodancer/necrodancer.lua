@@ -45,7 +45,7 @@ function init_necrodancer(skeleton)
     -- animation data
     local animation = Animation:new()
     gui.data["animation"] = animation
-    gui.data["currentkf"] = animation.keyframes[1]
+    gui.data["currentkf"] = nil
     gui.data["countkf"] = 1
     gui.data["ikf"] = 0
 
@@ -167,7 +167,7 @@ function init_necrodancer(skeleton)
 
 
 
-    -- connects bone to sliders
+    -- connects bone/duration to sliders
     length_slider.when_clicked = function(self, gui)
         gui.data.current.bone = gui.data.current.bone:normal() * self:get()
     end
@@ -203,6 +203,20 @@ function init_necrodancer(skeleton)
     offsety_slider.when_not_clicked = function(self, gui)
         self:put(gui.data.current.joint.y)
     end
+
+
+    --[[
+    duration_slider.when_clicked = function(self, gui)
+    end
+
+    duration_slider.when_not_clicked = function(self, gui)
+        if (gui.data.ikf == 0) then
+            self:put(0)
+        else
+            self:put(gui.data.currentkf.duration)
+        end
+    end
+    ]]
 
 
 
@@ -360,7 +374,7 @@ function init_necrodancer(skeleton)
         if (gui.data.ikf == 0) then
             gui.data.currentkf = nil
         else
-            gui.data.currentkf = gui.data.animation[gui.data.ikf]
+            gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
         end
     end
     prevkf.contents = prevkf_brain
@@ -373,7 +387,7 @@ function init_necrodancer(skeleton)
         if (gui.data.ikf == 0) then
             gui.data.currentkf = nil
         else
-            gui.data.currentkf = gui.data.animation[gui.data.ikf]
+            gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
         end
     end
     nextkf.contents = nextkf_brain
@@ -421,7 +435,6 @@ function init_necrodancer(skeleton)
         gui.data.currentkf = kf
     end
     addkf.contents = addkf_brain
-
 
 
 
