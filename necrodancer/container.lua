@@ -308,7 +308,7 @@ Slider.__index = Slider
 Slider.__type = "slider"
 setmetatable(Slider, Container)
 
-function Slider:new(x, y, length, vertical, minimum, maximum)
+function Slider:new(x, y, length, vertical, minimum, maximum, step)
     
     local w, h = -1, -1
     if (vertical) then
@@ -349,7 +349,7 @@ end
 
 -- places a value in, mapping into its min and max
 function Slider:put(value)
-    self.current = self:discretise((value - self.minimum) / (self.maximum - self.minimum))
+    self.current = (self:discretise(value) - self.minimum) / (self.maximum - self.minimum)
 end
 
 
