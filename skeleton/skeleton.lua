@@ -88,6 +88,23 @@ function Skeleton:add(bone, parent)
     self:findbones()
 end
 
+function Skeleton:remove(bone)  -- recursively finds the parent bone
+    local current = self.core
+    self:_remove(bone, current)
+    self.bones = {}
+    self:findbones()
+end
+
+function Skeleton:_remove(bone, current)
+    for child in all(current.children) do
+        if (child.name == bone.name) then
+            del(current.children, child)
+            return
+        end
+        self:_remove(bone, child)
+    end
+end
+
 -- applies a pose to the skeleton
 function Skeleton:dance(pose)   -- pose is a table of joint transforms
     self.core:dance(    -- applies to core; will cascade down from there
