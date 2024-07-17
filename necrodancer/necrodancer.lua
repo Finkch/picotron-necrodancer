@@ -89,16 +89,16 @@ function init_necrodancer(skeleton)
 
 
     --  sliders for the bones
-    local length_slider = Slider:new(length:middle_horizontal(), length:bottom(2 * padding), 49, true, 1, 25, 0.33)
+    local length_slider = Slider:new(length:middle_horizontal(), length:bottom(2 * padding), 49, true, 1, 25, 1)
     gui:attach(length_slider)
 
-    local rotation_slider = Slider:new(rotation:middle_horizontal(), length_slider:top(), 49, true, 0, 1.0001, 0)
+    local rotation_slider = Slider:new(rotation:middle_horizontal(), length_slider:top(), 49, true, 0, 1.019, 0.02)
     gui:attach(rotation_slider)
 
-    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, -25, 25, 0)
+    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, -25, 25, 1)
     gui:attach(offsetx_slider)
 
-    local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -25, 25, 0)
+    local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -25, 25, 1)
     gui:attach(offsety_slider)
 
 
@@ -142,10 +142,10 @@ function init_necrodancer(skeleton)
     local rotation_brain = LabelBrain:new(rotation_readout, rotation_slider, 2)
     gui:attach(rotation_brain)
 
-    local offsetx_brain = LabelBrain:new(offsetx_readout, offsetx_slider, 1)
+    local offsetx_brain = LabelBrain:new(offsetx_readout, offsetx_slider)
     gui:attach(offsetx_brain)
 
-    local offsety_brain = LabelBrain:new(offsety_readout, offsety_slider, 1)
+    local offsety_brain = LabelBrain:new(offsety_readout, offsety_slider)
     gui:attach(offsety_brain)
 
 
@@ -171,9 +171,7 @@ function init_necrodancer(skeleton)
 
 
     offsetx_slider.when_clicked = function(self, gui)
-        local v = self:get()
-        if (abs(v) < 1) v = 0
-        gui.data.current.joint = Vec:new(v, gui.data.current.joint.y)
+        gui.data.current.joint = Vec:new(self:get(), gui.data.current.joint.y)
     end
 
     offsetx_slider.when_not_clicked = function(self, gui)
@@ -182,9 +180,7 @@ function init_necrodancer(skeleton)
 
 
     offsety_slider.when_clicked = function(self, gui)
-        local v = self:get()
-        if (abs(v) < 1) v = 0
-        gui.data.current.joint = Vec:new(gui.data.current.joint.x, v)
+        gui.data.current.joint = Vec:new(gui.data.current.joint.x, self:get())
     end
 
     offsety_slider.when_not_clicked = function(self, gui)
@@ -302,7 +298,7 @@ function init_necrodancer(skeleton)
     -- adds a function to grave to highlight current bone
     grave.draw_extra = function(self, gui)
         local s, e = gui.data.current:span(offset)
-        
+
         line(s.x, s.y, e.x, e.y, 17)
         circfill(s.x, s.y, 1, 19)
     end
