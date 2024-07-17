@@ -407,7 +407,7 @@ function init_necrodancer(skeleton)
     
     -- button activation logic
     rmkf.update_active = function(self, gui)
-        self.active = gui.data.ikf != 0 and gui.data.count > 1
+        self.active = gui.data.ikf != 0 and gui.data.countkf > 1
     end
 
 
