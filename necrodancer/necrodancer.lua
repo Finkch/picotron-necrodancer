@@ -12,6 +12,7 @@ include("lib/vec.lua")
 
 include("skeleton/bone.lua")
 include("skeleton/transform.lua")
+include("skeleton/animation.lua")
 
 include("finkchlib/log.lua")
 
@@ -25,12 +26,25 @@ function init_necrodancer(skeleton)
     local gui = Gui:new("necrodancer", false, 245, 245, 180, 180, 6)
 
 
-    -- adds some data to the gui
+    --[[ 
+        adds some data to the gui
+
+    ]]
+
+    -- skeleton data
     gui.data["skeleton"] = skeleton
     gui.data["current"] = skeleton.core
     gui.data["max"] = 1
     gui.data["count"] = 1
     gui.data["i"] = 0
+
+
+    -- animation data
+    local animation = Animation:new()
+    gui.data["animation"] = animation
+    gui.data["currentkf"] = animation.keyframes[1]
+    gui.data["countkf"] = 1
+    gui.data["ikf"] = 0
 
 
 
@@ -300,6 +314,37 @@ function init_necrodancer(skeleton)
         circfill(s.x, s.y, 1, 19)
     end
     
+
+
+
+
+    --[[
+        animation buttons
+
+    ]]
+
+    -- add and remove keyframe
+    local rmkf = Button:new(prev:left(), prev:bottom(2 * padding), 6, 4)
+    gui:attach(rmkf)
+
+    local curkf = Label:new(rmkf:right(padding), rmkf:top(), 0, " Key Frame", 7, curbone:right() - curbone:left())
+    gui:attach(curkf)
+
+    local addkf = Button:new(curkf:right(padding), curkf:top(), 6, 3)
+    gui:attach(addkf)
+
+
+    
+    -- next and previous, plus label that says the $current_bone
+    local prevkf = Button:new(rmkf:left(), rmkf:bottom(padding), 6, 6)
+    gui:attach(prevkf)
+
+    local curreadkf = Label:new(prevkf:right(padding), prevkf:top(), 0, "n/a", 8, curkf:right() - curkf:left())
+    gui:attach(curreadkf)
+
+    local nextkf = Button:new(curreadkf:right(padding), curreadkf:top(), 6, 5)
+    gui:attach(nextkf)
+
 
 
     return gui
