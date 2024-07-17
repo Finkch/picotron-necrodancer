@@ -299,5 +299,15 @@ function init_necrodancer(skeleton)
 
 
 
+    -- adds a function to grave to highlight current bone
+    grave.draw_extra = function(self, gui)
+        local s, e = gui.data.current:span(offset)
+        
+        line(s.x, s.y, e.x, e.y, 17)
+        circfill(s.x, s.y, 1, 19)
+    end
+    
+
+
     return gui
 end
