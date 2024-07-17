@@ -348,6 +348,54 @@ function init_necrodancer(skeleton)
     gui:attach(nextkf)
 
 
+    -- next/prev keyframe
+    local prevkf_brain = Brain:new(nil)
+    prevkf_brain.update = function(self, gui)
+        gui.data.ikf = (gui.data.ikf - 1) % (gui.data.countkf + 1)
+
+        if (gui.data.ikf == 0) then
+            gui.data.currentkf = nil
+        else
+            gui.data.currentkf = gui.data.animation[gui.data.ikf]
+        end
+    end
+    prevkf.contents = prevkf_brain
+
+
+    local nextkf_brain = Brain:new(nil)
+    nextkf_brain.update = function(self, gui)
+        gui.data.ikf = (gui.data.ikf + 1) % (gui.data.countkf + 1)
+
+        if (gui.data.ikf == 0) then
+            gui.data.currentkf = nil
+        else
+            gui.data.currentkf = gui.data.animation[gui.data.ikf]
+        end
+    end
+    nextkf.contents = nextkf_brain
+
+
+    
+    -- button activation logic
+    rmkf.update_active = function(self, gui)
+        self.active = gui.data.ikf != 0 and gui.data.count > 1
+    end
+
+
+
+    -- current kf readout
+    local kf_readout = Brain:new(curreadkf)
+    kf_readout.update = function(self, gui)
+        debug:add(gui.data.ikf)
+        if (gui.data.ikf == 0) then
+            self.target.image = "n/a"
+        else
+            self.target.image = gui.data.ikf
+        end
+    end
+    gui:attach(kf_readout)
+
+
 
     return gui
 end
