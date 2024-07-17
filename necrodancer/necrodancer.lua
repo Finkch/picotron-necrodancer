@@ -95,10 +95,10 @@ function init_necrodancer(skeleton)
     local rotation_slider = Slider:new(rotation:middle_horizontal(), length_slider:top(), 49, true, 0, 1, 0)
     gui:attach(rotation_slider)
 
-    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, -15, 15, 0)
+    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, -25, 25, 0)
     gui:attach(offsetx_slider)
 
-    local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -15, 15, 0)
+    local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -25, 25, 0)
     gui:attach(offsety_slider)
 
 
