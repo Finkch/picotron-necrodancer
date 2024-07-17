@@ -308,7 +308,7 @@ Slider.__index = Slider
 Slider.__type = "slider"
 setmetatable(Slider, Container)
 
-function Slider:new(x, y, length, vertical, minimum, maximum, current)
+function Slider:new(x, y, length, vertical, minimum, maximum, current, step)
     
     local w, h = -1, -1
     if (vertical) then
@@ -325,6 +325,7 @@ function Slider:new(x, y, length, vertical, minimum, maximum, current)
     s.current = current
     s.length = length
     s.vertical = vertical
+    s.step = step               -- forces slider into discrete values of this size
     s.padding = 6
     s.when_clicked = nil        -- methods that can be set
     s.when_not_clicked = nil
@@ -333,15 +334,22 @@ function Slider:new(x, y, length, vertical, minimum, maximum, current)
     return s
 end
 
+-- alters input value to match discrete step size
+function Slider:discretise(value)
+    if (self.step) value = self.step * flr(value / self.step)
+
+    return value
+end
+
 
 -- gets the current value out of the slider, mapped to its min and max
 function Slider:get()
-    return self.current * (self.maximum - self.minimum) + self.minimum
+    return self:discretise(self.current * (self.maximum - self.minimum) + self.minimum)
 end
 
 -- places a value in, mapping into its min and max
 function Slider:put(value)
-    self.current = (value - self.minimum) / (self.maximum - self.minimum)
+    self.current = self:discretise((value - self.minimum) / (self.maximum - self.minimum))
 end
 
 
