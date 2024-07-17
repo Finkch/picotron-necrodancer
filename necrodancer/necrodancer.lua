@@ -250,7 +250,7 @@ function init_necrodancer(skeleton)
     -- adding bones
     local addbone_brain = Brain:new(skeleton)
     addbone_brain.update = function(self, gui)
-        local current = skeleton.bones[gui.data.current.name]
+        local current = gui.data.current
 
         local bone = Bone:new(
             tostr(gui.data.count),
@@ -265,8 +265,6 @@ function init_necrodancer(skeleton)
         gui.data.count += 1
     end
     addbone.contents = addbone_brain
-
-
 
 
 
