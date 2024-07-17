@@ -13,6 +13,7 @@ include("lib/vec.lua")
 include("skeleton/bone.lua")
 include("skeleton/transform.lua")
 
+include("finkchlib/log.lua")
 
 -- returns the window
 function init_necrodancer(skeleton)
@@ -28,6 +29,7 @@ function init_necrodancer(skeleton)
     gui.data["skeleton"] = skeleton
     gui.data["current"] = skeleton.core
     gui.data["count"] = 1
+    gui.data["i"] = 0
 
 
 
@@ -198,7 +200,50 @@ function init_necrodancer(skeleton)
     end
     gui:attach(bone_readout)
 
-    
+
+
+
+
+    -- previous and next bones
+    local prev_brain = Brain:new()
+    prev_brain.update = function(self, gui)
+        local i = 0
+        for _, bone in pairs(gui.data.skeleton.bones) do
+            if ((i - 1) % gui.data.count == gui.data.i) then
+                gui.data.i = i
+                gui.data.current = bone
+                return
+            end
+            i += 1
+        end
+    end
+    prev.contents = prev_brain
+
+    prev.update_active = function(self, gui)
+        self.active = gui.data.count > 1
+    end
+
+
+    local next_brain = Brain:new()
+    next_brain.update = function(self, gui)
+        local i = 0
+        for _, bone in pairs(gui.data.skeleton.bones) do
+            if ((i + 1) % gui.data.count == gui.data.i) then
+                gui.data.i = i
+                gui.data.current = bone
+                log("brains.txt", "i:\t" .. i .. " / " .. gui.data.i .. "\ncurrent:\t" .. bone.name, {"-a"})
+                return
+            end
+            i += 1
+        end
+    end
+    next.contents = next_brain
+
+    next.update_active = function(self, gui)
+        self.active = gui.data.count > 1
+    end
+
+
 
 
 
@@ -221,9 +266,6 @@ function init_necrodancer(skeleton)
     end
     addbone.contents = addbone_brain
 
-    
-
-    -- connects sliders to current bone
 
 
 
