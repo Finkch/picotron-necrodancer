@@ -308,7 +308,7 @@ Slider.__index = Slider
 Slider.__type = "slider"
 setmetatable(Slider, Container)
 
-function Slider:new(x, y, length, vertical, minimum, maximum, current, step)
+function Slider:new(x, y, length, vertical, minimum, maximum)
     
     local w, h = -1, -1
     if (vertical) then
@@ -322,7 +322,7 @@ function Slider:new(x, y, length, vertical, minimum, maximum, current, step)
     local s = Container:new(x, y, w, h, 0, nil)
     s.minimum = minimum
     s.maximum = maximum
-    s.current = current
+    s.current = 0
     s.length = length
     s.vertical = vertical
     s.step = step               -- forces slider into discrete values of this size
