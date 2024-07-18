@@ -35,6 +35,7 @@ function init_necrodancer(skeleton)
 
     gui.data["mode"] = "skeleton"
     gui.data["time"] = 0
+    gui.data.paused = true
 
 
     -- skeleton data
@@ -542,6 +543,21 @@ function init_necrodancer(skeleton)
             self.other.active = true
         end
     end
+
+    pause_brain = Brain:new(nil)
+    pause_brain.update = function(self, gui)
+        gui.data.paused = true
+    end
+    pause.contents = pause_brain
+
+
+    play_brain = Brain:new(nil)
+    play_brain.update = function(self, gui)
+        gui.data.paused = false
+    end
+    play.contents = play_brain
+
+
 
 
 
