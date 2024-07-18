@@ -34,7 +34,7 @@ end
 -- sets new animation
 function Necromancer:set(animation)
     self.previous = self.current    -- we'll want to keep transforms of last animation, not whole animation
-    self.current = animation
+    self.current = self.animations[animation]
     self.frame = 0
 end
 
