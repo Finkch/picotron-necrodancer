@@ -24,6 +24,25 @@ function Keyframe:new(duration, transforms)
     return k
 end
 
+-- adds a bone into the keyframe's transformations list
+function Keyframe:add(bone, angle)
+    if (not angle) angle = bone.bone:dir()
+    self.transforms[bone.name] = angle
+end
+
+-- returns bone's transform, with default for key not found
+function Keyframe:get(bone)
+
+    local transform = self.transforms[bone.name]
+    
+    if (not transform) then
+        transform = bone.bone:dir()
+        self.transforms[bone.name] = transform
+    end
+
+    return transform
+end
+
 
 -- metamethods
 function Keyframe:__index(key) -- returns transform without overriding metamethods
