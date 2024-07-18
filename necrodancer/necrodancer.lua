@@ -621,7 +621,7 @@ function init_necrodancer(skeleton)
     pause_brain = Brain:new(gui.data.skeleton.necromancer)
     pause_brain.update = function(self, gui)
         self.target.paused = true
-        --gui.data.paused = true
+        self.target.frame = gui.data.currentkf.frame
     end
     pause.contents = pause_brain
 
@@ -629,7 +629,7 @@ function init_necrodancer(skeleton)
     play_brain = Brain:new(gui.data.skeleton.necromancer)
     play_brain.update = function(self, gui)
         self.target.paused = false
-        --gui.data.paused = false
+        self.target.frame = gui.data.currentkf.frame
     end
     play.contents = play_brain
 
