@@ -5,6 +5,8 @@
 
 ]]
 
+include("finkchlib/tstr.lua")
+
 Keyframe = {}
 Keyframe.__index = Keyframe
 Keyframe.__type = "keyframe"
@@ -51,4 +53,8 @@ function Keyframe:__index(key) -- returns transform without overriding metametho
     -- if we didn't find the item, it likely means it shoud look in the metatable
     if (not datum) return Keyframe[key]
     return datum
+end
+
+function Keyframe:__tostring()
+    return "Keyframe (" .. self.duration .. "f @ " .. tostr(self.frame) .. ")\t" .. tstr(self.transforms, 1)
 end

@@ -6,6 +6,8 @@
 
 include("skeleton/keyframe.lua")
 
+include("finkchlib/tstr.lua")
+
 Animation = {}
 Animation.__index = Animation
 Animation.__type = "animation"
@@ -60,4 +62,11 @@ function Animation:addkeyframe(skeleton, index)
 
     -- recalculates the duration of the animation
     self:findduration()
+end
+
+
+
+-- metamethods
+function Animation:__tostring()
+    return "Animation (" .. self.duration .. ")" .. tstr(self.keyframes, 0)
 end
