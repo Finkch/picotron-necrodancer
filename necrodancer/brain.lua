@@ -53,8 +53,12 @@ function LabelBrain:new(target, source, decimals)
     return lb
 end
 
+function LabelBrain:get(gui)
+    return self.source:get(gui)
+end
+
 function LabelBrain:update(gui)
-    local datum = self.source:get(gui)
+    local datum = self:get(gui)
 
     if (type(datum) == "number") datum = string.format("%." .. self.decimals .. "f", datum)
 
