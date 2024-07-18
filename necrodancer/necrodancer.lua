@@ -265,6 +265,9 @@ function init_necrodancer(skeleton)
 
     duration_slider.when_clicked = function(self, gui)
         gui.data.currentkf.duration = self:get()
+
+        -- updates animation's duration
+        gui.data.animation:findduration()
     end
 
     duration_slider.when_not_clicked = function(self, gui)
