@@ -386,8 +386,20 @@ function init_necrodancer(skeleton)
         if (gui.data.mode == "skeleton") then
             gui.data.skeleton.necromancer:set("idle")
             gui.data.time = 0
+
+        elseif (gui.data.paused) then
+
+            -- creates new animation with one keyframe being currentkf
+            gui.data.skeleton.necromancer.animations[tostr(gui.data.ikf)] = Animation:new({gui.data.currentkf})
+
+            -- set animation to the keyframe
+            gui.data.skeleton.necromancer:set(tostr(gui.data.ikf))
+
+            -- resets time to allow playing to start again
+            gui.data.time = 0
+
         else
-            
+            -- sets animation to the actual animation
             if (gui.data.time == 0) gui.data.skeleton.necromancer:set("current")
 
             gui.data.time += 1
