@@ -231,7 +231,7 @@ function init_necrodancer(skeleton)
         if (gui.data.mode == "skeleton") then
             gui.data.current:rotate(gui.data.current.bone:dir() - self:get())
         else
-            gui.data.currentkf:add(gui.data.current, self:get())
+            gui.data.currentkf:addbone(gui.data.current, self:get())
         end
     end
 
@@ -353,6 +353,9 @@ function init_necrodancer(skeleton)
         gui.data.current = bone
         gui.data.count += 1
         gui.data.max += 1
+
+        -- adds the bone to the necromancer, setting default positions
+        gui.data.skeleton.necromancer:addbone(bone)
     end
     addbone.contents = addbone_brain
 
@@ -510,14 +513,14 @@ function init_necrodancer(skeleton)
 
 
     --[[
-        import/export buttons
+        save/load buttons
 
     ]]
-    local import = Button:new(prevkf:left(), prevkf:bottom(2 * padding), 6, "Import", 5)
-    gui:attach(import)
+    local load = Button:new(prevkf:left(), prevkf:bottom(2 * padding), 6, "Load", 5)
+    gui:attach(load)
 
-    local export = Button:new(import:right(padding), import:top(), 6, "Export", 5)
-    gui:attach(export)
+    local save = Button:new(load:right(padding), load:top(), 6, "Save", 5)
+    gui:attach(save)
 
 
 
