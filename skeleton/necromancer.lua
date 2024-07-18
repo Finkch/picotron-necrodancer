@@ -23,7 +23,8 @@ function Necromancer:new(animations)
         current = animations["idle"],   -- current animation
         previous = nil,                 -- previous animation
         interpolator = nil,             -- function used to interpolate between poses
-        frame = 0                       -- frame/time
+        frame = 0,                      -- frame/time
+        paused = false,                 -- whether to increment frames on update
     }
 
     setmetatable(n, Necromancer)
@@ -40,7 +41,7 @@ end
 
 -- updates frame count
 function Necromancer:update()
-    self.frame += 1
+    if (not self.paused) self.frame += 1
     if (self.frame >= self.current.duration) self.frame = 0 -- loops
 
     -- gets frames and progress
