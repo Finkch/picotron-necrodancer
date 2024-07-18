@@ -229,11 +229,11 @@ function init_necrodancer(skeleton)
     end
 
     rotation_slider.when_not_clicked = function(self, gui)
+        -- add arbitrarily small amount to fix rounding error
         if (gui.data.mode == "skeleton") then
-            -- add arbitrarily small amount to fix rounding error
             self:put(gui.data.current.bone:dir() + 0.0001)
         else
-            self:put(gui.data.currentkf:get(gui.data.current))
+            self:put(gui.data.currentkf:get(gui.data.current) + 0.0001)
         end
     end
 
