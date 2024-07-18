@@ -48,7 +48,7 @@ function init_necrodancer(skeleton)
 
     -- animation data
     local animation = Animation:new()
-    skeleton.necromancer.animations["1"] = animation
+    skeleton.necromancer.animations["current"] = animation
     gui.data["animation"] = animation
     gui.data["currentkf"] = animation.keyframes[1]
     gui.data["countkf"] = 1
@@ -387,7 +387,7 @@ function init_necrodancer(skeleton)
             gui.data.time = 0
         else
             
-            if (gui.data.time == 0) gui.data.skeleton.necromancer:set("1")
+            if (gui.data.time == 0) gui.data.skeleton.necromancer:set("current")
 
             gui.data.time += 1
         end
