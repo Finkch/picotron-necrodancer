@@ -70,30 +70,22 @@ function init_necrodancer(skeleton)
 
     -- mode toggle
     local skeleton_mode = Button:new(grave:right(padding + 3), grave:top(), 6, "Skeleton", 5)
+    skeleton_mode.mode = "animation"
     gui:attach(skeleton_mode)
-    skeleton_mode.active = false
 
     local animation_mode = Button:new(skeleton_mode:right(2 * padding + 1), skeleton_mode:top(), 6, "Animation", 5)
+    animation_mode.mode = "skeleton"
     gui:attach(animation_mode)
 
-    -- mode buttons need a reference to one another
-    skeleton_mode.other = animation_mode
-    animation_mode.other = skeleton_mode
 
     skeleton_mode.update_active = function(self, gui)
-        if (self.clicked) then
-            self.active = false
-            self.other.active = true
-            gui.data.mode = "skeleton"
-        end
+        self.active = true
+        if (self.clicked) gui.data.mode = "skeleton"
     end
 
     animation_mode.update_active = function(self, gui)
-        if (self.clicked) then
-            self.active = false
-            self.other.active = true
-            gui.data.mode = "animation"
-        end
+        self.active = true
+        if (self.clicked) gui.data.mode = "animation"
     end
 
 
@@ -516,7 +508,8 @@ function init_necrodancer(skeleton)
         save/load buttons
 
     ]]
-    local load = Button:new(prevkf:left(), prevkf:bottom(2 * padding), 6, "Load", 5)
+
+    local load = Button:new(play:right(4 * padding - 1), play:top(), 6, "Load", 5)
     gui:attach(load)
 
     local save = Button:new(load:right(padding), load:top(), 6, "Save", 5)
