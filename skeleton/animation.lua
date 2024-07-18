@@ -58,4 +58,6 @@ function Animation:addkeyframe(skeleton, index)
     -- if index is not supplied, defaults to end of the list
     add(self.keyframes, keyframe, index)
 
+    -- recalculates the duration of the animation
+    self:findduration()
 end
