@@ -25,7 +25,7 @@ function init_necrodancer(skeleton)
 
 
     -- application window to make a skeleton
-    local gui = Gui:new("necrodancer", false, 251, 245, 180, 180, 6)
+    local gui = Gui:new("necrodancer", false, 300, 245, 180, 180, 6)
 
 
     --[[ 
@@ -35,12 +35,14 @@ function init_necrodancer(skeleton)
 
     gui.data["mode"] = "skeleton"
     gui.data["time"] = 0
-    gui.data.paused = true
+    gui.data.paused = false
 
 
     -- skeleton data
     local skeleton = Skeleton:new(nil, nil, true)
+    skeleton.necromancer.paused = true
     gui.data["skeleton"] = skeleton
+    gui.data["necromancer"] = skeleton.necromancer
     gui.data["current"] = skeleton.core
     gui.data["max"] = 1
     gui.data["count"] = 1
@@ -86,7 +88,10 @@ function init_necrodancer(skeleton)
 
     animation_mode.update_active = function(self, gui)
         self.active = true
-        if (self.clicked) gui.data.mode = "animation"
+        if (self.clicked) then
+            gui.data.mode = "animation"
+            gui.data.necromancer.frame = gui.data.currentkf.frame
+        end
     end
 
 
@@ -137,6 +142,13 @@ function init_necrodancer(skeleton)
     duration.mode = "animation"
     gui:attach(duration)
 
+    local frame = Label:new(duration:right(padding), duration:top(), 0, " Frame ", 7, duration:right() - duration:left())
+    frame.mode = "animation"
+    frame.update_active = function(self, gui)
+        self.active = gui.data.necromancer.paused
+    end
+    gui:attach(frame)
+
 
 
 
@@ -160,6 +172,15 @@ function init_necrodancer(skeleton)
     duration_slider.mode = "animation"
     gui:attach(duration_slider)
 
+    local frame_slider = Slider:new(frame:middle_horizontal(), duration_slider:top(), 49, true, 0, 1, 1)
+    frame_slider.mode = "animation"
+    frame_slider.update_active = function(self, gui)
+        self.active = gui.data.necromancer.paused
+
+        if (not self.active) self:put(gui.data.currentkf.frame)
+    end
+    gui:attach(frame_slider)
+
 
 
 
@@ -182,6 +203,10 @@ function init_necrodancer(skeleton)
     local duration_readout = Label:new(offsety_readout:right(padding), offsety_readout:top(), 0, tostr(flr(duration_slider:get())), 8, duration:right() - duration:left())
     duration_readout.mode = "animation"
     gui:attach(duration_readout)
+
+    local frame_readout = Label:new(duration_readout:right(padding), duration_readout:top(), 0, "0", 8, frame:right() - frame:left())
+    frame_readout.mode = "animation"
+    gui:attach(frame_readout)
 
 
 
@@ -207,6 +232,14 @@ function init_necrodancer(skeleton)
 
     local duration_brain = LabelBrain:new(duration_readout, duration_slider)
     gui:attach(duration_brain)
+
+    local frame_brain = LabelBrain:new(frame_readout, gui.data.necromancer)
+    frame_brain.get = function(self, gui) -- custom get to link it to the necromancer
+        local frame = self.source.frame
+        if (frame < gui.data.currentkf.frame and self.source.paused) frame = gui.data.currentkf.frame
+        return frame
+    end
+    gui:attach(frame_brain)
 
 
 
@@ -268,6 +301,26 @@ function init_necrodancer(skeleton)
             self:put(0)
         else
             self:put(gui.data.currentkf.duration)
+        end
+    end
+
+
+    frame_slider.when_clicked = function(self, gui)
+        gui.data.necromancer.frame = self:get()
+    end
+
+    frame_slider.when_not_clicked = function(self, gui)
+        if (not gui.data.necromancer.paused) then
+            self:put(gui.data.currentkf.frame)
+        else
+            local frame = gui.data.necromancer.frame
+            if (gui.data.necromancer.frame < gui.data.currentkf.frame) frame = gui.data.currentkf.frame
+
+            -- updates the range of the slider!
+            self.minimum = gui.data.currentkf.frame
+            self.maximum = self.minimum + gui.data.currentkf.duration - 1
+
+            self:put(frame)
         end
     end
 
@@ -458,6 +511,9 @@ function init_necrodancer(skeleton)
     prevkf_brain.update = function(self, gui)
         gui.data.ikf = (gui.data.ikf - 2) % gui.data.countkf + 1
         gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
+
+        -- updates necromancer's frame
+        if (gui.data.necromancer.paused) gui.data.necromancer.frame = gui.data.currentkf.frame
     end
     prevkf.contents = prevkf_brain
 
@@ -470,6 +526,9 @@ function init_necrodancer(skeleton)
     nextkf_brain.update = function(self, gui)
         gui.data.ikf = gui.data.ikf % gui.data.countkf + 1
         gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
+
+                -- updates necromancer's frame
+                if (gui.data.necromancer.paused) gui.data.necromancer.frame = gui.data.currentkf.frame
     end
     nextkf.contents = nextkf_brain
 
@@ -513,6 +572,9 @@ function init_necrodancer(skeleton)
         gui.data.animation:addkeyframe(gui.data.skeleton, gui.data.ikf)
         gui.data.countkf += 1
         gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
+
+        -- updates necromancer
+        if (gui.data.necromancer.paused) gui.data.necromancer.frame = gui.data.currentkf.frame
     end
     addkf.contents = addkf_brain
 
@@ -556,16 +618,18 @@ function init_necrodancer(skeleton)
         end
     end
 
-    pause_brain = Brain:new(nil)
+    pause_brain = Brain:new(gui.data.skeleton.necromancer)
     pause_brain.update = function(self, gui)
-        gui.data.paused = true
+        self.target.paused = true
+        --gui.data.paused = true
     end
     pause.contents = pause_brain
 
 
-    play_brain = Brain:new(nil)
+    play_brain = Brain:new(gui.data.skeleton.necromancer)
     play_brain.update = function(self, gui)
-        gui.data.paused = false
+        self.target.paused = false
+        --gui.data.paused = false
     end
     play.contents = play_brain
 
