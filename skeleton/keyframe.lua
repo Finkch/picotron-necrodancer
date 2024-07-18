@@ -25,7 +25,7 @@ function Keyframe:new(duration, transforms)
 end
 
 -- adds a bone into the keyframe's transformations list
-function Keyframe:add(bone, angle)
+function Keyframe:addbone(bone, angle)
     if (not angle) angle = bone.bone:dir()
     self.transforms[bone.name] = angle
 end

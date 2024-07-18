@@ -34,3 +34,13 @@ function Animation:findduration()
     end
     self.duration = duration
 end
+
+
+-- adds a bone to all keyframes.
+-- shouldn't be used at runtime, but to build skeletons while
+-- seeing the output.
+function Animation:addbone(bone)
+    for keyframe in all(self.keyframes) do
+        keyframe:addbone(bone)
+    end
+end

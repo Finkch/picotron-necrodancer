@@ -86,3 +86,13 @@ function Necromancer:interpolate(k1, k2, progress)
 
     return transforms
 end
+
+
+-- adds a bone to all animations.
+-- shouldn't be used at runtime, but to build skeletons while
+-- seeing the output.
+function Necromancer:addbone(bone)
+    for _, animation in pairs(self.animations) do
+        animation:addbone(bone)
+    end
+end
