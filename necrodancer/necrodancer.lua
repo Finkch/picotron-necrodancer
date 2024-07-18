@@ -34,6 +34,8 @@ function init_necrodancer(skeleton)
     ]]
 
     gui.data["mode"] = "skeleton"
+    gui.data["time"] = 0
+
 
     -- skeleton data
     local skeleton = Skeleton:new(nil, nil, true)
@@ -46,6 +48,7 @@ function init_necrodancer(skeleton)
 
     -- animation data
     local animation = Animation:new()
+    skeleton.necromancer.animations["1"] = animation
     gui.data["animation"] = animation
     gui.data["currentkf"] = animation.keyframes[1]
     gui.data["countkf"] = 1
@@ -225,12 +228,20 @@ function init_necrodancer(skeleton)
 
 
     rotation_slider.when_clicked = function(self, gui)
-        gui.data.current:rotate(gui.data.current.bone:dir() - self:get())
+        if (gui.data.mode == "skeleton") then
+            gui.data.current:rotate(gui.data.current.bone:dir() - self:get())
+        else
+            gui.data.currentkf:add(gui.data.current, self:get())
+        end
     end
 
     rotation_slider.when_not_clicked = function(self, gui)
-        -- add arbitrarily small amount to fix rounding error
-        self:put(gui.data.current.bone:dir() + 0.0001)
+        if (gui.data.mode == "skeleton") then
+            -- add arbitrarily small amount to fix rounding error
+            self:put(gui.data.current.bone:dir() + 0.0001)
+        else
+            self:put(gui.data.currentkf:get(gui.data.current))
+        end
     end
 
 
@@ -371,6 +382,19 @@ function init_necrodancer(skeleton)
     end
 
 
+    -- links the current animation to the skeleton
+    grave.update_extra = function(self, gui)
+        if (gui.data.mode == "skeleton") then
+            gui.data.skeleton.necromancer:set("idle")
+            gui.data.time = 0
+        else
+            
+            if (gui.data.time == 0) gui.data.skeleton.necromancer:set("1")
+
+            gui.data.time += 1
+        end
+    end
+
 
     -- adds a function to grave to highlight current bone
     grave.draw_extra = function(self, gui)
@@ -468,6 +492,7 @@ function init_necrodancer(skeleton)
         gui.data.countkf -= 1
         gui.data.ikf = gui.data.ikf % gui.data.countkf + 1
         gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
+        gui.data.animation:findduration()
     end
     rmkf.contents = rmkf_brain
 
@@ -479,6 +504,7 @@ function init_necrodancer(skeleton)
         add(gui.data.animation.keyframes, kf, gui.data.ikf)
         gui.data.countkf += 1
         gui.data.currentkf = kf
+        gui.data.animation:findduration()
     end
     addkf.contents = addkf_brain
 
