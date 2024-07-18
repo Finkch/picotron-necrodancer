@@ -83,15 +83,15 @@ function init_necrodancer(skeleton)
 
     skeleton_mode.update_active = function(self, gui)
         self.active = true
-        if (self.clicked) gui.data.mode = "skeleton"
+        if (self.clicked) then
+            gui.data.mode = "skeleton"
+            gui.data.necromancer.paused = true
+        end
     end
 
     animation_mode.update_active = function(self, gui)
         self.active = true
-        if (self.clicked) then
-            gui.data.mode = "animation"
-            gui.data.necromancer.frame = gui.data.currentkf.frame
-        end
+        if (self.clicked) gui.data.mode = "animation"
     end
 
 
