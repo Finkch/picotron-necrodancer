@@ -498,13 +498,10 @@ function init_necrodancer(skeleton)
 
     local addkf_brain = Brain:new(nil)
     addkf_brain.update = function(self, gui)
-        local kf = Keyframe:new()
-
         gui.data.ikf += 1
-        add(gui.data.animation.keyframes, kf, gui.data.ikf)
+        gui.data.animation:addkeyframe(gui.data.skeleton, gui.data.ikf)
         gui.data.countkf += 1
-        gui.data.currentkf = kf
-        gui.data.animation:findduration()
+        gui.data.currentkf = gui.data.animation.keyframes[gui.data.ikf]
     end
     addkf.contents = addkf_brain
 
