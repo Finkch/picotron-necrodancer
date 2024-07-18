@@ -504,6 +504,47 @@ function init_necrodancer(skeleton)
     addkf.contents = addkf_brain
 
 
+
+    
+    
+    --[[
+        play/pause buttons
+
+    ]]
+
+    local pause = Button:new(prevkf:left(), prevkf:bottom(2 * padding), 6, 10, 5)
+    pause.mode = "animation"
+    pause.active = false
+    gui:attach(pause)
+
+    local play = Button:new(pause:right(padding), pause:top(), 6, 11, 5)
+    play.mode = "animation"
+    play.active = true
+    gui:attach(play)
+
+    play.other = pause
+    pause.other = play
+
+    pause.update_active = function(self, gui)
+        if (self.clicked) then
+            self.active = false
+            self.other.active = true
+        end
+    end
+
+    play.update_active = function(self, gui)
+
+        -- activates this button after switching modes
+        self.active = not self.other.active
+
+        if (self.clicked) then
+            self.active = false
+            self.other.active = true
+        end
+    end
+
+
+
     --[[
         save/load buttons
 
