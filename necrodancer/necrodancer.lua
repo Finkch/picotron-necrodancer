@@ -315,6 +315,7 @@ function init_necrodancer(skeleton)
         else
             local frame = gui.data.necromancer.frame
             if (gui.data.necromancer.frame < gui.data.currentkf.frame) frame = gui.data.currentkf.frame
+            if (gui.data.necromancer.paused) gui.data.necromancer.frame = frame
 
             -- updates the range of the slider!
             self.minimum = gui.data.currentkf.frame
