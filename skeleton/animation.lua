@@ -44,3 +44,18 @@ function Animation:addbone(bone)
         keyframe:addbone(bone)
     end
 end
+
+
+-- adds a keyframe to the animation
+function Animation:addkeyframe(skeleton, index)
+
+    -- creates a keyframe and adds each bone in the skeleton
+    local keyframe = Keyframe:new()
+    for _, bone in pairs(skeleton.bones) do
+        keyframe:addbone(bone)  -- uses default pose for angles
+    end
+
+    -- if index is not supplied, defaults to end of the list
+    add(self.keyframes, keyframe, index)
+
+end
