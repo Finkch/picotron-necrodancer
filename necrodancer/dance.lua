@@ -34,9 +34,10 @@ end
 
 function _draw()
 
+    debug:add(tostr(gui.data.skeleton.necromancer.current))
+
     gui:draw()
 
     -- debug printout
     camera()
-	debug:print(2, 2, 8)
 end
