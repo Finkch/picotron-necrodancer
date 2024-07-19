@@ -114,3 +114,16 @@ function Skeleton:dance(pose)   -- pose is a table of joint transforms
         pose
     )
 end
+
+
+
+-- metamethods
+function Skeleton:__tostring()
+    local str = "Skeleton (" .. self.core.name .. ")\t"
+
+    for _, bone in pairs(self.bones) do
+        str ..= "\n" .. tostr(bone)
+    end
+
+    return str
+end
