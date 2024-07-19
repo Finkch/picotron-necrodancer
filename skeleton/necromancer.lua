@@ -15,7 +15,7 @@ function Necromancer:new(animations)
 
     if (not animations) then
         animations = {}
-        animations["idle"] = Animation:new()
+        animations["idle"] = Animation:new("idle")
     end
 
     local n = {

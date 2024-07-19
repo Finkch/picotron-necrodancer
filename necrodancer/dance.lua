@@ -36,6 +36,10 @@ function _draw()
 
     debug:add(tostr(gui.data.skeleton.necromancer.current))
 
+    local k1, k2 = gui.data.skeleton.necromancer:findkeyframes()
+    local progress = gui.data.skeleton.necromancer:progress(k1, k2)
+    debug:add(progress)
+
     gui:draw()
 
     -- debug printout

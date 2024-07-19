@@ -64,7 +64,7 @@ function init_necrodancer(skeleton)
 
 
     -- animation data
-    local animation = Animation:new()
+    local animation = Animation:new("current")
     skeleton.necromancer.animations["current"] = animation
     gui.data["animation"] = animation
     gui.data["currentkf"] = animation.keyframes[1]

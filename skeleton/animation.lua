@@ -12,11 +12,12 @@ Animation = {}
 Animation.__index = Animation
 Animation.__type = "animation"
 
-function Animation:new(keyframes)
+function Animation:new(name, keyframes)
 
     if (not keyframes) keyframes = {Keyframe:new()}
 
     local a = {
+        name = name,
         keyframes = keyframes,  -- an ordered list of all keyframes in the animation
         duration = nil   
     }
@@ -68,5 +69,5 @@ end
 
 -- metamethods
 function Animation:__tostring()
-    return "Animation (" .. self.duration .. ")" .. tstr(self.keyframes, 0)
+    return self.name .. " (Animation, " .. self.duration .. ")" .. tstr(self.keyframes, 0)
 end
