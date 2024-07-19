@@ -180,11 +180,9 @@ function init_necrodancer(skeleton)
     gui:attach(length)
 
     local offsetx = Label:new(length:right(padding), length:top(), 0, "Offset x", 7)
-    offsetx.mode = "skeleton"
     gui:attach(offsetx)
 
     local offsety = Label:new(offsetx:right(padding), offsetx:top(), 0, "Offset y", 7)
-    offsety.mode = "skeleton"
     gui:attach(offsety)
 
     local duration = Label:new(offsety:right(padding), offsety:top(), 0, "Duration", 7)
@@ -210,11 +208,9 @@ function init_necrodancer(skeleton)
     gui:attach(length_slider)
 
     local offsetx_slider = Slider:new(offsetx:middle_horizontal(), length_slider:top(), 49, true, -25, 25, 1)
-    offsetx_slider.mode = "skeleton"
     gui:attach(offsetx_slider)
 
     local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -25, 25, 1)
-    offsety_slider.mode = "skeleton"
     gui:attach(offsety_slider)
 
     local duration_slider = Slider:new(duration:middle_horizontal(), offsety_slider:top(), 49, true, 2, 120, 2)
@@ -230,6 +226,16 @@ function init_necrodancer(skeleton)
     end
     gui:attach(frame_slider)
 
+    -- attatches a few sliders so, together, they can make transforms
+    rotation_slider.offsetx_slider = offsetx_slider
+    rotation_slider.offsety_slider = offsety_slider
+
+    offsetx_slider.rotation_slider = rotation_slider
+    offsetx_slider.offsety_slider = offsety_slider
+
+    offsety_slider.rotation_slider = rotation_slider
+    offsety_slider.offsety_slider = offsety_slider
+
 
 
 
@@ -242,11 +248,9 @@ function init_necrodancer(skeleton)
     gui:attach(length_readout)
 
     local offsetx_readout = Label:new(length_readout:right(padding), length_readout:top(), 0, tostr(flr(offsetx_slider:get())), 8, offsetx:right() - offsetx:left())
-    offsetx_readout.mode = "skeleton"
     gui:attach(offsetx_readout)
     
     local offsety_readout = Label:new(offsetx_readout:right(padding), offsetx_readout:top(), 0, tostr(flr(offsety_slider:get())), 8, offsety:right() - offsety:left())
-    offsety_readout.mode = "skeleton"
     gui:attach(offsety_readout)
 
     local duration_readout = Label:new(offsety_readout:right(padding), offsety_readout:top(), 0, tostr(flr(duration_slider:get())), 8, duration:right() - duration:left())
@@ -306,9 +310,11 @@ function init_necrodancer(skeleton)
         if (gui.data.mode == "skeleton") then
             gui.data.current:rotate(gui.data.current.bone:dir() - self:get())
         else
-
-            --! this is for quick cmd+f
-            gui.data.currentkf:addbone(gui.data.current, Transform:new(nil, self:get()))
+            gui.data.currentkf:addbone(gui.data.current, Transform:new(
+                    Vec:new(self.offsetx_slider:get(), self.offsety_slider:get()), 
+                    self:get()
+                )
+            )
         end
     end
 
@@ -323,7 +329,15 @@ function init_necrodancer(skeleton)
 
 
     offsetx_slider.when_clicked = function(self, gui)
-        gui.data.current.joint = Vec:new(self:get(), gui.data.current.joint.y)
+        if (gui.data.mode == "skeleton") then
+            gui.data.current.joint = Vec:new(self:get(), gui.data.current.joint.y)
+        else
+            gui.data.currentkf:addbone(gui.data.current, Transform:new(
+                    Vec:new(self:get(), self.offsety_slider:get()), 
+                    self.rotation_slider:get()
+                )
+            )
+        end
     end
 
     offsetx_slider.when_not_clicked = function(self, gui)
@@ -332,7 +346,15 @@ function init_necrodancer(skeleton)
 
 
     offsety_slider.when_clicked = function(self, gui)
-        gui.data.current.joint = Vec:new(gui.data.current.joint.x, self:get())
+        if (gui.data.mode == "skeleton") then
+            gui.data.current.joint = Vec:new(gui.data.current.joint.x, self:get())
+        else
+            gui.data.currentkf:addbone(gui.data.current, Transform:new(
+                    Vec:new(self.offsetx_slider:get(), self:get()), 
+                    self.rotation_slider:get()
+                )
+            )
+        end
     end
 
     offsety_slider.when_not_clicked = function(self, gui)
