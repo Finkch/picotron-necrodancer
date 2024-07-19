@@ -28,7 +28,7 @@ end
 
 -- adds a bone into the keyframe's transformations list
 function Keyframe:addbone(bone, angle)
-    if (not angle) angle = flr((bone.bone:dir() + 0.0001) * 1000) / 1000 -- tries to fix floating point error
+    if (not angle) angle = 0
     self.transforms[bone.name] = angle
 end
 
