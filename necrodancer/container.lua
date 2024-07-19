@@ -394,6 +394,19 @@ function Slider:put(value)
 end
 
 
+-- continuous versions of get/put
+function Slider:getc()
+    return self.current * (self.maximum - self.minimum) + self.minimum
+end
+
+function Slider:putc(value)
+    self.current = (value - self.minimum) / (self.maximum - self.minimum)
+
+    -- caps the value
+    self.current = mid(0, self.current, 1)
+end
+
+
 -- overrides container's update
 function Slider:update(gui)
     Container.update(self, gui)
