@@ -29,6 +29,11 @@ end
 
 -- finds the total duration of the animation
 function Animation:findduration()
+    if (#self.keyframes == 0) then
+        self.duration = 0
+        return
+    end
+
     local duration = 0
     local initial_duration = self.keyframes[1].duration
     for keyframe in all(self.keyframes) do
