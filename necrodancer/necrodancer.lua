@@ -19,7 +19,7 @@ include("skeleton/keyframe.lua")
 include("finkchlib/log.lua")
 
 -- returns the window
-function init_necrodancer(skeleton)
+function init_necrodancer()
 
     local padding = 4
 
