@@ -388,6 +388,9 @@ end
 function Slider:put(value)
 
     self.current = (self:discretise(value) - self.minimum) / (self.maximum - self.minimum)
+
+    -- caps the value
+    self.current = mid(0, self.current, 1)
 end
 
 
