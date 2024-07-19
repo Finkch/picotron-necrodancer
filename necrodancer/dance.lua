@@ -34,11 +34,11 @@ end
 
 function _draw()
 
-    debug:add(tostr(gui.data.skeleton.necromancer.current))
-
-    local k1, k2 = gui.data.skeleton.necromancer:findkeyframes()
-    local progress = gui.data.skeleton.necromancer:progress(k1, k2)
-    debug:add(progress)
+    --debug:add(tostr(gui.data.skeleton.necromancer.current))
+    debug:add("------")
+    debug:add(tostr(gui.data.skeleton))
+    debug:add("------")
+    debug:add(tostr(gui.data.necromancer.current))
 
     gui:draw()
 
