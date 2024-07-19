@@ -32,7 +32,7 @@ function init_necrodancer(skeleton)
 
     -- creates a debug window in which we can print stuff
     local w = 177
-    local printout = Container:new(480 - w, padding + 1, w - padding, 238 - padding, 0, nil)
+    local printout = Container:new(480 - w, padding + 1, w - padding - 1, 238 - padding, 0, nil)
     gui:attach(printout)
 
     printout.update_extra = function(self, gui)
@@ -88,7 +88,7 @@ function init_necrodancer(skeleton)
     ]]
 
     -- container that holds the skeleton
-    local grave = Container:new(padding + 1, padding + 1, 179, 128, 0, skeleton)
+    local grave = Container:new(padding + 1, padding + 1, 180, 128, 0, skeleton)
     gui:attach(grave)
 
     -- links the current animation to the skeleton
@@ -129,7 +129,7 @@ function init_necrodancer(skeleton)
 
 
     -- mode toggle
-    local skeleton_mode = Button:new(grave:right(padding + 3), grave:top(-3), 6, "Skeleton", 5)
+    local skeleton_mode = Button:new(grave:right(padding + 2), grave:top(-3), 6, "Skeleton", 5)
     skeleton_mode.mode = "animation"
     gui:attach(skeleton_mode)
 
