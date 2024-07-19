@@ -409,6 +409,81 @@ function init_necrodancer(skeleton)
 
 
 
+    -- clicking on sliders' labels will step slider by small amount
+    -- starts by linking slider to labels
+    rotation.slider = rotation_slider
+    rotation_readout.slider = rotation_slider
+
+    length.slider = length_slider
+    length_readout.slider = length_slider
+
+    offsetx.slider = offsetx_slider
+    offsetx_readout.slider = offsetx_slider
+
+    offsety.slider = offsety_slider
+    offsety_readout.slider = offsety_slider
+
+    duration.slider = duration_slider
+    duration_readout.slider = duration_slider
+
+    frame.slider = frame_slider
+    frame_readout.slider = frame_slider
+
+    
+    -- gives each a when-clicked
+    rotation.when_clicked = function(self, gui)
+        self.slider:stepup(gui)
+    end
+
+    rotation_readout.when_clicked = function(self, gui)
+        self.slider:stepdown(gui)
+    end
+
+
+    length.when_clicked = function(self, gui)
+        self.slider:stepup(gui)
+    end
+
+    length_readout.when_clicked = function(self, gui)
+        self.slider:stepdown(gui)
+    end
+
+
+    offsetx.when_clicked = function(self, gui)
+        self.slider:stepup(gui)
+    end
+
+    offsetx_readout.when_clicked = function(self, gui)
+        self.slider:stepdown(gui)
+    end
+
+
+    offsety.when_clicked = function(self, gui)
+        self.slider:stepup(gui)
+    end
+
+    offsety_readout.when_clicked = function(self, gui)
+        self.slider:stepdown(gui)
+    end
+
+    duration.when_clicked = function(self, gui)
+        self.slider:stepup(gui)
+    end
+
+    duration_readout.when_clicked = function(self, gui)
+        self.slider:stepdown(gui)
+    end
+
+    frame.when_clicked = function(self, gui)
+        self.slider:stepup(gui)
+    end
+
+    frame_readout.when_clicked = function(self, gui)
+        self.slider:stepdown(gui)
+    end
+
+
+
 
     -- current bone readout
     local bone_readout = Brain:new(curread)
