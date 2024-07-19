@@ -431,7 +431,7 @@ function Slider:stepup(gui)
     self:put(self:get() + self.step)
 
     -- updates whatever the slider is linked to
-    if (self.when_clicked) self.when_clicked()
+    if (self.when_clicked) self:when_clicked(gui)
 end
 
 function Slider:stepdown(gui)
@@ -439,7 +439,7 @@ function Slider:stepdown(gui)
     self:put(self:get() - self.step)
     
     -- updates whatever the slider is linked to
-    if (self.when_clicked) self.when_clicked()
+    if (self.when_clicked) self:when_clicked(gui)
 end
 
 
