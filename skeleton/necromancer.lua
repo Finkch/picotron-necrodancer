@@ -18,6 +18,9 @@ function Necromancer:new(animations)
         animations["idle"] = Animation:new("idle")
     end
 
+    -- ensures there is an empty animation (to play skeleton default)
+    animations["empty"] = Animation:new("empty", {})
+
     local n = {
         animations = animations,
         current = animations["idle"],   -- current animation
@@ -25,6 +28,7 @@ function Necromancer:new(animations)
         interpolator = nil,             -- function used to interpolate between poses
         frame = 0,                      -- frame/time
         paused = false,                 -- whether to increment frames on update
+        skeleton = nil                  -- will be set once given to skeleton
     }
 
     setmetatable(n, Necromancer)
@@ -41,6 +45,10 @@ end
 
 -- updates frame count
 function Necromancer:update()
+
+    -- if no keyframes in current animation, use skeleton default
+    if (#self.current.keyframes == 0) return self:emptypose()
+
     if (not self.paused) self.frame += 1
     if (self.frame >= self.current.duration) self.frame = 0 -- loops
 
@@ -81,8 +89,9 @@ function Necromancer:interpolate(k1, k2, progress)
     -- gets linear interpolation, if provided no other interpolator
     local transforms = {}
 
+
     for bone, _ in pairs(k1.transforms) do
-        transforms[bone] = (k1.transforms[bone] * (1 - progress) + k2.transforms[bone] * progress) / 2
+        transforms[bone] = (k1.transforms[bone] * (1 - progress) + k2.transforms[bone] * progress)
     end
 
     return transforms
@@ -96,4 +105,16 @@ function Necromancer:addbone(bone)
     for _, animation in pairs(self.animations) do
         animation:addbone(bone)
     end
+end
+
+
+-- returns default skeleton state
+function Necromancer:emptypose()
+    local transforms = {}
+    
+    for name, bone in pairs(self.skeleton.bones) do
+        transforms[bone] = 0
+    end
+
+    return transforms
 end
