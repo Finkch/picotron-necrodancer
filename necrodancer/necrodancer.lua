@@ -200,7 +200,7 @@ function init_necrodancer(skeleton)
 
 
     --  sliders for the bones
-    local rotation_slider = Slider:new(rotation:middle_horizontal(), rotation:bottom(2 * padding), 49, true, -1, 1, 0.02)
+    local rotation_slider = Slider:new(rotation:middle_horizontal(), rotation:bottom(2 * padding), 49, true, -1, 1, 0.01)
     gui:attach(rotation_slider)
 
     local length_slider = Slider:new(length:middle_horizontal(), rotation_slider:top(), 49, true, 1, 25, 1)
@@ -213,7 +213,7 @@ function init_necrodancer(skeleton)
     local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -25, 25, 1)
     gui:attach(offsety_slider)
 
-    local duration_slider = Slider:new(duration:middle_horizontal(), offsety_slider:top(), 49, true, 2, 120, 2)
+    local duration_slider = Slider:new(duration:middle_horizontal(), offsety_slider:top(), 49, true, 2, 120, 1)
     duration_slider.mode = "animation"
     gui:attach(duration_slider)
 
@@ -429,7 +429,7 @@ function init_necrodancer(skeleton)
     frame.slider = frame_slider
     frame_readout.slider = frame_slider
 
-    
+
     -- gives each a when-clicked
     rotation.when_clicked = function(self, gui)
         self.slider:stepup(gui)
