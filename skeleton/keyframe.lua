@@ -34,16 +34,10 @@ end
 
 -- returns bone's transform, with default for key not found
 function Keyframe:get(bone)
+    if (bone.name) bone = bone.name
+    if (self.transforms[bone] == nil) self.transforms[bone] = 0
 
-    local transform = self.transforms[bone.name]
-    
-    if (not transform) then
-        transform = flr((bone.bone:dir() + 0.0001) * 1000) / 1000 -- tries to fix floating point error
-
-        self.transforms[bone.name] = transform
-    end
-
-    return transform
+    return self.transforms[bone]
 end
 
 
