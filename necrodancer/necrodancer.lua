@@ -306,7 +306,9 @@ function init_necrodancer(skeleton)
         if (gui.data.mode == "skeleton") then
             gui.data.current:rotate(gui.data.current.bone:dir() - self:get())
         else
-            gui.data.currentkf:addbone(gui.data.current, self:get())
+
+            --! this is for quick cmd+f
+            gui.data.currentkf:addbone(gui.data.current, Transform:new(nil, self:get()))
         end
     end
 
@@ -315,7 +317,7 @@ function init_necrodancer(skeleton)
         if (gui.data.mode == "skeleton") then
             self:put(gui.data.current.bone:dir() + 0.0001)
         else
-            self:put(gui.data.currentkf:get(gui.data.current) + 0.0001)
+            self:put(gui.data.currentkf:get(gui.data.current).rot + 0.0001)
         end
     end
 

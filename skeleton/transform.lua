@@ -32,7 +32,7 @@ end
 
 -- metamethods
 function Transform:__add(other)
-    if (type("other") == "table" and other.__type == "transform") then
+    if (other.__type == "transform") then
         return Transform:new(
             self.pos + other.pos,
             self.rot + other.rot

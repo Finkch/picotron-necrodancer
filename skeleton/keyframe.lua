@@ -7,6 +7,8 @@
 
 include("finkchlib/tstr.lua")
 
+include("skeleton/transform.lua")
+
 Keyframe = {}
 Keyframe.__index = Keyframe
 Keyframe.__type = "keyframe"
@@ -27,15 +29,16 @@ function Keyframe:new(duration, transforms)
 end
 
 -- adds a bone into the keyframe's transformations list
-function Keyframe:addbone(bone, angle)
-    if (not angle) angle = 0
-    self.transforms[bone.name] = angle
+function Keyframe:addbone(bone, transform)
+    if (not transform) transform = Transform:new()
+    if (type(transform) == "number") transform = Transform:new(nil, transform)
+    self.transforms[bone.name] = transform
 end
 
 -- returns bone's transform, with default for key not found
 function Keyframe:get(bone)
     if (bone.name) bone = bone.name
-    if (self.transforms[bone] == nil) self.transforms[bone] = 0
+    if (self.transforms[bone] == nil) self.transforms[bone] = Transform:new()
 
     return self.transforms[bone]
 end

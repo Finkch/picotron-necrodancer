@@ -1,3 +1,4 @@
+--[[pod_format="raw",created="2024-07-19 20:04:12",modified="2024-07-19 20:04:12",revision=0]]
 --[[
     (re)animates movement between keyframes.
 
@@ -112,7 +113,7 @@ function Necromancer:emptypose()
     local transforms = {}
     
     for name, bone in pairs(self.skeleton.bones) do
-        transforms[bone] = 0
+        transforms[bone] = Transform:new()
     end
 
     return transforms

@@ -75,17 +75,20 @@ end
 -- applies a pose to this bone and to all of its children
 function Bone:dance(pose, parenttip, parentrot)
 
-    -- gets own rotation amount
-    local ownrot = 0                                            -- !don't! add previous rotation (leads to exponential growth)
-    if (parentrot and parentrot > 0) ownrot = parentrot         -- depends on parent's amount
-    if (pose[self.name]) ownrot += pose[self.name]              
-    self.transform.rot = ownrot
+    -- builds new transform for this pose
+    local transform = Transform:new(self.joint, 0)              -- !don't! add previous rotation (leads to exponential growth)
+    if (parentrot and parentrot > 0) transform.rot = parentrot  -- depends on parent's amount
+    if (pose[self.name]) then
+        transform.pos += pose[self.name].pos
+        transform.rot += pose[self.name].rot
+    end
+    
+    if (parenttip) transform.pos += parenttip                   -- sets joint position
 
-    self.transform.pos = self.joint
-    if (parenttip) self.transform.pos += parenttip               -- sets joint position
+    self.transform = transform
 
     for child in all(self.children) do
-        child:dance(pose, self:tip(), ownrot)
+        child:dance(pose, self:tip(), transform.rot)
     end
 end
 
