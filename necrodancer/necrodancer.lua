@@ -25,7 +25,21 @@ function init_necrodancer(skeleton)
 
 
     -- application window to make a skeleton
-    local gui = Gui:new("necrodancer", false, 300, 245, 180, 180, 6)
+    --local gui = Gui:new("necrodancer", false, 300, 245, 180, 180, 6)
+    local gui = Gui:new("necrodancer", false, 480, 245, 180, 180, 6)
+
+
+
+    -- creates a debug window in which we can print stuff
+    local w = 179
+    local printout = Container:new(480 - w, padding, w - padding, 238 - padding, 0, nil)
+    gui:attach(printout)
+
+    printout.draw_extra = function(self, gui)
+        self:focus()
+        debug:print(4, 4, 8)
+    end
+
 
 
     --[[ 
