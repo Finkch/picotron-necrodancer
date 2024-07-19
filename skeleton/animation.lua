@@ -80,5 +80,12 @@ end
 
 -- metamethods
 function Animation:__tostring()
-    return self.name .. " (Animation, " .. self.duration .. ")" .. tstr(self.keyframes, 0)
+    local str = self.name .. " (Animation, " .. self.duration .. ")"
+
+    local strs = {}
+    for i = 1, #self.keyframes do
+        strs[tostr(i)] = self.keyframes[i]
+    end
+
+    return str .. tstr(strs)
 end
