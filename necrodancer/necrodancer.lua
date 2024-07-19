@@ -256,6 +256,9 @@ function init_necrodancer(skeleton)
     rotation_slider.when_clicked = function(self, gui)
         if (gui.data.mode == "skeleton") then
             gui.data.current:rotate(gui.data.current.bone:dir() - self:get())
+
+            -- also adjusts the idle pose
+            gui.data.necromancer.animations["idle"]:addbone(gui.data.current)
         else
             gui.data.currentkf:addbone(gui.data.current, self:get())
         end
