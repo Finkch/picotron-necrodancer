@@ -108,6 +108,13 @@ function Container:update(gui)
     self:update_active(gui)
     self:_update_active(gui)
     self:update_status(gui)
+
+    if (self.clicked) then
+        self:when_clicked(gui)
+    else
+        self:when_not_clicked(gui)
+    end
+
     self:update_contents(gui)
     self:update_extra(gui)
 end
@@ -144,7 +151,12 @@ end
 
 
 -- can be overridden to give more control
+function Container:when_clicked(gui) end
+
+function Container:when_not_clicked(gui) end
+
 function Container:update_extra(gui) end
+
 
 -- draws container & contents
 function Container:draw(gui)
@@ -382,14 +394,7 @@ end
 function Slider:update(gui)
     Container.update(self, gui)
 
-
-    if (self.clicked) then
-        self:update_slider(gui)
-
-        if (self.when_clicked) self:when_clicked(gui)
-    else
-        if (self.when_not_clicked) self:when_not_clicked(gui)
-    end
+    if (self.clicked) self:update_slider(gui)
 end
 
 function Slider:update_slider(gui)
@@ -426,7 +431,7 @@ function Slider:stepup(gui)
     self:put(self:get() + self.step)
 
     -- updates whatever the slider is linked to
-    if (self.when_clicked) self.when_clicked
+    if (self.when_clicked) self.when_clicked()
 end
 
 function Slider:stepdown(gui)
@@ -434,8 +439,10 @@ function Slider:stepdown(gui)
     self:put(self:get() - self.step)
     
     -- updates whatever the slider is linked to
-    if (self.when_clicked) self.when_clicked
+    if (self.when_clicked) self.when_clicked()
 end
+
+
 
 function Slider:draw(gui)
     Container.draw(self)
