@@ -386,7 +386,6 @@ end
 
 -- places a value in, mapping into its min and max
 function Slider:put(value)
-
     self.current = (self:discretise(value) - self.minimum) / (self.maximum - self.minimum)
 
     -- caps the value
@@ -446,7 +445,6 @@ end
 
 -- increases current by the discrete step size
 function Slider:stepup(gui)
-
     self:putc(self:get() + self.step)
 
     -- updates whatever the slider is linked to
@@ -454,7 +452,6 @@ function Slider:stepup(gui)
 end
 
 function Slider:stepdown(gui)
-
     self:putc(self:get() - self.step)
     
     -- updates whatever the slider is linked to
