@@ -38,6 +38,8 @@ function Skeleton:new(core, necromancer, debug)
         debug = debug       -- shows skeleton as coloured lines
     }
 
+    necromancer.skeleton = s
+
     -- skin map
 
     setmetatable(s, Skeleton)
