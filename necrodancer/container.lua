@@ -373,7 +373,9 @@ end
 
 -- alters input value to match discrete step size
 function Slider:discretise(value)
-    if (self.step) value = self.step * flr(value / self.step)
+
+    -- step / 10 is adding an arbitrarily small amount to avoid floating errors
+    if (self.step) value = self.step * flr((value + self.step / 10) / self.step)
 
     return value
 end
@@ -381,25 +383,12 @@ end
 
 -- gets the current value out of the slider, mapped to its min and max
 function Slider:get()
-    return self:discretise((self.current * (self.maximum - self.minimum) + self.minimum) + 0.00001)
+    return self:discretise(self.current * (self.maximum - self.minimum) + self.minimum)
 end
 
 -- places a value in, mapping into its min and max
 function Slider:put(value)
     self.current = (self:discretise(value) - self.minimum) / (self.maximum - self.minimum)
-
-    -- caps the value
-    self.current = mid(0, self.current, 1)
-end
-
-
--- continuous variants of get/put
-function Slider:getc()
-    return self.current * (self.maximum - self.minimum) + self.minimum
-end
-
-function Slider:putc(value)
-    self.current = (value - self.minimum) / (self.maximum - self.minimum)
 
     -- caps the value
     self.current = mid(0, self.current, 1)
@@ -449,14 +438,14 @@ end
 
 -- increases current by the discrete step size
 function Slider:stepup(gui)
-    self:putc(self:get() + self.step)
+    self:put(self:get() + self.step)
 
     -- updates whatever the slider is linked to
     if (self.when_clicked) self:when_clicked(gui)
 end
 
 function Slider:stepdown(gui)
-    self:putc(self:get() - self.step)
+    self:put(self:get() - self.step)
     
     -- updates whatever the slider is linked to
     if (self.when_clicked) self:when_clicked(gui)
