@@ -83,6 +83,41 @@ function init_necrodancer(skeleton)
     local grave = Container:new(padding, padding, 128, 128, 0, skeleton)
     gui:attach(grave)
 
+    -- links the current animation to the skeleton
+    grave.update_extra = function(self, gui)
+        if (gui.data.mode == "skeleton") then
+            gui.data.skeleton.necromancer:set("idle")
+            gui.data.time = 0
+
+        elseif (gui.data.paused) then
+
+            -- creates new animation with one keyframe being currentkf
+            gui.data.skeleton.necromancer.animations[tostr(gui.data.ikf)] = Animation:new({gui.data.currentkf})
+
+            -- set animation to the keyframe
+            gui.data.skeleton.necromancer:set(tostr(gui.data.ikf))
+
+            -- resets time to allow playing to start again
+            gui.data.time = 0
+
+        else
+            -- sets animation to the actual animation
+            if (gui.data.time == 0) gui.data.skeleton.necromancer:set("current")
+
+            gui.data.time += 1
+        end
+    end
+
+    -- adds a function to grave to highlight current bone
+    grave.draw_extra = function(self, gui)
+        local s, e = gui.data.current:span(offset)
+
+        line(s.x, s.y, e.x, e.y, 17)
+        circfill(s.x, s.y, 1, 19)
+    end
+
+
+    
 
 
     -- mode toggle
@@ -451,40 +486,6 @@ function init_necrodancer(skeleton)
         self.active = gui.data.current.name != "core"
     end
 
-
-    -- links the current animation to the skeleton
-    grave.update_extra = function(self, gui)
-        if (gui.data.mode == "skeleton") then
-            gui.data.skeleton.necromancer:set("idle")
-            gui.data.time = 0
-
-        elseif (gui.data.paused) then
-
-            -- creates new animation with one keyframe being currentkf
-            gui.data.skeleton.necromancer.animations[tostr(gui.data.ikf)] = Animation:new({gui.data.currentkf})
-
-            -- set animation to the keyframe
-            gui.data.skeleton.necromancer:set(tostr(gui.data.ikf))
-
-            -- resets time to allow playing to start again
-            gui.data.time = 0
-
-        else
-            -- sets animation to the actual animation
-            if (gui.data.time == 0) gui.data.skeleton.necromancer:set("current")
-
-            gui.data.time += 1
-        end
-    end
-
-
-    -- adds a function to grave to highlight current bone
-    grave.draw_extra = function(self, gui)
-        local s, e = gui.data.current:span(offset)
-
-        line(s.x, s.y, e.x, e.y, 17)
-        circfill(s.x, s.y, 1, 19)
-    end
     
 
 
