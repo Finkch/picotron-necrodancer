@@ -15,6 +15,8 @@ Skeleton.__type = "skeleton"
 
 function Skeleton:new(core, necromancer, debug)
     
+    if (not necromancer) necromancer = Necromancer:new()
+
     if (not core) then
         core = Bone:new(
             "core",
@@ -22,9 +24,10 @@ function Skeleton:new(core, necromancer, debug)
             0,                  -- default depth
             Vec:new(0, -12)      -- starts off the ground
         )
-    end
 
-    if (not necromancer) necromancer = Necromancer:new()
+        -- adds core to all animations
+        necromancer:addbone(core)
+    end
 
     debug = debug or false
 
