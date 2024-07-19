@@ -420,6 +420,22 @@ function Slider:update_slider(gui)
     self.current = current
 end
 
+-- increases current by the discrete step size
+function Slider:stepup(gui)
+
+    self:put(self:get() + self.step)
+
+    -- updates whatever the slider is linked to
+    if (self.when_clicked) self.when_clicked
+end
+
+function Slider:stepdown(gui)
+
+    self:put(self:get() - self.step)
+    
+    -- updates whatever the slider is linked to
+    if (self.when_clicked) self.when_clicked
+end
 
 function Slider:draw(gui)
     Container.draw(self)
