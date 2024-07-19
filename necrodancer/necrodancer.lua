@@ -200,7 +200,7 @@ function init_necrodancer(skeleton)
 
 
     --  sliders for the bones
-    local rotation_slider = Slider:new(rotation:middle_horizontal(), rotation:bottom(2 * padding), 49, true, 0, 1.019, 0.02)
+    local rotation_slider = Slider:new(rotation:middle_horizontal(), rotation:bottom(2 * padding), 49, true, -1, 1, 0.02)
     gui:attach(rotation_slider)
 
     local length_slider = Slider:new(length:middle_horizontal(), rotation_slider:top(), 49, true, 1, 25, 1)
