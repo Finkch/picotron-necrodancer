@@ -89,9 +89,8 @@ function Necromancer:interpolate(k1, k2, progress)
     -- gets linear interpolation, if provided no other interpolator
     local transforms = {}
 
-
     for bone, _ in pairs(k1.transforms) do
-        transforms[bone] = (k1.transforms[bone] * (1 - progress) + k2.transforms[bone] * progress)
+        transforms[bone] = (k1:get(bone) * (1 - progress) + k2:get(bone) * progress)
     end
 
     return transforms
