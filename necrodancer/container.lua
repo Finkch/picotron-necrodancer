@@ -386,6 +386,7 @@ end
 
 -- places a value in, mapping into its min and max
 function Slider:put(value)
+
     self.current = (self:discretise(value) - self.minimum) / (self.maximum - self.minimum)
 end
 
@@ -394,7 +395,13 @@ end
 function Slider:update(gui)
     Container.update(self, gui)
 
-    if (self.clicked) self:update_slider(gui)
+    if (self.clicked) then
+        self:update_slider(gui)
+
+        self:when_clicked(gui)
+    else
+        self:when_not_clicked(gui)
+    end
 end
 
 function Slider:update_slider(gui)
