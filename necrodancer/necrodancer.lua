@@ -31,9 +31,17 @@ function init_necrodancer(skeleton)
 
 
     -- creates a debug window in which we can print stuff
-    local w = 179
-    local printout = Container:new(480 - w, padding, w - padding, 238 - padding, 0, nil)
+    local w = 177
+    local printout = Container:new(480 - w, padding + 1, w - padding, 238 - padding, 0, nil)
     gui:attach(printout)
+
+    printout.update_extra = function(self, gui)
+        if (gui.data.mode == "skeleton") then
+            debug:add(tostr(gui.data.skeleton))
+        else
+            debug:add(tostr(gui.data.necromancer.current))
+        end
+    end
 
     printout.draw_extra = function(self, gui)
         self:focus()
@@ -80,7 +88,7 @@ function init_necrodancer(skeleton)
     ]]
 
     -- container that holds the skeleton
-    local grave = Container:new(padding, padding, 128, 128, 0, skeleton)
+    local grave = Container:new(padding + 1, padding + 1, 179, 128, 0, skeleton)
     gui:attach(grave)
 
     -- links the current animation to the skeleton

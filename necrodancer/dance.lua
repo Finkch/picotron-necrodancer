@@ -34,12 +34,6 @@ end
 
 function _draw()
 
-    --debug:add(tostr(gui.data.skeleton.necromancer.current))
-    debug:add("------")
-    debug:add(tostr(gui.data.skeleton))
-    debug:add("------")
-    debug:add(tostr(gui.data.necromancer.current))
-
     gui:draw()
 
     -- debug printout
