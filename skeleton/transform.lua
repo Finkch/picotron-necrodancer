@@ -7,7 +7,7 @@ include("lib/vec.lua")
 
 Transform = {}
 Transform.__index = Transform
-Transform.__type = Transform
+Transform.__type = "transform"
 
 function Transform:new(pos, rot)
     pos = pos or Vec:new()
