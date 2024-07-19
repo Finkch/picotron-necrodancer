@@ -381,7 +381,7 @@ end
 
 -- gets the current value out of the slider, mapped to its min and max
 function Slider:get()
-    return self:discretise(self.current * (self.maximum - self.minimum) + self.minimum)
+    return self.current * (self.maximum - self.minimum) + self.minimum
 end
 
 -- places a value in, mapping into its min and max
@@ -394,11 +394,7 @@ function Slider:put(value)
 end
 
 
--- continuous versions of get/put
-function Slider:getc()
-    return self.current * (self.maximum - self.minimum) + self.minimum
-end
-
+-- continuous variant of put
 function Slider:putc(value)
     self.current = (value - self.minimum) / (self.maximum - self.minimum)
 
@@ -451,7 +447,7 @@ end
 -- increases current by the discrete step size
 function Slider:stepup(gui)
 
-    self:putc(self:getc() + self.step)
+    self:putc(self:get() + self.step)
 
     -- updates whatever the slider is linked to
     if (self.when_clicked) self:when_clicked(gui)
@@ -459,7 +455,7 @@ end
 
 function Slider:stepdown(gui)
 
-    self:putc(self:getc() - self.step)
+    self:putc(self:get() - self.step)
     
     -- updates whatever the slider is linked to
     if (self.when_clicked) self:when_clicked(gui)
