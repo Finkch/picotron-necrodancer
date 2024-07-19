@@ -109,7 +109,7 @@ function Container:update(gui)
     self:_update_active(gui)
     self:update_status(gui)
 
-    if (self.clicked) then
+    if (self.clicking) then
         self:when_clicked(gui)
     else
         self:when_not_clicked(gui)
