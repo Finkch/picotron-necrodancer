@@ -381,7 +381,7 @@ end
 
 -- gets the current value out of the slider, mapped to its min and max
 function Slider:get()
-    return self.current * (self.maximum - self.minimum) + self.minimum
+    return self:discretise((self.current * (self.maximum - self.minimum) + self.minimum) + 0.00001)
 end
 
 -- places a value in, mapping into its min and max
@@ -393,7 +393,11 @@ function Slider:put(value)
 end
 
 
--- continuous variant of put
+-- continuous variants of get/put
+function Slider:getc()
+    return self.current * (self.maximum - self.minimum) + self.minimum
+end
+
 function Slider:putc(value)
     self.current = (value - self.minimum) / (self.maximum - self.minimum)
 
