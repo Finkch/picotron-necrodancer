@@ -129,7 +129,7 @@ function init_necrodancer(skeleton)
 
 
     -- mode toggle
-    local skeleton_mode = Button:new(grave:right(padding + 3), grave:top(), 6, "Skeleton", 5)
+    local skeleton_mode = Button:new(grave:right(padding + 3), grave:top(-3), 6, "Skeleton", 5)
     skeleton_mode.mode = "animation"
     gui:attach(skeleton_mode)
 
