@@ -29,8 +29,19 @@ end
 
 
 -- transforms a vector
-function Transform:__mul(vec)
-    return vec:rotate(self.rot) + self.pos
+function Transform:__mul(other)
+    if (other.__type == "vec") then
+        return other:rotate(self.rot) + self.pos
+
+    elseif (type(other) == "number") then
+        return Transform:new(
+            self.pos * other,
+            self.rot * other
+        )
+
+    else
+        error("cannot multiply transform with type \"" .. type(other) .. "\" (" .. tostr(other.__type) .. ")")
+    end
 end
 
 
