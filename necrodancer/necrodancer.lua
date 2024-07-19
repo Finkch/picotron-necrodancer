@@ -171,15 +171,15 @@ function init_necrodancer(skeleton)
 
 
 
-    -- labels for the sliders 
-    local rotation = Label:new(grave:left(), grave:bottom(padding + 1), 0, "Rotation", 7)
-    gui:attach(rotation)
-    
-    local length = Label:new(rotation:right(padding), rotation:top(), 0, " Length ", 7)
+    -- labels for the sliders
+    local length = Label:new(grave:left(), grave:bottom(padding + 1), 0, " Length ", 7)
     length.mode = "skeleton"
     gui:attach(length)
 
-    local offsetx = Label:new(length:right(padding), length:top(), 0, "Offset x", 7)
+    local rotation = Label:new(length:right(padding), length:top(), 0, "Rotation", 7)
+    gui:attach(rotation)
+
+    local offsetx = Label:new(rotation:right(padding), rotation:top(), 0, "Offset x", 7)
     gui:attach(offsetx)
 
     local offsety = Label:new(offsetx:right(padding), offsetx:top(), 0, "Offset y", 7)
@@ -199,15 +199,15 @@ function init_necrodancer(skeleton)
 
 
 
-    --  sliders for the bones
-    local rotation_slider = Slider:new(rotation:middle_horizontal(), rotation:bottom(2 * padding), 49, true, -1, 1, 0.01)
-    gui:attach(rotation_slider)
-
-    local length_slider = Slider:new(length:middle_horizontal(), rotation_slider:top(), 49, true, 1, 25, 1)
+    --  sliders for the bones 
+    local length_slider = Slider:new(length:middle_horizontal(), length:bottom(2 * padding), 49, true, 1, 25, 1)
     length_slider.mode = "skeleton"
     gui:attach(length_slider)
 
-    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), length_slider:top(), 49, true, -25, 25, 1)
+    local rotation_slider = Slider:new(rotation:middle_horizontal(), length_slider:top(), 49, true, -1, 1, 0.01)
+    gui:attach(rotation_slider)
+
+    local offsetx_slider = Slider:new(offsetx:middle_horizontal(), rotation_slider:top(), 49, true, -25, 25, 1)
     gui:attach(offsetx_slider)
 
     local offsety_slider = Slider:new(offsety:middle_horizontal(), offsetx_slider:top(), 49, true, -25, 25, 1)
@@ -240,14 +240,14 @@ function init_necrodancer(skeleton)
 
 
     -- readouts for the sliders
-    local rotation_readout = Label:new(rotation:left(), rotation_slider:bottom(2 * padding), 0, tostr(flr(rotation_slider:get())), 8, rotation:right() - rotation:left())
-    gui:attach(rotation_readout)
-
-    local length_readout = Label:new(rotation_readout:right(padding), rotation_readout:top(), 0, tostr(flr(length_slider:get())), 8, length:right() - length:left())
+    local length_readout = Label:new(length:left(), length_slider:bottom(2 * padding), 0, tostr(flr(length_slider:get())), 8, length:right() - length:left())
     length_readout.mode = "skeleton"
     gui:attach(length_readout)
 
-    local offsetx_readout = Label:new(length_readout:right(padding), length_readout:top(), 0, tostr(flr(offsetx_slider:get())), 8, offsetx:right() - offsetx:left())
+    local rotation_readout = Label:new(length_readout:right(padding), length_readout:top(), 0, tostr(flr(rotation_slider:get())), 8, rotation:right() - rotation:left())
+    gui:attach(rotation_readout)
+
+    local offsetx_readout = Label:new(rotation_readout:right(padding), rotation_readout:top(), 0, tostr(flr(offsetx_slider:get())), 8, offsetx:right() - offsetx:left())
     gui:attach(offsetx_readout)
     
     local offsety_readout = Label:new(offsetx_readout:right(padding), offsetx_readout:top(), 0, tostr(flr(offsety_slider:get())), 8, offsety:right() - offsety:left())
@@ -411,11 +411,11 @@ function init_necrodancer(skeleton)
 
     -- clicking on sliders' labels will step slider by small amount
     -- starts by linking slider to labels
-    rotation.slider = rotation_slider
-    rotation_readout.slider = rotation_slider
-
     length.slider = length_slider
     length_readout.slider = length_slider
+
+    rotation.slider = rotation_slider
+    rotation_readout.slider = rotation_slider
 
     offsetx.slider = offsetx_slider
     offsetx_readout.slider = offsetx_slider
@@ -431,20 +431,20 @@ function init_necrodancer(skeleton)
 
 
     -- gives each a when-clicked
-    rotation.when_clicked = function(self, gui)
-        self.slider:stepup(gui)
-    end
-
-    rotation_readout.when_clicked = function(self, gui)
-        self.slider:stepdown(gui)
-    end
-
-
     length.when_clicked = function(self, gui)
         self.slider:stepup(gui)
     end
 
     length_readout.when_clicked = function(self, gui)
+        self.slider:stepdown(gui)
+    end
+
+    
+    rotation.when_clicked = function(self, gui)
+        self.slider:stepup(gui)
+    end
+
+    rotation_readout.when_clicked = function(self, gui)
         self.slider:stepdown(gui)
     end
 
