@@ -77,8 +77,8 @@ function Bone:dance(pose, parenttip, parentrot)
 
     -- gets own rotation amount
     local ownrot = 0                                            -- !don't! add previous rotation (leads to exponential growth)
-    if (pose[self.name]) ownrot += pose[self.name]              
     if (parentrot and parentrot > 0) ownrot = parentrot         -- depends on parent's amount
+    if (pose[self.name]) ownrot += pose[self.name]              
     self.transform.rot = ownrot
 
     self.transform.pos = self.joint
