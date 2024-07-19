@@ -416,7 +416,6 @@ function init_necrodancer(skeleton)
             if ((i + 1) % gui.data.count == gui.data.i) then
                 gui.data.i = i
                 gui.data.current = bone
-                log("brains.txt", "i:\t" .. i .. " / " .. gui.data.i .. "\ncurrent:\t" .. bone.name, {"-a"})
                 return
             end
             i += 1
