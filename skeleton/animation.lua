@@ -60,7 +60,13 @@ function Animation:addkeyframe(skeleton, index)
     -- creates a keyframe and adds each bone in the skeleton
     local keyframe = Keyframe:new()
     for _, bone in pairs(skeleton.bones) do
-        keyframe:addbone(bone)  -- uses default pose for angles
+
+        -- tries to use previous keyframe's positions.
+        -- if no previous keyframe, use empty pose.
+        local transforms = {}
+        if (index > 1) transforms = self.keyframes[index - 1]
+
+        keyframe:addbone(bone, transforms[bone])
     end
 
     -- if index is not supplied, defaults to end of the list
