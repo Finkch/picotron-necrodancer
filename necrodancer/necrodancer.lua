@@ -19,33 +19,40 @@ include("skeleton/keyframe.lua")
 include("finkchlib/log.lua")
 
 -- returns the window
-function init_necrodancer()
+function init_necrodancer(debug_mode)
+    if (debug_mode == nil) debug_mode = false
 
     local padding = 4
 
 
     -- application window to make a skeleton
-    --local gui = Gui:new("necrodancer", false, 300, 245, 180, 180, 6)
-    local gui = Gui:new("necrodancer", false, 480, 245, 180, 180, 6)
+    local gui = nil
+    if (not debug_mode) then
+        gui = Gui:new("necrodancer", false, 301, 245, 180, 180, 6)
+    else
+        gui = Gui:new("necrodancer", false, 480, 245, 180, 180, 6)
+    end
 
 
 
     -- creates a debug window in which we can print stuff
-    local w = 177
-    local printout = Container:new(480 - w, padding + 1, w - padding - 1, 238 - padding, 0, nil)
-    gui:attach(printout)
+    if (debug_mode) then
+        local w = 177
+        local printout = Container:new(480 - w, padding + 1, w - padding - 1, 238 - padding, 0, nil)
+        gui:attach(printout)
 
-    printout.update_extra = function(self, gui)
-        if (gui.data.mode == "skeleton") then
-            debug:add(tostr(gui.data.skeleton))
-        else
-            debug:add(tostr(gui.data.necromancer.current))
+        printout.update_extra = function(self, gui)
+            if (gui.data.mode == "skeleton") then
+                debug:add(tostr(gui.data.skeleton))
+            else
+                debug:add(tostr(gui.data.necromancer.current))
+            end
         end
-    end
 
-    printout.draw_extra = function(self, gui)
-        self:focus()
-        debug:print(4, 4, 8)
+        printout.draw_extra = function(self, gui)
+            self:focus()
+            debug:print(4, 4, 8)
+        end
     end
 
 
