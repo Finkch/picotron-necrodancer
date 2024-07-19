@@ -86,7 +86,7 @@ function init_necrodancer(skeleton)
     -- links the current animation to the skeleton
     grave.update_extra = function(self, gui)
         if (gui.data.mode == "skeleton") then
-            gui.data.skeleton.necromancer:set("idle")
+            gui.data.skeleton.necromancer:set("empty")
             gui.data.time = 0
 
         elseif (gui.data.paused) then
@@ -117,7 +117,7 @@ function init_necrodancer(skeleton)
     end
 
 
-    
+
 
 
     -- mode toggle
@@ -305,9 +305,6 @@ function init_necrodancer(skeleton)
     rotation_slider.when_clicked = function(self, gui)
         if (gui.data.mode == "skeleton") then
             gui.data.current:rotate(gui.data.current.bone:dir() - self:get())
-
-            -- also adjusts the idle pose
-            gui.data.necromancer.animations["idle"]:addbone(gui.data.current)
         else
             gui.data.currentkf:addbone(gui.data.current, self:get())
         end
