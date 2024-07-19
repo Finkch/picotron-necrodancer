@@ -30,7 +30,18 @@ function Transform:copy()
 end
 
 
--- transforms a vector
+-- metamethods
+function Transform:__add(other)
+    if (type("other") == "table" and other.__type == "transform") then
+        return Transform:new(
+            self.pos + other.pos,
+            self.rot + other.rot
+        )
+    else
+        error("cannot add transform with type \"" .. type(other) .. "\" (" .. tostr(other.__type) .. ")")
+    end
+end
+
 function Transform:__mul(other)
     if (type(other) == "number") then
         return Transform:new(
@@ -47,7 +58,7 @@ function Transform:__mul(other)
 end
 
 
--- metamethods
+
 function Transform:__tostring()
     return tostr(self.pos) .. " @ " .. self.rot
 end
