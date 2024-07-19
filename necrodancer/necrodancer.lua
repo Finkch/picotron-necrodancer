@@ -487,7 +487,7 @@ function init_necrodancer(skeleton)
     end
 
     frame_readout.when_clicked = function(self, gui)
-        self.slider:stepdown(gui)
+        if (gui.data.necromancer.paused) self.slider:stepdown(gui)
     end
 
 
