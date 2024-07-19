@@ -234,7 +234,7 @@ function init_necrodancer(skeleton)
     offsetx_slider.offsety_slider = offsety_slider
 
     offsety_slider.rotation_slider = rotation_slider
-    offsety_slider.offsety_slider = offsety_slider
+    offsety_slider.offsetx_slider = offsetx_slider
 
 
 
@@ -341,7 +341,11 @@ function init_necrodancer(skeleton)
     end
 
     offsetx_slider.when_not_clicked = function(self, gui)
-        self:put(gui.data.current.joint.x)
+        if (gui.data.mode == "skeleton") then
+            self:put(gui.data.current.joint.x)
+        else
+            self:put(gui.data.currentkf:get(gui.data.current).pos.x)
+        end
     end
 
 
@@ -358,7 +362,11 @@ function init_necrodancer(skeleton)
     end
 
     offsety_slider.when_not_clicked = function(self, gui)
-        self:put(gui.data.current.joint.y)
+        if (gui.data.mode == "skeleton") then
+            self:put(gui.data.current.joint.y)
+        else
+            self:put(gui.data.currentkf:get(gui.data.current).pos.y)
+        end
     end
 
 
