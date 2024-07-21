@@ -30,6 +30,20 @@ function Transform:copy()
 end
 
 
+
+-- pods
+function Transform:pod()
+    local transform = {}
+
+    transform["pos"] = {x = self.pos.x, y = self.pos.y}
+    transform["rot"] = self.rot
+
+    return transform
+end
+
+
+
+
 -- metamethods
 function Transform:__add(other)
     if (other.__type == "transform") then
