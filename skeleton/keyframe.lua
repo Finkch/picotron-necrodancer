@@ -44,6 +44,24 @@ function Keyframe:get(bone)
 end
 
 
+
+-- pod
+function Keyframe:pod()
+    local keyframe = {}
+
+    keyframe["duration"] = self.duration
+
+    -- adds transforms
+    keyframe["transforms"] = {}
+    for bone, transform in pairs(self.transforms) do
+        keyframe.transforms[bone] = transform:pod()
+    end
+
+    return keyframe
+end
+
+
+
 -- metamethods
 function Keyframe:__index(key) -- returns transform without overriding metamethods
     local datum = self.transforms[key]
