@@ -29,15 +29,11 @@ function import(skeleton)
 
     local tbl = unpod(skeleton)
 
-    log("imp.txt", tstr(skeleton))
-
     local core = getbones(tbl.core)
 
     local necromancer = getnecromancer(tbl.necromancer)
 
     local skeleton = Skeleton:new(core, necromancer)
-    log("imp.txt", tostr(skeleton), {"-a"})
-
 
     return skeleton
 end
