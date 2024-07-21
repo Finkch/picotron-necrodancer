@@ -1,5 +1,6 @@
 --[[
-    handles the gui for the necrodancer
+    a graphical user interface
+
 ]]
 
 include("lib/kbm.lua")

@@ -1,5 +1,5 @@
 --[[
-    functions and classes to connect gui elements
+    gives logic to containers in the gui
 
 ]]
 

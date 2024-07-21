@@ -1,6 +1,5 @@
 --[[
-    a thing within a gui.
-    very verbose, me.
+    a visual or functional element within the gui
 
 ]]
 
