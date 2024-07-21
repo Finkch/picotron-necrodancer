@@ -78,6 +78,23 @@ end
 
 
 
+-- pod
+function Animation:pod()
+    local animation = {}
+
+    animation["name"] = self.name
+
+    -- adds keyframes
+    animation["keyframes"] = {}
+    for i = 1, #self.keyframes do
+        animation.keyframes[i] = self.keyframes[i]:pod()
+    end
+
+    return animation
+end
+
+
+
 -- metamethods
 function Animation:__tostring()
     local str = self.name .. " (Animation, " .. self.duration .. ")"
