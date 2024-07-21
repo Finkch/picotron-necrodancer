@@ -13,8 +13,11 @@ include("skeleton/bone.lua")
 include("skeleton/transform.lua")
 include("skeleton/animation.lua")
 include("skeleton/keyframe.lua")
+include("skeleton/gravedig.lua")
 
 include("lib/queue.lua")
+include("lib/log.lua")
+include("lib/tstr.lua")
 
 
 -- returns the window
@@ -785,6 +788,30 @@ function necrodancer(debug_mode)
 
     local save = Button:new(load:right(padding), load:top(), 6, "Save", 5)
     gui:attach(save)
+
+    
+    local load_brain = Brain:new(nil)
+    load_brain.update = function(self, gui)
+
+        -- loads new skeleton
+        local ns = import(fetch("../../appdata/necrodancer/skeleton.pod"))
+
+        -- reset gui
+    end
+    load.contents = load_brain
+
+    local save_brain = Brain:new(nil)
+    save_brain.update = function(self, gui)
+        local skeletontbl = export(gui.data.skeleton)
+
+        -- makes the directory if its not there
+        mkdir("appdata/necrodancer")
+
+        -- stores the skeleton in a pod within appdata
+        store("appdata/necrodancer/skeleton.pod", skeletontbl)
+    end
+    save.contents = save_brain
+
 
 
 
