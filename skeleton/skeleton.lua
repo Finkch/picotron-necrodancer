@@ -118,6 +118,21 @@ function Skeleton:dance(pose)   -- pose is a table of joint transforms
 end
 
 
+-- puts the skeleton into a grave
+-- (returns a pod for the skeleton).
+function Skeleton:pod()
+    local skeleton = {}
+
+    -- adds each bone to the grave
+    skeleton["core"] = self.core:pod()
+
+    -- adds the necromancer to the grave
+    skeleton["necromancer"] = self.necromancer:pod(skeleton)
+
+    return skeleton
+end
+
+
 
 -- metamethods
 function Skeleton:__tostring()
