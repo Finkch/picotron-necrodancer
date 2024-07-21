@@ -106,6 +106,27 @@ function Bone:copy(name)
 end
 
 
+-- places the bones into the skeleton's grave (pod)
+function Bone:pod()
+    local bone = {}
+
+    -- adds each component to the pod.
+    -- note: no need to care about transform since its transient
+    bone["name"]    = self.name
+    bone["bone"]    = {x = self.bone.x, y = self.bone.y}
+    bone["z"]       = self.z
+    bone["joint"]   = {x = self.joint.x, y = self.joint.y}
+
+    -- adds each child
+    bone["children"] = {}
+    for name, child in pairs(self.children) do
+        bone.children[name] = child:pod()
+    end
+
+    return bone
+end
+
+
  
 --[[
     metamethods
