@@ -76,14 +76,14 @@ end
 function Bone:dance(pose, parenttip, parentrot)
 
     -- builds new transform for this pose
-    local transform = Transform:new(self.joint, 0)              -- !don't! add previous rotation (leads to exponential growth)
-    if (parentrot and parentrot > 0) transform.rot = parentrot  -- depends on parent's amount
+    local transform = Transform:new(self.joint, 0)  -- !don't! add previous rotation (leads to exponential growth)
+    if (parentrot) transform.rot = parentrot        -- depends on parent's amount
     if (pose[self.name]) then
         transform.pos += pose[self.name].pos
         transform.rot += pose[self.name].rot
     end
     
-    if (parenttip) transform.pos += parenttip                   -- sets joint position
+    if (parenttip) transform.pos += parenttip       -- sets joint position
 
     self.transform = transform
 
