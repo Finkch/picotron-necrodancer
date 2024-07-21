@@ -14,9 +14,11 @@ include("skeleton/transform.lua")
 include("skeleton/animation.lua")
 include("skeleton/keyframe.lua")
 
+include("lib/queue.lua")
+
 
 -- returns the window
-function init_necrodancer(debug_mode)
+function necrodancer(debug_mode)
     if (debug_mode == nil) debug_mode = false
 
     local padding = 4
@@ -24,9 +26,11 @@ function init_necrodancer(debug_mode)
 
     -- application window to make a skeleton
     local gui = nil
+    local debug = nil
     if (not debug_mode) then
         gui = Gui:new("necrodancer", false, 301, 245, 180, 180, 6)
     else
+        debug = Q:new()
         gui = Gui:new("necrodancer", false, 480, 245, 180, 180, 6)
     end
 
