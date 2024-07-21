@@ -6,7 +6,7 @@
 
 include("skeleton/keyframe.lua")
 
-include("finkchlib/tstr.lua")
+include("lib/tstr.lua")
 
 Animation = {}
 Animation.__index = Animation

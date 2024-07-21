@@ -5,7 +5,7 @@
 
 ]]
 
-include("finkchlib/tstr.lua")
+include("lib/tstr.lua")
 
 include("skeleton/transform.lua")
 
