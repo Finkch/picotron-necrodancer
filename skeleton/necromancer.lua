@@ -10,7 +10,7 @@ include("skeleton/animation.lua")
 
 Necromancer = {}
 Necromancer.__index = Necromancer
-Necromancer.__type = "necromancer"
+--Necromancer.__type = "necromancer"
 
 function Necromancer:new(animations)
 
@@ -117,4 +117,16 @@ function Necromancer:emptypose()
     end
 
     return transforms
+end
+
+
+-- places necromancer in the grave (pod)
+function Necromancer:pod()
+    local necromancer = {}
+
+    for name, animation in pairs(self.animations) do
+        necromancer[name] = animation:pod()
+    end
+
+    return necromancer
 end
