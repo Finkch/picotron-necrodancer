@@ -3,8 +3,6 @@
 
 -- 2d vectors
 
-include("finkchlib/log.lua")
-
 Vec = {}
 Vec.__index = Vec
 Vec.__type = "vec"
