@@ -4,9 +4,9 @@
 
 ]]
 
-include("necrodancer/gui.lua")
-include("necrodancer/container.lua")
-include("necrodancer/brain.lua")
+include("gui/gui.lua")
+include("gui/container.lua")
+include("gui/brain.lua")
 
 include("skeleton/skeleton.lua")
 include("skeleton/bone.lua")
