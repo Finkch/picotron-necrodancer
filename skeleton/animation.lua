@@ -37,8 +37,8 @@ function Animation:findduration()
     local duration = 0
     local initial_duration = self.keyframes[1].duration
     for keyframe in all(self.keyframes) do
+        keyframe.frame = duration       -- sets the timestamp
         duration += keyframe.duration   -- adds duration to tally
-        keyframe.frame = duration - initial_duration       -- sets the timestamp
     end
     self.duration = duration
 end
