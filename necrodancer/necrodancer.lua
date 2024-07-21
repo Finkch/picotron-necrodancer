@@ -8,15 +8,12 @@ include("necrodancer/gui.lua")
 include("necrodancer/container.lua")
 include("necrodancer/brain.lua")
 
-include("lib/vec.lua")
-
 include("skeleton/skeleton.lua")
 include("skeleton/bone.lua")
 include("skeleton/transform.lua")
 include("skeleton/animation.lua")
 include("skeleton/keyframe.lua")
 
-include("finkchlib/log.lua")
 
 -- returns the window
 function init_necrodancer(debug_mode)
