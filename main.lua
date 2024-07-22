@@ -8,6 +8,8 @@ end
 
 function _update()
 
+    -- reloads the gui.
+    -- used when loading new skeleton
     if (gui.data.reload) then
         local skeleton = gui.data.skeleton
         local debug_mode = gui.data.debug_mode
