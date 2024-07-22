@@ -47,7 +47,9 @@ function necrodancer(debug_mode, new_skeleton)
 
         printout.update_extra = function(self, gui)
             if (gui.data.mode == "skeleton") then
-                debug:add(tostr(gui.data.skeleton))
+                for name, bone in pairs(gui.data.skeleton.bones) do
+                    debug:add(tostr(bone))
+                end
             else
                 debug:add(tostr(gui.data.necromancer.current))
             end
