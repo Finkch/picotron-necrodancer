@@ -79,17 +79,33 @@ function necrodancer(debug_mode, new_skeleton)
     gui.data["skeleton"] = skeleton
     gui.data["necromancer"] = skeleton.necromancer
     gui.data["current"] = skeleton.core
-    gui.data["max"] = 1
-    gui.data["count"] = 1
+
+    -- finds max and count
+    local count = 0
+    for name, bone in pairs(gui.data.skeleton.bones) do
+        count += 1
+
+    end
+
+    gui.data["max"] = count - 1
+    gui.data["count"] = count
     gui.data["i"] = 0
 
 
     -- animation data
     local animation = Animation:new("current")
+    if (new_skeleton) animation = skeleton.necromancer.animations["current"]
     skeleton.necromancer.animations["current"] = animation
     gui.data["animation"] = animation
     gui.data["currentkf"] = animation.keyframes[1]
-    gui.data["countkf"] = 1
+
+    -- finds current kf count
+    local count = 1
+    for i = 2, #gui.data.animation.keyframes do
+        count = i
+    end
+
+    gui.data["countkf"] = count
     gui.data["ikf"] = 1
 
 
