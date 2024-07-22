@@ -112,7 +112,7 @@ function Bone:pod()
 
     -- adds each component to the pod.
     -- note: no need to care about transform since its transient
-    bone["name"]    = self.name
+    bone["name"]    = tostr(self.name)
     bone["bone"]    = {x = self.bone.x, y = self.bone.y}
     bone["z"]       = self.z
     bone["joint"]   = {x = self.joint.x, y = self.joint.y}
