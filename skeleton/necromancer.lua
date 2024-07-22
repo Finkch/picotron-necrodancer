@@ -8,6 +8,8 @@
 
 include("skeleton/animation.lua")
 
+include("lib/tstr.lua")
+
 Necromancer = {}
 Necromancer.__index = Necromancer
 --Necromancer.__type = "necromancer"
@@ -129,4 +131,18 @@ function Necromancer:pod()
     end
 
     return necromancer
+end
+
+
+-- metamethods
+function Necromancer:__tostring()
+
+    local tbl = {}
+
+    tbl["current"] = self.current.name
+    tbl["frame"] = self.frame
+    tbl["paused"] = self.paused
+    tbl["animations"] = self.animations
+
+    return "Necromancer" .. tstr(tbl)
 end
