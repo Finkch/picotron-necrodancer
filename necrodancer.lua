@@ -825,6 +825,10 @@ function necrodancer(debug_mode, new_skeleton)
         gui.data.reload_soon = true
     end
 
+    load.update_active = function(self, gui)
+        self.active = nil != fstat("/appdata/necrodancer/skeleton.pod")
+    end
+
     -- need a bit of state to tell when to reload, otherwise on reload
     -- it would immediately reload again since user is still clicking load.
     -- otherwords, prevents continuous reloads.
