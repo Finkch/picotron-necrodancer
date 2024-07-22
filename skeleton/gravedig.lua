@@ -25,15 +25,19 @@ function export(skeleton)
 end
 
 
-function import(skeleton)
+function import(new_skeleton)
 
-    local tbl = unpod(skeleton)
+    -- gets the table
+    local tbl = unpod(new_skeleton)
 
+    -- obtains the core and all its children from the table
     local core = getbones(tbl.core)
 
+    -- gets all animations
     local necromancer = getnecromancer(tbl.necromancer)
 
-    local skeleton = Skeleton:new(core, necromancer)
+    -- puts it all together
+    local skeleton = Skeleton:new(core, necromancer, tbl.debug)
 
     return skeleton
 end
@@ -50,12 +54,13 @@ function getbones(bonetbl, parent)
         bonetbl.z,
         Vec:new(bonetbl.joint.x, bonetbl.joint.y)
     )
+
+    -- add the child bone to the parent bone
+    if (parent) parent:add(bone)
     
+    -- recurses to find children
     for _, childtbl in pairs(bonetbl.children) do
-
         local child = getbones(childtbl, bone)
-
-        if (parent) parent:add(child)
     end
 
     return bone
