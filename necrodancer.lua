@@ -793,36 +793,34 @@ function necrodancer(debug_mode, new_skeleton)
 
     
     load.when_clicked = function(self, gui)
-        -- loads new skeleton
+
+        -- fetches stored skeleton
         local ns = import(fetch("../../appdata/necrodancer/skeleton.pod"))
 
         -- reset gui
         gui.data.skeleton = ns
 
+        -- sets reload to after the user finishes clicking
         gui.data.reload_soon = true
     end
 
+    -- need a bit of state to tell when to reload, otherwise on reload
+    -- it would immediately reload again since user is still clicking load.
+    -- otherwords, prevents continuous reloads.
     load.update_extra = function(self, gui)
         if (not self.holding and gui.data.reload_soon) gui.data.reload = true
     end
 
 
-
     save.when_clicked = function(self, gui)
-        --log("imp.txt", "clicked save", {"-a"})
 
         local skeletontbl = export(gui.data.skeleton)
 
         -- makes the directory if its not there
         mkdir("appdata/necrodancer")
 
-        log("imp.txt", "exporting", {"-a"})
-        --log("imp.txt", tostr(skeletontbl), {"-a"})
-
         -- stores the skeleton in a pod within appdata
         store("appdata/necrodancer/skeleton.pod", skeletontbl)
-
-
     end
 
 
