@@ -84,10 +84,13 @@ function necrodancer(debug_mode, new_skeleton)
     local count = 0
     for name, bone in pairs(gui.data.skeleton.bones) do
         count += 1
-
     end
 
-    gui.data["max"] = count - 1
+    if (count == 1) then
+        gui.data["max"] = 1
+    else
+        gui.data["max"] = count - 1
+    end
     gui.data["count"] = count
     gui.data["i"] = 0
 
@@ -834,6 +837,9 @@ function necrodancer(debug_mode, new_skeleton)
 
         -- makes the directory if its not there
         mkdir("appdata/necrodancer")
+
+        -- logs the skeleton data in a human-readable format
+        log("log.txt", tstr(unpod(skeletontbl)), {"-d appdata/necrodancer/"})
 
         -- stores the skeleton in a pod within appdata
         store("appdata/necrodancer/skeleton.pod", skeletontbl)
