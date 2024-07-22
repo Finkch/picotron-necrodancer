@@ -3,10 +3,17 @@
 include("necrodancer.lua")
 
 function _init()
-    gui = necrodancer(false)
+    gui = necrodancer(true)
 end
 
 function _update()
+
+    if (gui.data.reload) then
+        local skeleton = gui.data.skeleton
+        local debug_mode = gui.data.debug_mode
+        gui = necrodancer(debug_mode, skeleton)
+    end
+
     gui:update()
 end
 
