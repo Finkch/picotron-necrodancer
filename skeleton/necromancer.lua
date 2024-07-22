@@ -12,7 +12,7 @@ include("lib/tstr.lua")
 
 Necromancer = {}
 Necromancer.__index = Necromancer
---Necromancer.__type = "necromancer"
+Necromancer.__type = "necromancer"
 
 function Necromancer:new(animations)
 
