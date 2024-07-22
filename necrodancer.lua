@@ -21,7 +21,7 @@ include("lib/tstr.lua")
 
 
 -- returns the window
-function necrodancer(debug_mode)
+function necrodancer(debug_mode, new_skeleton)
     if (debug_mode == nil) debug_mode = false
 
     local padding = 4
@@ -65,7 +65,8 @@ function necrodancer(debug_mode)
         adds some data to the gui
 
     ]]
-
+    gui.data.reload = false
+    gui.data.debug_mode = debug_mode
     gui.data["mode"] = "skeleton"
     gui.data["time"] = 0
     gui.data.paused = false
@@ -73,6 +74,7 @@ function necrodancer(debug_mode)
 
     -- skeleton data
     local skeleton = Skeleton:new(nil, nil, true)
+    if (new_skeleton) skeleton = new_skeleton
     skeleton.necromancer.paused = true
     gui.data["skeleton"] = skeleton
     gui.data["necromancer"] = skeleton.necromancer
@@ -790,28 +792,38 @@ function necrodancer(debug_mode)
     gui:attach(save)
 
     
-    local load_brain = Brain:new(nil)
-    load_brain.update = function(self, gui)
-
+    load.when_clicked = function(self, gui)
         -- loads new skeleton
         local ns = import(fetch("../../appdata/necrodancer/skeleton.pod"))
 
         -- reset gui
-    end
-    load.contents = load_brain
+        gui.data.skeleton = ns
 
-    local save_brain = Brain:new(nil)
-    save_brain.update = function(self, gui)
+        gui.data.reload_soon = true
+    end
+
+    load.update_extra = function(self, gui)
+        if (not self.holding and gui.data.reload_soon) gui.data.reload = true
+    end
+
+
+
+    save.when_clicked = function(self, gui)
+        --log("imp.txt", "clicked save", {"-a"})
+
         local skeletontbl = export(gui.data.skeleton)
 
         -- makes the directory if its not there
         mkdir("appdata/necrodancer")
 
+        log("imp.txt", "exporting", {"-a"})
+        --log("imp.txt", tostr(skeletontbl), {"-a"})
+
         -- stores the skeleton in a pod within appdata
         store("appdata/necrodancer/skeleton.pod", skeletontbl)
-    end
-    save.contents = save_brain
 
+
+    end
 
 
 
