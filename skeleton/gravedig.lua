@@ -21,7 +21,7 @@ function export(skeleton)
     local tbl = skeleton:pod()
 
     -- transforms into a compressed pod
-    return pod(tbl)
+    return pod(tbl, 0x7)
 end
 
 
