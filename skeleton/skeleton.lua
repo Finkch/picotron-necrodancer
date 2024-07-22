@@ -125,6 +125,7 @@ function Skeleton:pod()
 
     -- adds each bone to the grave
     skeleton["core"] = self.core:pod()
+    skeleton["debug"] = self.debug
 
     -- adds the necromancer to the grave
     skeleton["necromancer"] = self.necromancer:pod(skeleton)
@@ -141,6 +142,8 @@ function Skeleton:__tostring()
     for _, bone in pairs(self.bones) do
         str ..= "\n" .. tostr(bone)
     end
+
+    str ..= "\n" .. tostr(self.necromancer)
 
     return str
 end
